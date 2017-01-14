@@ -3,7 +3,7 @@
 
 import argparse
 
-from nizkctfcli.cli import scoreboard
+from nizkctf.cli import scoreboard
 
 def cmd_scoreboard(args):
     scoreboard.pprint(open('accepted-submissions.json', 'r'), top=args.top)
