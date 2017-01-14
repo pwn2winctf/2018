@@ -27,14 +27,12 @@ class GitHub(RepoHost):
         return data['token']
 
     def fork(self, source):
-        params = self._params()
         r = requests.post(Settings.github_api_endpoint +
                           'repos/' + source + '/forks',
-                          params=params)
+                          params=self._params())
         self._raise_for_status(r)
-        # ssh_url
-        # id or full_name
-        return r.json()
+        data = r.json()
+        return data['full_name'], data['ssh_url']
 
     def _params(self):
         return {'access_token': self.token}

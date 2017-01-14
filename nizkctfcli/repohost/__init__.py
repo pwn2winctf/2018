@@ -12,7 +12,7 @@ class RepoHost(object):
         try:
             r.raise_for_status()
         except Exception as e:
-            raise APIError(r.json(), e)
+            raise APIError(r.text, e)
 
 
 class APIError(Exception):
