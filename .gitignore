@@ -1,1 +1,6 @@
+# dependencies downloaded by elm-make
 /elm-stuff
+
+# wingide projects
+*.wpr
+*.wpu
