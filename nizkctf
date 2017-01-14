@@ -3,25 +3,30 @@
 
 import argparse
 
-def scoreboard(args):
-    print('score')
+from nizkctfcli.cli import scoreboard
+
+def cmd_scoreboard(args):
+    scoreboard.pprint(open('accepted-submissions.json', 'r'), top=args.top)
 
 def test(args):
     print('test')
 
 def main():
     commands = {
-        'scoreboard': scoreboard,
-        'score': scoreboard,
+        'score': cmd_scoreboard,
         'test': test,
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
-    parser.add_argument('command', metavar='<command>', nargs=1,
-        help='command', choices=commands.keys())
-    args = parser.parse_args()
+    subparsers = parser.add_subparsers(help='command help')
 
-    commands[args.command[0]](args)
+    parser_score = subparsers.add_parser('score', help='scoreboard help')
+    parser_score.set_defaults(command='score')
+    parser_score.add_argument('--top', type=int, default=0, metavar='N',
+            help='size of ranking to display')
+
+    args = parser.parse_args()
+    commands[args.command](args)
 
 if __name__ == '__main__':
     main()
