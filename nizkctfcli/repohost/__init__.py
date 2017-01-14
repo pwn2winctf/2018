@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import urllib
+
 
 class RepoHost(object):
     def __init__(self, token):
@@ -15,3 +17,7 @@ class RepoHost(object):
 
 class APIError(Exception):
     pass
+
+
+quote_plus = urllib.quote_plus if hasattr(urllib, 'quote_plus') else \
+    urllib.parse.quote_plus

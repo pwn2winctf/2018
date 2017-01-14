@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 import requests
-import urllib
 from ..settings import Settings
-from . import RepoHost, APIError
+from . import RepoHost, APIError, quote_plus
 
 
 class GitLab(RepoHost):
@@ -32,9 +31,3 @@ class GitLab(RepoHost):
 
     def _post_data(self):
         return {'private_token': self.token}
-
-
-if hasattr(urllib, 'quote_plus'):
-    quote_plus = urllib.quote_plus
-else:
-    quote_plus = urllib.parse.quote_plus

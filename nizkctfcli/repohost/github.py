@@ -18,12 +18,10 @@ class GitHub(RepoHost):
 
         data = r.json()
 
-        if any(err.get('code') == 'already_exists'
-               for err in data.get('errors', [])):
+        if GitHub._has_error(data, 'already_exists'):
             raise APIError("Please visit https://github.com/settings/tokens "
                            "and make sure you do not already have a personal "
                            "access token called '%s'" % Settings.ctf_name)
-
         GitHub._raise_for_status(r)
 
         return data['token']
@@ -40,3 +38,8 @@ class GitHub(RepoHost):
 
     def _params(self):
         return {'access_token': self.token}
+
+    @staticmethod
+    def _has_error(data, err_code):
+        return any(err.get('code') == err_code
+                   for err in data.get('errors', []))
