@@ -1,6 +1,6 @@
 {
 	"ctf_name": "Pwn2Win Platform Test Edition",
-	"repository_host": "gitlab",
+	"repository_host": "GitLab",
 	"submissions_project": "pwn2win/PTEsubmissions",
 
 	"github_api_endpoint": "https://api.github.com/",

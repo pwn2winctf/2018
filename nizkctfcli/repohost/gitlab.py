@@ -3,10 +3,10 @@
 import requests
 import re
 from ..settings import Settings
-from . import RepoHost, APIError, quote_plus
+from .common import BaseRepoHost, APIError, quote_plus
 
 
-class GitLab(RepoHost):
+class GitLab(BaseRepoHost):
     @staticmethod
     def get_token(username, password):
         auth = {'login': username,

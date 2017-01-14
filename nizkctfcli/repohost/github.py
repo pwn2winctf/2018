@@ -2,10 +2,10 @@
 
 import requests
 from ..settings import Settings
-from . import RepoHost, APIError
+from .common import BaseRepoHost, APIError
 
 
-class GitHub(RepoHost):
+class GitHub(BaseRepoHost):
     @staticmethod
     def get_token(username, password):
         authorization = {'scopes': 'public_repo',
