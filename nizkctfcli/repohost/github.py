@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 import requests
-from .settings import Settings
-from .repohost import RepoHost, APIError
+from ..settings import Settings
+from . import RepoHost, APIError
 
 
 class GitHub(RepoHost):
