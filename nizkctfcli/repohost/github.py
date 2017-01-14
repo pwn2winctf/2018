@@ -11,10 +11,10 @@ class GitHub(RepoHost):
         authorization = {'scopes': 'public_repo',
                          'note': Settings.ctf_name}
 
-        r = requests.post(Settings.github_api_endpoint +
-                          'authorizations',
-                          json=authorization,
-                          auth=(username, password))
+        r = self.s.post(Settings.github_api_endpoint +
+                        'authorizations',
+                        json=authorization,
+                        auth=(username, password))
 
         data = r.json()
 
@@ -27,15 +27,30 @@ class GitHub(RepoHost):
         return data['token']
 
     def fork(self, source):
-        r = requests.post(Settings.github_api_endpoint +
-                          'repos/' + source + '/forks',
-                          params=self._params())
+        r = self.s.post(Settings.github_api_endpoint +
+                        'repos/' + source + '/forks')
         self._raise_for_status(r)
         data = r.json()
         return data['full_name'], data['ssh_url']
 
-    def _params(self):
-        return {'access_token': self.token}
+    def merge_request(self, source, target,
+                      source_branch='master',
+                      target_branch='master',
+                      title='Pull Request'):
+        source_branch = source.split('/', 2)[0] + ':' + source_branch
+
+        pull_request = {'head': source_branch,
+                        'base': target_branch,
+                        'title': title}
+
+        r = self.s.post(Settings.github_api_endpoint +
+                        'repos/' + target + '/pulls',
+                        json=pull_request)
+        self._raise_for_status(r)
+        return r.json()
+
+    def _init_session(self):
+        self.s.headers.update({'Authorization': 'token ' + self.token})
 
     @staticmethod
     def _has_error(data, err_code):

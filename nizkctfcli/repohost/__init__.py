@@ -1,11 +1,17 @@
 # -*- encoding: utf-8 -*-
 
+import requests
 import urllib
 
 
 class RepoHost(object):
     def __init__(self, token):
         self.token = token
+        self.s = requests.Session()
+        self._init_session()
+
+    def _init_session(self):
+        pass
 
     @staticmethod
     def _raise_for_status(r):
