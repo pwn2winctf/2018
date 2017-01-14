@@ -16,12 +16,27 @@ class GitHub(RepoHost):
                           json=authorization,
                           auth=(username, password))
 
-        if r.status_code == 422:
+        data = r.json()
+
+        if any(err.get('code') == 'already_exists'
+               for err in data.get('errors', [])):
             raise APIError("Please visit https://github.com/settings/tokens "
                            "and make sure you do not already have a personal "
                            "access token called '%s'" % Settings.ctf_name)
 
-        r.raise_for_status()
+        GitHub._raise_for_status(r)
 
-        data = r.json()
         return data['token']
+
+    def fork(self, source):
+        params = self._params()
+        r = requests.post(Settings.github_api_endpoint +
+                          'repos/' + source + '/forks',
+                          params=params)
+        self._raise_for_status(r)
+        # ssh_url
+        # id or full_name
+        return r.json()
+
+    def _params(self):
+        return {'access_token': self.token}
