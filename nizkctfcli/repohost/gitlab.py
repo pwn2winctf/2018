@@ -20,6 +20,10 @@ class GitLab(RepoHost):
         data = r.json()
         return data['private_token']
 
+    @staticmethod
+    def get_public_url(proj):
+        return Settings.gitlab_base_url + proj
+
     def fork(self, source):
         r = self.s.post(Settings.gitlab_api_endpoint +
                         'projects/fork/' + quote_plus(source))

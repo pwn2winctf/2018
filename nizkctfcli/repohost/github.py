@@ -26,6 +26,10 @@ class GitHub(RepoHost):
 
         return data['token']
 
+    @staticmethod
+    def get_public_url(proj):
+        return Settings.github_base_url + proj
+
     def fork(self, source):
         r = self.s.post(Settings.github_api_endpoint +
                         'repos/' + source + '/forks')

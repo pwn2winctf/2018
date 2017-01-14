@@ -1,5 +1,8 @@
 {
 	"ctf_name": "Pwn2Win Platform Test Edition",
+
 	"github_api_endpoint": "https://api.github.com/",
-	"gitlab_api_endpoint": "https://gitlab.com/api/v3/"
+	"github_base_url": "https://github.com/",
+	"gitlab_api_endpoint": "https://gitlab.com/api/v3/",
+	"gitlab_base_url": "https://gitlab.com/"
 }

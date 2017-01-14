@@ -8,7 +8,9 @@ class Settings(object):
     # Placeholders for autocompletion
     ctf_name = ''
     github_api_endpoint = ''
+    github_base_url = ''
     gitlab_api_endpoint = ''
+    gitlab_base_url = ''
 
 
 def load():
