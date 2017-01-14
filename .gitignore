@@ -1,6 +1,10 @@
-# dependencies downloaded by elm-make
+# elm-make
 /elm-stuff
 
-# wingide projects
+# python
+*.pyc
+*.pyo
+
+# wingide
 *.wpr
 *.wpu

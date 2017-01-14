@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "CTF platform frontend",
-    "repository": "https://github.com/pwn2winctf/platform.git",
+    "summary": "NIZKCTF platform frontend",
+    "repository": "https://github.com/pwn2winctf/nizkctf.git",
     "license": "BSD3",
     "source-directories": [
         "frontend"
