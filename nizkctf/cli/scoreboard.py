@@ -1,10 +1,18 @@
 # -*- encoding: utf-8 -*-
 
+from __future__ import unicode_literals, print_function
 import sys
 import json
 import operator
 import tempfile
 import subprocess
+import unicodedata
+import codecs
+
+
+def width(s):
+    asian = sum(unicodedata.east_asian_width(c) == 'W' for c in s)
+    return len(s) + asian
 
 
 def rank(f):
@@ -29,12 +37,8 @@ def rank(f):
     scores = {}
     for subm in data:
         team = subm['team']
-        if team in scores:
-            scores[team] += subm['points']
-            submissions[team].append(subm)
-        else:
-            scores[team] = subm['points']
-            submissions[team] = [subm]
+        scores[team] = scores.get(team, 0) + subm['points']
+        submissions.setdefault(team, []).append(subm)
 
     return (sorted(scores.items(), key=operator.itemgetter(1),
             reverse=True), submissions)
@@ -52,29 +56,33 @@ def pprint(ranking, top=0):
 
     if top == 0:
         top = len(ranking)
-    team_max_len = 10
-    for team, score in ranking[0:top]:
-        if len(team) > team_max_len:
-            team_max_len = len(team)
-    team_max_len += 1  # add breathing space
 
-    fmt = ' %-7s| %-' + str(team_max_len) + 's| %-8s'
-    # fix for utf8 crown
-    fmtfst = ' %-8s| %-' + str(team_max_len) + 's| %-8s'
-    sep = '-'*8+'+' + '-'*(team_max_len+1)+'+' + '-'*8+'-'
+    team_len = max(width(team) for team, score in ranking[:top])
+    team_len = max(team_len, 10)
+
+    pos_len = score_len = 6
+
+    def hyph(n):
+        return '-'*(n + 2)
+
+    sep = hyph(pos_len) + '+' + hyph(team_len) + '+' + hyph(score_len)
+
+    def fmtcol(s, n):
+        return ' ' + s + ' '*(n - width(s) + 1)
+
+    def fmt(pos, team, score):
+        return fmtcol(pos, pos_len) + '|' + \
+               fmtcol(team, team_len) + '|' + \
+               fmtcol(score, score_len)
 
     print('')
     print(sep)
-    print(fmt % ('Pos', 'Team', 'Score'))
+    print(fmt('Pos', 'Team', 'Score'))
     print(sep)
 
     for idx, (team, score) in enumerate(ranking[0:top]):
-        pos = str(idx+1)
-        if idx == 0:
-            pos += u' \U0001F451 '
-            print(fmtfst % (pos, team, str(score)))
-        else:
-            print(fmt % (pos, team, str(score)))
+        pos = '%d' % (idx + 1)
+        print(fmt(pos, team, '%d' % score))
 
     print(sep)
     print('')
@@ -96,28 +104,30 @@ def plot(ranking, submissions, top=3):
     for team, _ in ranking[0:top]:
         f = tempfile.NamedTemporaryFile(suffix='-%s.dat' % team,
                                         prefix='nizkctf-', delete=True)
+        w = codecs.getwriter('utf-8')(f)
         partial = 0
         for subm in submissions[team]:
             partial += subm['points']
-            f.write('%s, %d\n' % (subm['time'], partial))
-        f.flush()
+            w.write('%s, %d\n' % (subm['time'], partial))
+        w.flush()
         fnames.append((team, f))
 
     # generate gnuplot file
     f = tempfile.NamedTemporaryFile(suffix='.gp',
                                     prefix='nizkctf-', delete=True)
-    f.write('set terminal dumb 120 30\n')
-    f.write('set xdata time\n')
-    f.write('set datafile sep \',\'\n')
-    f.write('set timefmt "%Y-%m-%dT%H:%M:%S"\n')
-    f.write('set style data steps\n')
-    f.write('plot ')
+    w = codecs.getwriter('utf-8')(f)
+    w.write('set terminal dumb 120 30\n')
+    w.write('set xdata time\n')
+    w.write('set datafile sep \',\'\n')
+    w.write('set timefmt "%Y-%m-%dT%H:%M:%S"\n')
+    w.write('set style data steps\n')
+    w.write('plot ')
     fmt = '\'%s\' using 1:2 title \'%s\''
-    f.write(fmt % (fnames[0][1].name, fnames[0][0]))
+    w.write(fmt % (fnames[0][1].name, fnames[0][0]))
     for team, ft in fnames[1:]:
-        f.write(', ')
-        f.write(fmt % (ft.name, team))
-    f.flush()
+        w.write(', ')
+        w.write(fmt % (ft.name, team))
+    w.flush()
 
     # plot in terminal
     p = subprocess.Popen(['gnuplot', f.name],
