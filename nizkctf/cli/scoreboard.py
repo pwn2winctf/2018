@@ -97,7 +97,7 @@ def plot(ranking, submissions, top=3):
     # generate temporary files with data points
     fnames = []
     for team, _ in ranking[0:top]:
-        f = tempfile.NamedTemporaryFile(suffix='-%s.dat' % team,
+        f = tempfile.NamedTemporaryFile(suffix='.dat',
                                         prefix='nizkctf-', delete=True)
         w = codecs.getwriter('utf-8')(f)
         partial = 0
