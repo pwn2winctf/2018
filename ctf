@@ -5,15 +5,19 @@ import argparse
 
 from nizkctf.cli import scoreboard
 
+
 def cmd_scoreboard(args):
-    ranking, submissions = scoreboard.rank(open('accepted-submissions.json', 'r'))
+    with open('accepted-submissions.json', 'r') as f:
+        ranking, submissions = scoreboard.rank(f)
     scoreboard.pprint(ranking, top=args.top)
 
     if args.chart:
         scoreboard.plot(ranking, submissions)
 
+
 def test(args):
     print('test')
+
 
 def main():
     commands = {
@@ -26,10 +30,12 @@ def main():
 
     parser_score = subparsers.add_parser('score', help='scoreboard help')
     parser_score.set_defaults(command='score')
-    parser_score.add_argument('--top', type=int, default=0, metavar='N',
-            help='size of ranking to display')
-    parser_score.add_argument('--chart', type=bool, default=False, metavar='T/F',
-            help='display chart (true or false).')
+    parser_score.add_argument('--top', type=int,
+                              default=0, metavar='N',
+                              help='size of ranking to display')
+    parser_score.add_argument('--chart', type=bool,
+                              default=False, metavar='T/F',
+                              help='display chart (true or false).')
 
     args = parser.parse_args()
     commands[args.command](args)
