@@ -6,13 +6,8 @@ import json
 import operator
 import tempfile
 import subprocess
-import unicodedata
 import codecs
-
-
-def width(s):
-    asian = sum(unicodedata.east_asian_width(c) == 'W' for c in s)
-    return len(s) + asian
+from ..text import width
 
 
 def rank(f):
