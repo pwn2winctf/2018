@@ -5,5 +5,5 @@ import unicodedata
 
 
 def width(s):
-    asian = sum(unicodedata.east_asian_width(c) == 'W' for c in s)
+    asian = sum(unicodedata.east_asian_width(c) in {'W','F'} for c in s)
     return len(s) + asian
