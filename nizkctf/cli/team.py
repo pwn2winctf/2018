@@ -12,6 +12,16 @@ def hashf(s):
     '''placeholder. remove when hash is defined'''
     return hashlib.sha1(s).hexdigest()
 
+def write_team_config(team_name, priv_key, public_key):
+    log.info('overriding team_key.json')
+    with codecs.open('team_key.json', 'w', 'utf8') as f:
+        f.write(json.dumps({
+            'name': team_name,
+            'private_key': priv_key,
+            'public_key': public_key,
+        })
+    .log.succe('new team key ready, share it with your team')
+
 def register(team_name, public_key):
     log.info('registering new team: %s'%(team_name))
     team_hash = hashf(team_name)
