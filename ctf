@@ -4,6 +4,7 @@
 import argparse
 
 from nizkctf.cli import scoreboard
+from nizkctf.cli import team
 
 
 def cmd_scoreboard(args):
@@ -14,6 +15,9 @@ def cmd_scoreboard(args):
     if args.chart:
         scoreboard.plot(ranking, submissions)
 
+def cmd_register(args):
+    team.register(args.name, 'public')
+
 
 def test(args):
     print('test')
@@ -22,6 +26,7 @@ def test(args):
 def main():
     commands = {
         'score': cmd_scoreboard,
+        'register': cmd_register,
         'test': test,
     }
 
@@ -36,6 +41,10 @@ def main():
     parser_score.add_argument('--chart', type=bool,
                               default=False, metavar='T/F',
                               help='display chart (true or false).')
+
+    parser_score = subparsers.add_parser('register', help='register a new team')
+    parser_score.set_defaults(command='register')
+    parser.add_argument('name', metavar='NAME', help='team name')
 
     args = parser.parse_args()
     commands[args.command](args)
