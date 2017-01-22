@@ -21,20 +21,13 @@ def read_auth(opt):
             print('Enter your username and password:')
             username = raw_input('Username: ')
             password = getpass.getpass('Password: ')
-            try:
-                RepoHost.login(username=username, password=password)
-                return True
-            except Exception as e:
-                print('Could not get access token')
-                print('    %s'%(e))
+            RepoHost.login(username=username, password=password)
+            return True
         elif opt == '2':
             print('Enter your auth token:')
             token = raw_input('Token: ')
-            try:
-                RepoHost.login(token=token)
-            except Exception as e:
-                print('Could not connect using provided token')
-                print('    %s'%(e))
+            RepoHost.login(token=token)
+            return True
 
 def cmd_scoreboard(args):
     with open('accepted-submissions.json', 'r') as f:
