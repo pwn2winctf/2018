@@ -31,7 +31,7 @@ def register(team_name):
         log.fail('team is already registered')
         return False
 
-    log.info('generating crypt keypair')
+    log.info('generating crypto keypair')
     crypt_pk, crypt_sk = pysodium.crypto_box_keypair()
 
     log.info('generating signature keypair')
