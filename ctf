@@ -7,6 +7,7 @@ import getpass
 from nizkctf.cli import scoreboard
 from nizkctf.cli import team
 from nizkctf.repohost import RepoHost
+from nizkctf.subrepo import SubRepo
 
 def read_opt(msg, opts):
     while True:
@@ -46,8 +47,14 @@ def cmd_scoreboard(args):
 def cmd_register(args):
     team.register(args.name)
 
-def cmd_auth(args):
-    print('auth user')
+def cmd_login(args):
+    if args.token != None:
+        RepoHost.login(token=args.token)
+    else:
+        read_auth('1')
+    print('User successfully authenticated')
+    print('Cloning submissions repository')
+    SubRepo.clone()
 
 def cmd_init(args):
     print('NIZKCTF initializing your environment.')
@@ -59,6 +66,9 @@ def cmd_init(args):
 
     read_auth(opt)
     print('')
+
+    print('Cloning submissions repository')
+    SubRepo.clone()
 
     print('Do you want to register a new team? [y/n]')
     opt = read_opt('>> ', set(['y','n']))
@@ -73,7 +83,7 @@ def cmd_init(args):
 def main():
     commands = {
         'init': cmd_init,
-        'auth': cmd_auth,
+        'login': cmd_login,
         'score': cmd_scoreboard,
         'register': cmd_register,
     }
@@ -84,8 +94,11 @@ def main():
     parser_init = subparsers.add_parser('init', help='init ctf environment')
     parser_init.set_defaults(command='init')
 
-    parser_auth = subparsers.add_parser('auth', help='authenticate in gitlab/github')
-    parser_auth.set_defaults(command='auth')
+    parser_login = subparsers.add_parser('login', help='authenticate in gitlab/github')
+    parser_login.set_defaults(command='login')
+    parser_login.add_argument('--token', type=str, default=None,
+                              metavar='TOKEN',
+                              help='use token auth instead of username/password')
 
     parser_score = subparsers.add_parser('score', help='scoreboard help')
     parser_score.set_defaults(command='score')
