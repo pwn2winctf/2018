@@ -1,10 +1,13 @@
 #! /usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+import os
+import codecs
 import argparse
 import getpass
 
 from nizkctf.cli import scoreboard
+from nizkctf.cli import challenges
 from nizkctf.cli import team
 from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
@@ -73,12 +76,20 @@ def cmd_init(args):
 
     print('We are all set!')
 
+def cmd_submit(args):
+    print('Checking flag: %s'%(args.flag))
+    thisdir = os.path.dirname(os.path.realpath(__file__))
+    challf = os.path.join(thisdir, 'challenges/challenges.json')
+    with codecs.open(challf, 'r', 'utf8') as f:
+        print(challenges.check_flag(f, args.id, args.flag))
+
 def main():
     commands = {
         'init': cmd_init,
         'login': cmd_login,
         'score': cmd_scoreboard,
         'register': cmd_register,
+        'submit': cmd_submit,
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
@@ -105,6 +116,11 @@ def main():
     parser_register = subparsers.add_parser('register', help='register a new team')
     parser_register.set_defaults(command='register')
     parser_register.add_argument('name', metavar='NAME', help='team name')
+
+    parser_submit = subparsers.add_parser('submit', help='submit a flag')
+    parser_submit.set_defaults(command='submit')
+    parser_submit.add_argument('id', metavar='CHALL_ID', help='challenge id')
+    parser_submit.add_argument('flag', metavar='FLAG', help='flag')
 
     args = parser.parse_args()
     commands[args.command](args)
