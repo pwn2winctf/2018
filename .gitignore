@@ -1,6 +1,6 @@
 # our own stuff
-submissions
-.token
+/submissions
+/local-settings.json
 
 # elm-make
 /elm-stuff
