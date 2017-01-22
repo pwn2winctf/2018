@@ -27,17 +27,16 @@ class SubRepo(object):
 
     @classmethod
     def clone(cls, fork=True):
+        upstream_url = repohost.get_ssh_url(Settings.submissions_project)
+
         if fork:
             repohost = RepoHost.instance()
 
             forked_project, origin_url = \
                 repohost.fork(Settings.submissions_project)
             LocalSettings.forked_project = forked_project
-
-            upstream_url = repohost.get_https_url(Settings.submissions_project)
         else:
-            upstream_url = origin_url = \
-                repohost.get_ssh_url(Settings.submissions_project)
+            origin_url = upstream_url
 
         cls.git(['clone', origin_url, SUBREPO_NAME], cwd=cls.clone_into)
         cls.git(['remote', 'add', 'upstream', upstream_url])

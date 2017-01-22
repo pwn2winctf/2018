@@ -12,17 +12,13 @@ class GitLab(BaseRepoHost):
         auth = {'login': username,
                 'password': password}
 
-        r = self.s.post(Settings.gitlab_api_endpoint +
-                        'session',
-                        json=auth)
+        r = requests.post(Settings.gitlab_api_endpoint +
+                         'session',
+                         json=auth)
         cls._raise_for_status(r)
 
         data = r.json()
         return data['private_token']
-
-    @staticmethod
-    def get_https_url(proj):
-        return Settings.gitlab_https_url % proj
 
     @staticmethod
     def get_ssh_url(proj):

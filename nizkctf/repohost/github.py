@@ -11,10 +11,10 @@ class GitHub(BaseRepoHost):
         authorization = {'scopes': 'public_repo',
                          'note': Settings.ctf_name}
 
-        r = self.s.post(Settings.github_api_endpoint +
-                        'authorizations',
-                        json=authorization,
-                        auth=(username, password))
+        r = requests.post(Settings.github_api_endpoint +
+                         'authorizations',
+                         json=authorization,
+                         auth=(username, password))
 
         data = r.json()
 
@@ -25,10 +25,6 @@ class GitHub(BaseRepoHost):
         cls._raise_for_status(r)
 
         return data['token']
-
-    @staticmethod
-    def get_https_url(proj):
-        return Settings.github_https_url % proj
 
     @staticmethod
     def get_ssh_url(proj):
