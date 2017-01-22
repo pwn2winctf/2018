@@ -13,7 +13,8 @@ thisdir = os.path.dirname(os.path.realpath(__file__))
 
 
 class SubRepo(object):
-    path = os.path.realpath(os.path.join(thisdir, '..', SUBREPO_NAME))
+    clone_into = os.path.realpath(os.path.join(thisdir, '..'))
+    path = os.path.join(clone_into, SUBREPO_NAME)
 
     @classmethod
     def get_path(cls, subpath=''):
@@ -38,7 +39,7 @@ class SubRepo(object):
             upstream_url = origin_url = \
                 repohost.get_ssh_url(Settings.submissions_project)
 
-        cls.git(['clone', origin_url, cls.path])
+        cls.git(['clone', origin_url, SUBREPO_NAME], cwd=cls.clone_into)
         cls.git(['remote', 'add', 'upstream', upstream_url])
 
     @classmethod
@@ -59,7 +60,9 @@ class SubRepo(object):
 
     @classmethod
     def git(cls, args, **kwargs):
-        p = subprocess.Popen(['git'] + args, cwd=cls.get_path(), **kwargs)
+        if 'cwd' not in kwargs:
+            kwargs['cwd'] = cls.get_path()
+        p = subprocess.Popen(['git'] + args, **kwargs)
         returncode = p.wait()
         if returncode != 0:
             raise GitError(returncode)
