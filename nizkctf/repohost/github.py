@@ -12,9 +12,9 @@ class GitHub(BaseRepoHost):
                          'note': Settings.ctf_name}
 
         r = requests.post(Settings.github_api_endpoint +
-                         'authorizations',
-                         json=authorization,
-                         auth=(username, password))
+                          'authorizations',
+                          json=authorization,
+                          auth=(username, password))
 
         data = r.json()
 

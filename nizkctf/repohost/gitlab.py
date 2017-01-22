@@ -13,8 +13,8 @@ class GitLab(BaseRepoHost):
                 'password': password}
 
         r = requests.post(Settings.gitlab_api_endpoint +
-                         'session',
-                         json=auth)
+                          'session',
+                          json=auth)
         cls._raise_for_status(r)
 
         data = r.json()
