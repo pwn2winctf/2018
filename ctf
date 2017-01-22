@@ -7,19 +7,6 @@ import getpass
 from nizkctf.cli import scoreboard
 from nizkctf.cli import team
 
-
-def cmd_scoreboard(args):
-    with open('accepted-submissions.json', 'r') as f:
-        ranking, submissions = scoreboard.rank(f)
-    scoreboard.pprint(ranking, top=args.top)
-
-    if args.chart:
-        scoreboard.plot(ranking, submissions)
-
-def cmd_register(args):
-    team.register(args.name, 'public')
-
-
 def read_opt(msg, opts):
     while True:
         inp = raw_input(msg)
@@ -40,6 +27,21 @@ def read_auth(opt):
             # FIXME: authenticate
             return True
 
+def cmd_scoreboard(args):
+    with open('accepted-submissions.json', 'r') as f:
+        ranking, submissions = scoreboard.rank(f)
+    scoreboard.pprint(ranking, top=args.top)
+
+    if args.chart:
+        scoreboard.plot(ranking, submissions)
+
+def cmd_register(args):
+    team.register(args.name)
+
+def cmd_auth(args):
+    print('auth user')
+
+
 def cmd_init(args):
     print('NIZKCTF initializing your environment.')
     print('First of all, we need your github/gitlab credentials:')
@@ -56,26 +58,27 @@ def cmd_init(args):
     if opt == 'y':
         print('Enter your team name:')
         team_name = raw_input('>> ')
-        # FIXME: add key generation
-        team.register(team_name, 'public')
+        team.register(team_name)
     print('')
 
     print('We are all set!')
 
-def test(args):
-    print('test')
-
-
 def main():
     commands = {
+        'init': cmd_init,
+        'auth': cmd_auth,
         'score': cmd_scoreboard,
         'register': cmd_register,
-        'init': cmd_init,
-        'test': test,
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
     subparsers = parser.add_subparsers(help='command help')
+
+    parser_init = subparsers.add_parser('init', help='init ctf environment')
+    parser_init.set_defaults(command='init')
+
+    parser_auth = subparsers.add_parser('auth', help='authenticate in gitlab/github')
+    parser_auth.set_defaults(command='auth')
 
     parser_score = subparsers.add_parser('score', help='scoreboard help')
     parser_score.set_defaults(command='score')
@@ -89,9 +92,6 @@ def main():
     parser_register = subparsers.add_parser('register', help='register a new team')
     parser_register.set_defaults(command='register')
     parser_register.add_argument('name', metavar='NAME', help='team name')
-
-    parser_init = subparsers.add_parser('init', help='init ctf environment')
-    parser_init.set_defaults(command='init')
 
     args = parser.parse_args()
     commands[args.command](args)
