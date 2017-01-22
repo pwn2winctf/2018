@@ -1,0 +1,10 @@
+[
+    {
+        "id": "chall1", "description": "this is chall1", "points": 50, "tags": ["rev"],
+        "hash": "$7$I6..../....7kmrW/FKDSImJoer748wHP8IDn96tv1Cwxo26yPsYb7$XvKHFrKnR655DrfzselAkF4tehGLBLMjy81C1R6G3cC"
+    },
+    {
+        "id": "chall2", "description": "this is chall2", "points": 30, "tags": ["rev", "xpl"],
+        "hash": "$7$I6..../....O73VORkIU55Sp9.QYl/tN06/gfGjWbyJpohYBk.P2iB$GaHEYclSEYgq4Nu.iBdhg5z0Yz8r2QvjbYnbFdISdy7"
+    }
+]
