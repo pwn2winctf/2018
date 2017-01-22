@@ -27,8 +27,12 @@ class GitHub(BaseRepoHost):
         return data['token']
 
     @staticmethod
-    def get_public_url(proj):
-        return Settings.github_base_url + proj
+    def get_https_url(proj):
+        return Settings.github_https_url % proj
+
+    @staticmethod
+    def get_ssh_url(proj):
+        return Settings.github_ssh_url % proj
 
     def fork(self, source):
         r = self.s.post(Settings.github_api_endpoint +

@@ -3,6 +3,7 @@
 import os
 import subprocess
 from .settings import Settings
+from .localsettings import LocalSettings
 from .repohost import RepoHost
 
 
@@ -27,19 +28,34 @@ class SubRepo(object):
     def clone(cls, fork=True):
         if fork:
             repohost = RepoHost.instance()
-            project, origin_url = repohost.fork(Settings.submissions_project)
 
-        pass
+            forked_project, origin_url = \
+                repohost.fork(Settings.submissions_project)
+            LocalSettings.forked_project = forked_project
+
+            upstream_url = repohost.get_https_url(Settings.submissions_project)
+        else:
+            upstream_url = origin_url = \
+                repohost.get_ssh_url(Settings.submissions_project)
+
+        cls.git(['clone', origin_url, cls.path])
+        cls.git(['remote', 'add', 'upstream', upstream_url])
+
+    @classmethod
+    def pull(cls):
+        cls.git(['pull', '--rebase', 'upstream', 'master'])
 
     @classmethod
     def sync(cls, commit_message='commit', merge_request=True):
         cls.git(['add', '-A'])
         cls.git(['commit', '-m', commit_message])
-        cls.git(['pull', '--rebase', 'upstream', 'master'])
+        cls.pull()
         cls.git(['push', '-u', 'origin', 'master'])
 
         if merge_request:
-            pass
+            repohost.merge_request(LocalSettings.forked_project,
+                                   Settings.submissions_project,
+                                   title=commit_message)
 
     @classmethod
     def git(cls, args, **kwargs):

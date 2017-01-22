@@ -5,14 +5,7 @@ import json
 
 
 class Settings(object):
-    # Placeholders for autocompletion
-    ctf_name = ''
-    repository_host = ''
-    submissions_project = ''
-    github_api_endpoint = ''
-    github_base_url = ''
-    gitlab_api_endpoint = ''
-    gitlab_base_url = ''
+    pass
 
 
 def load():

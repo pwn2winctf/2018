@@ -21,8 +21,12 @@ class GitLab(BaseRepoHost):
         return data['private_token']
 
     @staticmethod
-    def get_public_url(proj):
-        return Settings.gitlab_base_url + proj
+    def get_https_url(proj):
+        return Settings.gitlab_https_url % proj
+
+    @staticmethod
+    def get_ssh_url(proj):
+        return Settings.gitlab_ssh_url % proj
 
     def fork(self, source):
         r = self.s.post(Settings.gitlab_api_endpoint +
