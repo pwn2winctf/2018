@@ -27,11 +27,10 @@ class SubRepo(object):
 
     @classmethod
     def clone(cls, fork=True):
+        repohost = RepoHost.instance()
         upstream_url = repohost.get_ssh_url(Settings.submissions_project)
 
         if fork:
-            repohost = RepoHost.instance()
-
             forked_project, origin_url = \
                 repohost.fork(Settings.submissions_project)
             LocalSettings.forked_project = forked_project
@@ -53,6 +52,7 @@ class SubRepo(object):
         cls.git(['push', '-u', 'origin', 'master'])
 
         if merge_request:
+            repohost = RepoHost.instance()
             repohost.merge_request(LocalSettings.forked_project,
                                    Settings.submissions_project,
                                    title=commit_message)
