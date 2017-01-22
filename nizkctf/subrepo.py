@@ -9,7 +9,6 @@ from .repohost import RepoHost
 SUBREPO_NAME = 'submissions'
 
 thisdir = os.path.dirname(os.path.realpath(__file__))
-repohost = RepoHost.get_instance()
 
 
 class SubRepo(object):
@@ -27,7 +26,8 @@ class SubRepo(object):
     @classmethod
     def clone(cls, fork=True):
         if fork:
-            pass
+            repohost = RepoHost.instance()
+            project, origin_url = repohost.fork(Settings.submissions_project)
 
         pass
 
@@ -35,7 +35,7 @@ class SubRepo(object):
     def sync(cls, commit_message='commit', merge_request=True):
         cls.git(['add', '-A'])
         cls.git(['commit', '-m', commit_message])
-        cls.git(['pull', 'upstream', 'master'])
+        cls.git(['pull', '--rebase', 'upstream', 'master'])
         cls.git(['push', '-u', 'origin', 'master'])
 
         if merge_request:

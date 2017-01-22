@@ -21,7 +21,7 @@ class BaseRepoHost(object):
         TokenFile.create(token)
 
     @classmethod
-    def get_instance(cls):
+    def instance(cls):
         return cls(TokenFile.get())
 
     def __init__(self, token):
@@ -55,10 +55,10 @@ class TokenFile(object):
     @classmethod
     def get(cls):
         if not os.path.exists(cls.path):
-            raise EnvironmentError("The token file ('%s') was not created yet "
-                                   "Please call 'ctf login' to get it created "
-                                   "before performing any further actions." %
-                                   cls.path)
+            raise EnvironmentError("The token file ('%s') was not created "
+                                   "yet. Please call 'ctf login' to get it "
+                                   "created before performing any further "
+                                   "actions." % cls.path)
 
         with codecs.open(cls.path, 'w', 'utf-8') as f:
             return f.read().strip()
