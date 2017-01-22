@@ -81,7 +81,12 @@ def cmd_submit(args):
     thisdir = os.path.dirname(os.path.realpath(__file__))
     challf = os.path.join(thisdir, 'challenges/challenges.json')
     with codecs.open(challf, 'r', 'utf8') as f:
-        print(challenges.check_flag(f, args.id, args.flag))
+        ret = challenges.check_flag(f, args.id, args.flag)
+    if ret:
+        print('Congratulations! You found the right flag.')
+    else:
+        print('This is not the correct flag.')
+
 
 def main():
     commands = {
