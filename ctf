@@ -6,6 +6,7 @@ import getpass
 
 from nizkctf.cli import scoreboard
 from nizkctf.cli import team
+from nizkctf.repohost import RepoHost
 
 def read_opt(msg, opts):
     while True:
@@ -19,13 +20,20 @@ def read_auth(opt):
             print('Enter your username and password:')
             username = raw_input('Username: ')
             password = getpass.getpass('Password: ')
-            # FIXME: authenticate on github/gitlab
-            return True
+            try:
+                RepoHost.login(username=username, password=password)
+                return True
+            except Exception as e:
+                print('Could not get access token')
+                print('    %s'%(e))
         elif opt == '2':
             print('Enter your auth token:')
             token = raw_input('Token: ')
-            # FIXME: authenticate
-            return True
+            try:
+                RepoHost.login(token=token)
+            except Exception as e:
+                print('Could not connect using provided token')
+                print('    %s'%(e))
 
 def cmd_scoreboard(args):
     with open('accepted-submissions.json', 'r') as f:
@@ -40,7 +48,6 @@ def cmd_register(args):
 
 def cmd_auth(args):
     print('auth user')
-
 
 def cmd_init(args):
     print('NIZKCTF initializing your environment.')
