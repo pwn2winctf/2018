@@ -4,11 +4,7 @@ import os
 import requests
 import urllib
 import codecs
-
-
-TOKENFILE_NAME = '.token'
-
-thisdir = os.path.dirname(os.path.realpath(__file__))
+from ..localsettings import LocalSettings
 
 
 class BaseRepoHost(object):
@@ -18,11 +14,11 @@ class BaseRepoHost(object):
             token = cls.get_token(username, password)
         if not token:
             raise ValueError("Pass either a token or an username/password")
-        TokenFile.create(token)
+        LocalSettings.token = token
 
     @classmethod
     def instance(cls):
-        return cls(TokenFile.get())
+        return cls(LocalSettings.token)
 
     def __init__(self, token):
         self.token = token
@@ -42,26 +38,6 @@ class BaseRepoHost(object):
             r.raise_for_status()
         except Exception as e:
             raise APIError(r.text, e)
-
-
-class TokenFile(object):
-    path = os.path.join(thisdir, '..', '..', TOKENFILE_NAME)
-
-    @classmethod
-    def create(cls, token):
-        with codecs.open(cls.path, 'w', 'utf-8') as f:
-            f.write(token + '\n')
-
-    @classmethod
-    def get(cls):
-        if not os.path.exists(cls.path):
-            raise EnvironmentError("The token file ('%s') was not created "
-                                   "yet. Please call 'ctf login' to get it "
-                                   "created before performing any further "
-                                   "actions." % cls.path)
-
-        with codecs.open(cls.path, 'w', 'utf-8') as f:
-            return f.read().strip()
 
 
 class APIError(Exception):
