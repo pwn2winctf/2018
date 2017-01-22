@@ -6,8 +6,8 @@ from .common import BaseRepoHost, APIError
 
 
 class GitHub(BaseRepoHost):
-    @staticmethod
-    def get_token(username, password):
+    @classmethod
+    def get_token(cls, username, password):
         authorization = {'scopes': 'public_repo',
                          'note': Settings.ctf_name}
 
@@ -18,11 +18,11 @@ class GitHub(BaseRepoHost):
 
         data = r.json()
 
-        if GitHub._has_error(data, 'already_exists'):
+        if cls._has_error(data, 'already_exists'):
             raise APIError("Please visit https://github.com/settings/tokens "
                            "and make sure you do not already have a personal "
                            "access token called '%s'" % Settings.ctf_name)
-        GitHub._raise_for_status(r)
+        cls._raise_for_status(r)
 
         return data['token']
 

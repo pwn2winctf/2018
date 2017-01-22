@@ -7,15 +7,15 @@ from .common import BaseRepoHost, APIError, quote_plus
 
 
 class GitLab(BaseRepoHost):
-    @staticmethod
-    def get_token(username, password):
+    @classmethod
+    def get_token(cls, username, password):
         auth = {'login': username,
                 'password': password}
 
         r = self.s.post(Settings.gitlab_api_endpoint +
                         'session',
                         json=auth)
-        GitLab._raise_for_status(r)
+        cls._raise_for_status(r)
 
         data = r.json()
         return data['private_token']
