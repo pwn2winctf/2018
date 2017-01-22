@@ -13,7 +13,8 @@ class LocalSettings(object):
 
     def __setitem__(self, k, v):
         self.data[k] = v
-        self._store()
+        with self.lock:
+            self._store()
 
     def __getitem__(self, k):
         return self.data[k]
@@ -31,8 +32,3 @@ class LocalSettings(object):
         with open(os.path.join(tdir, '..', 'local-settings.json'), 'w') as f:
             json.dump(self.data, f)
 
-
-if __name__ == '__main__':
-    ls = LocalSettings()
-    ls['test'] = 'loller'
-    print(ls['test'])
