@@ -19,8 +19,8 @@ def write_team_config(team_name, priv_key, public_key):
             'name': team_name,
             'private_key': priv_key,
             'public_key': public_key,
-        })
-    .log.succe('new team key ready, share it with your team')
+        }))
+    log.success('new team key ready, share it with your team')
 
 def register(team_name, public_key):
     log.info('registering new team: %s'%(team_name))
