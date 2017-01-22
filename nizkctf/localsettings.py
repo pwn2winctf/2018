@@ -5,7 +5,7 @@ import json
 import threading
 
 
-class LocalSettings(object):
+class DefaultLocalSettings(object):
     def __init__(self):
         self.data = None
         self.lock = threading.Lock()
@@ -32,3 +32,4 @@ class LocalSettings(object):
         with open(os.path.join(tdir, '..', 'local-settings.json'), 'w') as f:
             json.dump(self.data, f)
 
+LocalSettings = DefaultLocalSettings()
