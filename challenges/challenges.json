@@ -1,12 +1,12 @@
 [
     {
         "id": "chall1", "description": "this is chall1", "points": 50, "tags": ["rev"],
-        "salt": "SALT",
-        "pk": "dS58FXo5GPbpMt1bY2QocoNff8OiIulp3NJZM9SbvMs="
+        "salt": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "pk": "QtluMkVUZBUe0nfGW78C4D6tNKU0Ewnn/jFTvIpAOQE="
     },
     {
         "id": "chall2", "description": "this is chall2", "points": 30, "tags": ["rev", "xpl"],
-        "salt": "SALT",
-        "pk": "ZltAd36AcTVXmjBlMvfB7eAJ2P+kJ5/duH26V+VWkA8="
+        "salt": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "pk": "etRmJS2PcGjWPpi/lMknbooV8gK6RB59bXeWY3IU5+o="
     }
 ]

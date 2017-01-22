@@ -12,8 +12,9 @@ class ChallError(Exception):
     pass
 
 def generate_keypair(flag, salt):
+    assert len(salt) == pysodium.crypto_pwhash_scryptsalsa208sha256_SALTBYTES
     chall_seed = pysodium.crypto_pwhash_scryptsalsa208sha256(
-        32,
+        pysodium.crypto_sign_SEEDBYTES,
         flag,
         salt,
         OPSLIMIT,
