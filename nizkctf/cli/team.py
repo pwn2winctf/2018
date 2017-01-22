@@ -7,8 +7,7 @@ import codecs
 import pysodium
 import base64
 from . import log
-
-PLACEHOLDER_SUB_DIR='submissions/'
+from ..subrepo import SubRepo, GitError
 
 def write_team_config(team_name, crypt_pk, crypt_sk, sign_pk, sign_sk):
     log.info('overriding team_key.json')
@@ -25,7 +24,7 @@ def write_team_config(team_name, crypt_pk, crypt_sk, sign_pk, sign_sk):
 def register(team_name):
     log.info('registering new team: %s'%(team_name))
     team_hash = hashlib.sha256(team_name).hexdigest()
-    team_dir = os.path.join(PLACEHOLDER_SUB_DIR, team_hash)
+    team_dir = os.path.join(SubRepo.get_path(), team_hash)
 
     if os.path.exists(team_dir):
         log.fail('team is already registered')
@@ -47,9 +46,13 @@ def register(team_name):
     with codecs.open(os.path.join(team_dir, 'team.json'), 'w', 'utf8') as f:
         f.write(json.dumps(team_data))
 
-    log.success('team %s successfully added'%(team_name))
-
-    write_team_config(team_name, crypt_pk, crypt_sk, sign_pk, sign_sk)
+    try:
+        SubRepo.sync()
+        log.success('team %s successfully added'%(team_name))
+        write_team_config(team_name, crypt_pk, crypt_sk, sign_pk, sign_sk)
+    except GitError as e:
+        log.fail('could not add team to repository')
+        return False
 
     return True
 
