@@ -3,6 +3,9 @@
 	"repository_host": "GitLab",
 	"submissions_project": "pwn2win/PTEsubmissions",
 
+	"scrypt_ops_limit": 33554432,
+	"scrypt_mem_limit": 1073741824,
+
 	"github_api_endpoint": "https://api.github.com/",
 	"github_ssh_url": "git@github.com:%s.git",
 
