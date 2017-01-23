@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from base64 import b64decode
 import os
 import re
+import json
 import pysodium
 from .serializable import SerializableDict
 from .settings import Settings
@@ -28,6 +29,14 @@ class Challenge(object):
     def validate_id(id):
         if len(id) > 15 or not re.match(r'^[a-zA-Z0-9-_]+$', id):
             raise ValueError('invalid challenge ID')
+
+    @staticmethod
+    def index():
+        # fixme: put thisdir and dir in a better place
+        thisdir = os.path.dirname(os.path.realpath(__file__))
+        dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
+        with open(os.path.join(dir, 'index.json'), 'r') as f:
+            return json.load(f)
 
 
 def derive_keypair(salt, flag):

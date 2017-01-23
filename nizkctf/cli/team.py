@@ -12,7 +12,6 @@ from .teamsecrets import write_team_secrets
 from ..team import Team
 from ..subrepo import SubRepo
 
-
 def register(team_name):
     log.info('updating subrepo')
     SubRepo.pull()

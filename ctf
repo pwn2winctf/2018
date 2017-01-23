@@ -6,9 +6,7 @@ import codecs
 import argparse
 import getpass
 
-from nizkctf.cli import scoreboard
-from nizkctf.cli import challenges
-from nizkctf.cli import team
+from nizkctf.cli import scoreboard, challenges, team
 from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
 
@@ -85,6 +83,8 @@ def cmd_submit(args):
     else:
         print('This is not the correct flag.')
 
+def cmd_challenges(args):
+    challenges.pprint()
 
 def main():
     commands = {
@@ -93,6 +93,7 @@ def main():
         'score': cmd_scoreboard,
         'register': cmd_register,
         'submit': cmd_submit,
+        'challs': cmd_challenges,
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
@@ -124,6 +125,9 @@ def main():
     parser_submit.set_defaults(command='submit')
     parser_submit.add_argument('id', metavar='CHALL_ID', help='challenge id')
     parser_submit.add_argument('flag', metavar='FLAG', help='flag')
+
+    parser_challenges = subparsers.add_parser('challs', help='list challenges')
+    parser_challenges.set_defaults(command='challs')
 
     args = parser.parse_args()
     commands[args.command](args)

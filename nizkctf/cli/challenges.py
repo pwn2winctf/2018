@@ -6,6 +6,7 @@ import codecs
 import json
 import pysodium
 import base64
+import textwrap
 
 from . import log
 from .teamsecrets import TeamSecrets
@@ -40,4 +41,23 @@ def check_flag(chall_id, flag):
         return True
     else:
         return False
+
+LINE_WIDTH=72
+def pprint():
+    index = Challenge.index()
+    print('')
+    print('-'*LINE_WIDTH)
+    print('')
+    for chall_id in index:
+        chall_dt = Challenge(chall_id)
+        with open(chall_dt.path(), 'r') as f:
+            chall = json.load(f)
+            print('%s        (%d points)        [%s]'%(chall['id'],
+                chall['points'], ', '.join(chall['tags'])))
+            print('')
+            print('\n'.join(textwrap.wrap(chall['description'],
+                LINE_WIDTH)))
+            print('')
+            print('-'*LINE_WIDTH)
+            print('')
 
