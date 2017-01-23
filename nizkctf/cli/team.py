@@ -14,6 +14,9 @@ from ..subrepo import SubRepo
 
 
 def register(team_name):
+    log.info('updating subrepo')
+    SubRepo.pull()
+
     log.info('registering new team: %s' % team_name)
     team = Team(name=team_name)
 
