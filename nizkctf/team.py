@@ -64,8 +64,10 @@ class TeamMembers(SerializableList):
     def projection(self, attr):
         return [member[attr] for member in self]
 
-    def add(self, **attrs):
-        self.append(attrs)
+    def add(self, id=None, username=None):
+        assert isinstance(id, int) or isinstance(id, long)
+        assert isinstance(username, type(''))
+        self.append({'id': id, 'username': username})
         self.save()
 
 
