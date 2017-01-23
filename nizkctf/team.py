@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals
 import os
-import json
 import hashlib
 from .subrepo import SubRepo
 from .serializable import SerializableDict
@@ -27,13 +26,15 @@ class Team(SerializableDict):
     def dir(self):
         return SubRepo.get_path(self.id)
 
+    def exists(self):
+        return os.path.exists(self.dir())
+
     def path(self):
         return os.path.join(self.dir(), TEAM_FILE)
 
     def save(self):
-        dir = self.dir()
-        if not os.path.exists(dir):
-            os.makedirs(dir)
+        if not self.exists():
+            os.makedirs(self.dir())
         super(Team, self).save()
 
     @staticmethod
