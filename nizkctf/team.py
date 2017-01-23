@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import os
 import hashlib
 from .subrepo import SubRepo
-from .serializable import SerializableDict
+from .serializable import SerializableDict, SerializableList
 
 
 TEAM_FILE = 'team.json'
@@ -21,7 +21,7 @@ class Team(SerializableDict):
             self.id = id
         else:
             raise ValueError('Either name or id are required')
-        self.load()
+        super(Team, self).__init__()
 
     def dir(self):
         return SubRepo.get_path(self.id)
@@ -37,6 +37,9 @@ class Team(SerializableDict):
             os.makedirs(self.dir())
         super(Team, self).save()
 
+    def members(self):
+        return TeamMembers(self.dir())
+
     @staticmethod
     def name_to_id(name):
         sha = hashlib.sha256(name.encode('utf-8')).hexdigest()
@@ -45,3 +48,19 @@ class Team(SerializableDict):
     @staticmethod
     def _binary_field(k):
         return k.endswith('_pk')
+
+
+class TeamMembers(SerializableList):
+    def __init__(self, team_dir):
+        self.team_dir = team_dir
+        super(TeamMembers, self).__init__()
+
+    def path(self):
+        return os.path.join(self.team_dir, MEMBERS_FILE)
+
+    def projection(self, attr):
+        return [member[attr] for member in self]
+
+    def add(self, **attrs):
+        self.append(attrs)
+        self.save()
