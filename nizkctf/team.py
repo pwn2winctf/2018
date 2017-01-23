@@ -3,8 +3,7 @@
 from __future__ import unicode_literals
 import os
 import json
-import pysodium
-from binascii import hexlify, unhexlify
+import hashlib
 from .subrepo import SubRepo
 from .serializable import SerializableDict
 
@@ -39,7 +38,7 @@ class Team(SerializableDict):
 
     @staticmethod
     def name_to_id(name):
-        sha = hexlify(pysodium.crypto_hash_sha256(name)).decode('utf-8')
+        sha = hashlib.sha256(name.encode()).hexdigest()
         return sha[0:1] + '/' + sha[1:4] + '/' + sha[4:]
 
     @staticmethod
