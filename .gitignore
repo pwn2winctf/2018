@@ -1,6 +1,7 @@
 # our own stuff
 /submissions
 /local-settings.json
+/team-secrets.json
 
 # elm-make
 /elm-stuff

@@ -2,8 +2,8 @@
 
 from __future__ import unicode_literals
 import os
-from .serializable import SerializableDict
-from .cli import log
+from . import log
+from ..serializable import SerializableDict
 
 
 TEAMSECRETS_FILE = 'team-secrets.json'
@@ -12,7 +12,7 @@ TEAMSECRETS_FILE = 'team-secrets.json'
 class DefaultTeamSecrets(SerializableDict):
     def path(self):
         thisdir = os.path.dirname(os.path.realpath(__file__))
-        return os.path.join(thisdir, '..', TEAMSECRETS_FILE)
+        return os.path.join(thisdir, '..', '..', TEAMSECRETS_FILE)
 
     @staticmethod
     def _binary_field(k):

@@ -8,8 +8,8 @@ import codecs
 import pysodium
 import base64
 from . import log
+from .teamsecrets import write_team_secrets
 from ..team import Team
-from ..teamsecrets import write_team_secrets
 from ..subrepo import SubRepo
 
 
