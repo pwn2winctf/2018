@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from __future__ import unicode_literals
 import hashlib
 import os
 import json
@@ -31,7 +32,7 @@ def register(team_name):
                  'sign_pk': sign_pk})
     team.save()
 
-    SubRepo.sync()
+    SubRepo.sync(commit_message='Register team %s' % team_name)
     log.success('team %s added successfully' % team_name)
 
     write_team_secrets(team.id, crypt_sk, sign_sk)

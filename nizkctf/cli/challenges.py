@@ -1,15 +1,20 @@
 # -*- encoding: utf-8 -*-
 
+from __future__ import unicode_literals
 import os
 import json
 import pysodium
 import base64
 from . import log
 
+
 OPSLIMIT = 33554432
 MEMLIMIT = 1073741824
+
+
 class ChallError(Exception):
     pass
+
 
 def generate_keypair(flag, salt):
     assert len(salt) == pysodium.crypto_pwhash_scryptsalsa208sha256_SALTBYTES

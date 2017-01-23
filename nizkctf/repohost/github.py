@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from __future__ import unicode_literals
 import requests
 from ..settings import Settings
 from .common import BaseRepoHost, APIError

@@ -14,6 +14,9 @@ class SerializableDict(dict):
     def path(self):
         return ''
 
+    def __init__(self):
+        self.load()
+
     def load(self):
         path = self.path()
         if os.path.exists(path):
