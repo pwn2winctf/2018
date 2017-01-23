@@ -40,6 +40,9 @@ class Team(SerializableDict):
     def members(self):
         return TeamMembers(self.dir())
 
+    def sumissions(self):
+        return TeamSubmissions(self.dir())
+
     @staticmethod
     def name_to_id(name):
         sha = hashlib.sha256(name.encode('utf-8')).hexdigest()
@@ -64,3 +67,12 @@ class TeamMembers(SerializableList):
     def add(self, **attrs):
         self.append(attrs)
         self.save()
+
+
+class TeamSubmissions(object):
+    def __init__(self, team_dir):
+        self.path = os.path.join(team_dir, SUBMISSIONS_FILE)
+
+    def submit(self, proof):
+        with open(self.path, 'a'):
+            f.write(proof + b'\n')
