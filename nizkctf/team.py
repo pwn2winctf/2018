@@ -39,7 +39,7 @@ class Team(SerializableDict):
 
     @staticmethod
     def name_to_id(name):
-        sha = hashlib.sha256(name.encode()).hexdigest()
+        sha = hashlib.sha256(name.encode('utf-8')).hexdigest()
         return sha[0:1] + '/' + sha[1:4] + '/' + sha[4:]
 
     @staticmethod

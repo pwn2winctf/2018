@@ -20,7 +20,7 @@ def register(team_name):
         log.fail('team is already registered')
         return False
 
-    log.info('generating crypto keypair')
+    log.info('generating encryption keypair')
     crypt_pk, crypt_sk = pysodium.crypto_box_keypair()
 
     log.info('generating signature keypair')
@@ -34,6 +34,6 @@ def register(team_name):
     SubRepo.sync()
     log.success('team %s added successfully' % team_name)
 
-    write_team_secrets(team_name, crypt_pk, crypt_sk, sign_pk, sign_sk)
+    write_team_secrets(team.id, crypt_sk, sign_sk)
 
     return True
