@@ -17,15 +17,17 @@ def proof_open(team, proof):
 
     proof = b64decode(proof)
 
-    claimed_chall = proof[2*64:].decode('utf-8')
-    chall_pk = Challenge(claimed_chall).pk
+    claimed_chall_id = proof[2*64:].decode('utf-8')
+    claimed_chall = Challenge(claimed_chall_id)
+
+    chall_pk = claimed_chall['pk']
     team_pk = team['sign_pk']
 
     membership_proof = pysodium.crypto_sign_open(proof, chall_pk)
     chall_id = pysodium.crypto_sign_open(membership_proof,
                                          team_pk).decode('utf-8')
 
-    if claimed_chall != chall_id:
+    if claimed_chall_id != chall_id:
         raise ValueError('invalid proof')
 
     return chall_id

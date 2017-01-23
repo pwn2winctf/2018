@@ -2,15 +2,32 @@
 
 from __future__ import unicode_literals
 from base64 import b64decode
+import os
+import re
 import pysodium
+from .serializable import SerializableDict
 from .settings import Settings
 
 
+CHALLENGES_DIR = 'challenges'
+
+
 class Challenge(object):
-    def __init__(self, chall_id):
-        """ stub """
-        self.pk = b''
-        self.salt = b''
+    thisdir = os.path.dirname(os.path.realpath(__file__))
+    dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
+
+    def __init__(self, id):
+        self.validate_id(id)
+        self.id = id
+        super(Challenge, self).__init__()
+
+    def path(self):
+        return os.path.join(self.dir, self.id + '.json')
+
+    @staticmethod
+    def validate_id(id):
+        if len(id) > 15 or not re.match(r'^[a-zA-Z0-9-_]+$', id):
+            raise ValueError('invalid challenge ID')
 
 
 def derive_keypair(salt, flag):
