@@ -40,7 +40,7 @@ class Team(SerializableDict):
     def members(self):
         return TeamMembers(self.dir())
 
-    def sumissions(self):
+    def submissions(self):
         return TeamSubmissions(self.dir())
 
     @staticmethod
@@ -76,5 +76,5 @@ class TeamSubmissions(object):
         self.path = os.path.join(team_dir, SUBMISSIONS_FILE)
 
     def submit(self, proof):
-        with open(self.path, 'a'):
+        with open(self.path, 'a') as f:
             f.write(proof + b'\n')
