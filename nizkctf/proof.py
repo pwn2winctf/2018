@@ -1,16 +1,18 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function
 import os
 import pysodium
 from base64 import b64encode, b64decode
+from .text import text_type
 from .challenge import Challenge
 from .team import Team
 from .cli.teamsecrets import TeamSecrets
 
 
 def proof_open(team, proof):
-    proof = proof.encode('utf-8')
+    if isinstance(proof, text_type):
+        proof = proof.encode('utf-8')
 
     assert isinstance(team, Team)
     assert isinstance(proof, bytes)

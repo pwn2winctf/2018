@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function
 import os
 import json
 from base64 import b64encode, b64decode

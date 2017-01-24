@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function
 import os
 import hashlib
+from .text import text_type
 from .subrepo import SubRepo
 from .serializable import SerializableDict, SerializableList
 
@@ -35,10 +36,10 @@ class Team(SerializableDict):
         super(Team, self).save()
 
     def members(self):
-        return TeamMembers(self.dir())
+        return TeamMembers(self)
 
     def submissions(self):
-        return TeamSubmissions(self.dir())
+        return TeamSubmissions(self)
 
     @staticmethod
     def name_to_id(name):
@@ -51,8 +52,8 @@ class Team(SerializableDict):
 
 
 class TeamMembers(SerializableList):
-    def __init__(self, team_dir):
-        self.team_dir = team_dir
+    def __init__(self, team):
+        self.team_dir = team.dir()
         super(TeamMembers, self).__init__()
 
     def path(self):
@@ -63,14 +64,15 @@ class TeamMembers(SerializableList):
 
     def add(self, id=None, username=None):
         assert isinstance(id, int) or isinstance(id, long)
-        assert isinstance(username, type(''))
+        assert isinstance(username, text_type)
         self.append({'id': id, 'username': username})
         self.save()
 
 
 class TeamSubmissions(object):
-    def __init__(self, team_dir):
-        self.path = os.path.join(team_dir, SUBMISSIONS_FILE)
+    def __init__(self, team):
+        self.team = team
+        self.path = os.path.join(team.dir(), SUBMISSIONS_FILE)
 
     def submit(self, proof):
         with open(self.path, 'a') as f:

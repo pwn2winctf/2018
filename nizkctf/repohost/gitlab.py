@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function
 import requests
 import re
 from ..settings import Settings
