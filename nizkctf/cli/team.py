@@ -31,9 +31,9 @@ def register(team_name):
     log.info('generating signature keypair')
     sign_pk, sign_sk = pysodium.crypto_sign_keypair()
 
-    team.update({'name': team_name,
-                 'crypt_pk': crypt_pk,
+    team.update({'crypt_pk': crypt_pk,
                  'sign_pk': sign_pk})
+    team.validate()
     team.save()
 
     SubRepo.sync(commit_message='Register team %s' % team_name)

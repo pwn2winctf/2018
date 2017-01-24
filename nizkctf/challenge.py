@@ -32,7 +32,8 @@ class Challenge(SerializableDict):
 
     @staticmethod
     def validate_id(id):
-        if len(id) > 15 or not re.match(r'^[a-zA-Z0-9-_]+$', id):
+        if len(id) > Settings.max_size_chall_id or \
+           not re.match(r'^[a-zA-Z0-9-_]+$', id):
             raise ValueError('invalid challenge ID')
 
     @staticmethod

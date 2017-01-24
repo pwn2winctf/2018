@@ -4,7 +4,9 @@ from __future__ import unicode_literals, division, print_function,\
                        absolute_import
 import os
 import hashlib
+import pysodium
 from .six import text_type
+from .settings import Settings
 from .subrepo import SubRepo
 from .serializable import SerializableDict, SerializableList
 from .proof import proof_open
@@ -29,13 +31,33 @@ class Team(SerializableDict):
             self.id = id
         else:
             raise ValueError('Either name or id are required')
+
         super(Team, self).__init__()
+
+        if self.exists():
+            self.validate()
 
     def dir(self):
         return SubRepo.get_path(self.id)
 
     def path(self):
         return os.path.join(self.dir(), TEAM_FILE)
+
+    def validate(self):
+        expected_keys = {'name', 'crypt_pk', 'sign_pk'}
+        if set(self.keys()) != expected_keys:
+            raise ValueError("Team should contain, and only contain: %s" %
+                             ', '.join(expected_keys))
+
+        if len(self['name']) > Settings.max_size_team_name:
+            raise ValueError("Team name must have at most %d chars." %
+                             Settings.max_size_team_name)
+
+        if len(self['crypt_pk']) != pysodium.crypto_box_PUBLICKEYBYTES:
+            raise ValueError("Team's crypt_pk has incorrect size")
+
+        if len(self['sign_pk']) != pysodium.crypto_sign_PUBLICKEYBYTES:
+            raise ValueError("Team's sign_pk has incorrect size")
 
     def save(self):
         if not self.exists():

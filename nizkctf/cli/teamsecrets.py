@@ -31,4 +31,4 @@ def write_team_secrets(team_id, crypt_sk, sign_sk):
     TeamSecrets['sign_sk'] = sign_sk
     TeamSecrets.save()
 
-    log.success('new team secrets ready, share them with your team')
+    log.success('ready, share %s with your team!' % TEAMSECRETS_FILE)
