@@ -81,6 +81,7 @@ class Team(SerializableDict):
 
 class TeamMembers(SerializableList):
     def __init__(self, team):
+        self.team = team
         self.team_dir = team.dir()
         super(TeamMembers, self).__init__()
 
@@ -93,10 +94,16 @@ class TeamMembers(SerializableList):
     def add(self, id=None, username=None):
         assert isinstance(id, int) or isinstance(id, long)
         assert isinstance(username, text_type)
+
         another_team = lookup_member(id=id)
         if another_team:
-            raise ValueError("User '%s' is already member of team '%s'" %
-                             (username, another_team['name']))
+            if another_team != self.team:
+                raise ValueError("User '%s' is already member of team '%s'" %
+                                 (username, another_team['name']))
+            else:
+                # do nothing, but do not fail if it is the same team
+                return
+
         self.append({'id': id, 'username': username})
         self.save()
 
