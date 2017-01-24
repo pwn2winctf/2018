@@ -3,6 +3,7 @@
 from __future__ import unicode_literals, division, print_function,\
                        absolute_import
 import os
+import re
 import hashlib
 import pysodium
 from .six import text_type
@@ -24,6 +25,7 @@ class Team(SerializableDict):
             id = self.name_to_id(name)
             self.update({'name': name})
         if id:
+            self.validate_id(id)
             self.id = id
         else:
             raise ValueError('Either name or id are required')
@@ -52,8 +54,15 @@ class Team(SerializableDict):
 
     @staticmethod
     def name_to_id(name):
+        assert isinstance(name, text_type)
         sha = hashlib.sha256(name.encode('utf-8')).hexdigest()
         return sha[0:1] + '/' + sha[1:4] + '/' + sha[4:]
+
+    @staticmethod
+    def validate_id(id):
+        assert isinstance(id, text_type)
+        if not re.match(r'^[0-9a-f]/[0-9a-f]{3}/[0-9a-f]{60}$', id):
+            raise ValueError('Invalid Team ID')
 
     @staticmethod
     def _binary_field(k):
@@ -69,6 +78,8 @@ class Team(SerializableDict):
         if len(self['name']) > Settings.max_size_team_name:
             raise ValueError("Team name must have at most %d chars." %
                              Settings.max_size_team_name)
+        if self.name_to_id(self['name']) != self.id:
+            raise ValueError("Team name does not match its ID")
 
         assert isinstance(self['crypt_pk'], bytes)
         if len(self['crypt_pk']) != pysodium.crypto_box_PUBLICKEYBYTES:
