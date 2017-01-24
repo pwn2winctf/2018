@@ -49,13 +49,16 @@ class Team(SerializableDict):
             raise ValueError("Team should contain, and only contain: %s" %
                              ', '.join(expected_keys))
 
+        assert isinstance(self['name'], text_type)
         if len(self['name']) > Settings.max_size_team_name:
             raise ValueError("Team name must have at most %d chars." %
                              Settings.max_size_team_name)
 
+        assert isinstance(self['crypt_pk'], bytes)
         if len(self['crypt_pk']) != pysodium.crypto_box_PUBLICKEYBYTES:
             raise ValueError("Team's crypt_pk has incorrect size")
 
+        assert isinstance(self['sign_pk'], bytes)
         if len(self['sign_pk']) != pysodium.crypto_sign_PUBLICKEYBYTES:
             raise ValueError("Team's sign_pk has incorrect size")
 

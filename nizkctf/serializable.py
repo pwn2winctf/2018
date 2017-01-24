@@ -5,7 +5,7 @@ from __future__ import unicode_literals, division, print_function,\
 import os
 import json
 from base64 import b64encode, b64decode
-from .six import viewitems
+from .six import viewitems, text_type
 
 
 class Serializable(object):
@@ -41,6 +41,7 @@ class SerializableDict(Serializable, dict):
     def _unserialize_inplace(self):
         for k, v in viewitems(self):
             if self._binary_field(k):
+                assert isinstance(v, text_type)
                 self[k] = b64decode(v)
 
     def _serialize(self):
