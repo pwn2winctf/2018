@@ -4,6 +4,8 @@ from __future__ import unicode_literals, division, print_function,\
                        absolute_import
 import os
 import subprocess
+import base64
+import pysodium
 from .settings import Settings
 from .localsettings import LocalSettings
 from .repohost import RepoHost
@@ -44,20 +46,31 @@ class SubRepo(object):
 
     @classmethod
     def pull(cls):
+        cls.git(['checkout', 'master'])
         cls.git(['pull', '--rebase', 'upstream', 'master'])
 
     @classmethod
-    def sync(cls, commit_message='commit', merge_request=True):
+    def push(cls, commit_message='commit', merge_request=True):
+        branch = 'master'
+        if merge_request:
+            branch = cls.random_branch()
+            cls.git(['checkout', '-b', branch, 'master'])
+
         cls.git(['add', '-A'])
         cls.git(['commit', '-m', commit_message])
-        cls.pull()
-        cls.git(['push', '-u', 'origin', 'master'])
+        cls.git(['push', '-u', 'origin', branch])
 
         if merge_request:
             repohost = RepoHost.instance()
             repohost.merge_request(LocalSettings.forked_project,
                                    Settings.submissions_project,
+                                   source_branch=branch,
                                    title=commit_message)
+
+    @staticmethod
+    def random_branch():
+        return base64.b32encode(pysodium.randombytes(10))\
+               .decode('utf-8').lower()
 
     @classmethod
     def git(cls, args, **kwargs):

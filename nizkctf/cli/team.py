@@ -36,7 +36,7 @@ def register(team_name):
     team.validate()
     team.save()
 
-    SubRepo.sync(commit_message='Register team %s' % team_name)
+    SubRepo.push(commit_message='Register team %s' % team_name)
     log.success('team %s added successfully' % team_name)
 
     write_team_secrets(team.id, crypt_sk, sign_sk)
