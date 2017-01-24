@@ -11,7 +11,7 @@ import textwrap
 from . import log
 from .teamsecrets import TeamSecrets, my_team
 from ..proof import proof_create
-from ..challenge import lookup_flag
+from ..challenge import Challenge, lookup_flag
 from ..subrepo import SubRepo
 
 
@@ -33,11 +33,10 @@ LINE_WIDTH = 72
 
 
 def pprint():
-    index = Challenge.index()
     print('')
     print('-'*LINE_WIDTH)
     print('')
-    for chall_id in index:
+    for chall_id in Challenge.index():
         chall_dt = Challenge(chall_id)
         with open(chall_dt.path(), 'r') as f:
             chall = json.load(f)
