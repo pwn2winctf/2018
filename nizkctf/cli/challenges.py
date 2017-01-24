@@ -37,16 +37,14 @@ def pprint():
     print('-'*LINE_WIDTH)
     print('')
     for chall_id in Challenge.index():
-        chall_dt = Challenge(chall_id)
-        with open(chall_dt.path(), 'r') as f:
-            chall = json.load(f)
-            print('%s        (%d points)        [%s]' % (
-                chall['id'],
-                chall['points'],
-                ', '.join(chall['tags'])))
-            print('')
-            print('\n'.join(textwrap.wrap(chall['description'],
-                                          LINE_WIDTH)))
-            print('')
-            print('-'*LINE_WIDTH)
-            print('')
+        chall = Challenge(chall_id)
+        print('%s        (%d points)        [%s]' % (
+            chall['id'],
+            chall['points'],
+            ', '.join(chall['tags'])))
+        print('')
+        print('\n'.join(textwrap.wrap(chall['description'],
+                                      LINE_WIDTH)))
+        print('')
+        print('-'*LINE_WIDTH)
+        print('')
