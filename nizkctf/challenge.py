@@ -59,3 +59,25 @@ def derive_keypair(salt, flag):
         Settings.scrypt_mem_limit)
 
     return pysodium.crypto_sign_seed_keypair(chall_seed)
+
+
+def lookup_flag(flag, chall_id=None):
+    if chall_id:
+        # challenge provided, only try it
+        try_challenges = [chall_id]
+    else:
+        # try every challenge
+        try_challenges = Challenge.index()
+
+    try_challenges = map(Challenge, try_challenges)
+    try_salts = set(chall['salt'] for chall in try_challenges)
+    pk_chall = {chall['pk']: chall for chall in try_challenges}
+
+    for salt in try_salts:
+        pk, sk = derive_keypair(salt, flag)
+        match = pk_chall.get(pk)
+
+        if match:
+            return chall, sk
+
+    return None, None
