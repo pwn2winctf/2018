@@ -30,7 +30,7 @@ def proof_open(team, proof):
     if claimed_chall_id != chall_id:
         raise ValueError('invalid proof')
 
-    return chall_id
+    return claimed_chall
 
 
 def proof_create(chall_id, chall_sk):
