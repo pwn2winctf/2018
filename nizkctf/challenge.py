@@ -6,24 +6,25 @@ import os
 import re
 import json
 import pysodium
-from .serializable import SerializableDict
+from .serializable import SerializableDict, SerializableList
 from .settings import Settings
 
 
 CHALLENGES_DIR = 'challenges'
+INDEX_FILE = 'index.json'
+
+thisdir = os.path.dirname(os.path.realpath(__file__))
+chall_dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
 
 
 class Challenge(SerializableDict):
-    thisdir = os.path.dirname(os.path.realpath(__file__))
-    dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
-
     def __init__(self, id):
         self.validate_id(id)
         self.id = id
         super(Challenge, self).__init__()
 
     def path(self):
-        return os.path.join(self.dir, self.id + '.json')
+        return os.path.join(chall_dir, self.id + '.json')
 
     @staticmethod
     def validate_id(id):
@@ -36,11 +37,12 @@ class Challenge(SerializableDict):
 
     @staticmethod
     def index():
-        # fixme: put thisdir and dir in a better place
-        thisdir = os.path.dirname(os.path.realpath(__file__))
-        dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
-        with open(os.path.join(dir, 'index.json'), 'r') as f:
-            return json.load(f)
+        return ChallengeIndex()
+
+
+class ChallengeIndex(SerializableList):
+    def path(self):
+        return os.path.join(chall_dir, INDEX_FILE)
 
 
 def derive_keypair(salt, flag):
