@@ -13,7 +13,7 @@ from .settings import Settings
 CHALLENGES_DIR = 'challenges'
 
 
-class Challenge(object):
+class Challenge(SerializableDict):
     thisdir = os.path.dirname(os.path.realpath(__file__))
     dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
 
@@ -29,6 +29,10 @@ class Challenge(object):
     def validate_id(id):
         if len(id) > 15 or not re.match(r'^[a-zA-Z0-9-_]+$', id):
             raise ValueError('invalid challenge ID')
+
+    @staticmethod
+    def _binary_field(k):
+        return k in {'salt', 'pk'}
 
     @staticmethod
     def index():
