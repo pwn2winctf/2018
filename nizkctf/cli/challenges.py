@@ -11,6 +11,7 @@ import textwrap
 from . import log
 from .teamsecrets import TeamSecrets
 from ..team import Team
+from ..proof import proof_create
 from ..challenge import Challenge, derive_keypair
 from ..subrepo import SubRepo
 
@@ -28,10 +29,7 @@ def check_flag(chall_id, flag):
             base64.b64decode(chall_data['salt']), flag)
     if chall_sk != None:
         team = Team(id=TeamSecrets['id'])
-
-        team_proof = pysodium.crypto_sign(chall_id, TeamSecrets['sign_sk'])
-        proof = pysodium.crypto_sign(team_proof, chall_sk)
-
+        proof = proof_create(chall_id, chall_sk)
         subs = team.submissions()
         subs.submit(proof)
 
