@@ -18,10 +18,6 @@ MEMBERS_FILE = 'members.json'
 SUBMISSIONS_FILE = 'submissions.csv'
 
 
-def my_team():
-    return Team(id=TeamSecrets['id'])
-
-
 class Team(SerializableDict):
     def __init__(self, name=None, id=None):
         if name:
@@ -97,6 +93,10 @@ class TeamMembers(SerializableList):
     def add(self, id=None, username=None):
         assert isinstance(id, int) or isinstance(id, long)
         assert isinstance(username, text_type)
+        another_team = lookup_member(id=id)
+        if another_team:
+            raise ValueError("User '%s' is already member of team '%s'" %
+                             (username, another_team['name']))
         self.append({'id': id, 'username': username})
         self.save()
 
@@ -115,3 +115,33 @@ class TeamSubmissions(object):
             with open(self.path) as f:
                 for proof in f:
                     yield proof_open(self.team, proof.strip())
+
+
+def my_team():
+    return Team(id=TeamSecrets['id'])
+
+
+def all_teams():
+    root = SubRepo.get_path()
+    for path, dirs, files in os.walk(root):
+        if TEAM_FILE in files:
+            assert path.startswith(root)
+            id = path[len(root):].strip('/')
+            yield Team(id=id)
+
+
+def lookup_member(id=None, username=None):
+    if id:
+        attr = 'id'
+        value = id
+    elif username:
+        attr = 'username'
+        value = username
+    else:
+        raise ValueError('Provide either an id or an username')
+
+    for team in all_teams():
+        if value in team.members().projection(attr):
+            return team
+
+    return None
