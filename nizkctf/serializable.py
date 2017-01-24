@@ -11,10 +11,9 @@ class Serializable(object):
         self.load()
 
     def load(self):
-        path = self.path()
-        if os.path.exists(path):
+        if self.exists():
             self.clear()
-            with open(path) as f:
+            with open(self.path()) as f:
                 self.update(json.load(f))
             self._unserialize_inplace()
 
