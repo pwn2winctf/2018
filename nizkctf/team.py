@@ -7,11 +7,17 @@ import hashlib
 from .six import text_type
 from .subrepo import SubRepo
 from .serializable import SerializableDict, SerializableList
+from .proof import proof_open
+from .cli.teamsecrets import TeamSecrets
 
 
 TEAM_FILE = 'team.json'
 MEMBERS_FILE = 'members.json'
 SUBMISSIONS_FILE = 'submissions.csv'
+
+
+def my_team():
+    return Team(id=TeamSecrets['id'])
 
 
 class Team(SerializableDict):
@@ -78,3 +84,9 @@ class TeamSubmissions(object):
     def submit(self, proof):
         with open(self.path, 'a') as f:
             f.write(proof + b'\n')
+
+    def challs(self):
+        if os.path.exists(self.path):
+            with open(self.path) as f:
+                for proof in f:
+                    yield proof_open(self.team, proof.strip())

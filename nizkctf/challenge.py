@@ -24,6 +24,9 @@ class Challenge(SerializableDict):
         self.id = id
         super(Challenge, self).__init__()
 
+    def __eq__(self, other):
+        return self.id == other.id
+
     def path(self):
         return os.path.join(chall_dir, self.id + '.json')
 
@@ -81,6 +84,6 @@ def lookup_flag(flag, chall_id=None):
         match = pk_chall.get(pk)
 
         if match:
-            return chall, sk
+            return match, sk
 
     return None, None

@@ -10,7 +10,8 @@ import base64
 import textwrap
 
 from . import log
-from .teamsecrets import TeamSecrets, my_team
+from .teamsecrets import TeamSecrets
+from ..team import my_team
 from ..proof import proof_create
 from ..challenge import Challenge, lookup_flag
 from ..subrepo import SubRepo
@@ -20,14 +21,19 @@ def submit_flag(flag, chall_id=None):
     chall, chall_sk = lookup_flag(flag, chall_id)
 
     if chall_sk is None:
-        return False
+        return False, 'This is not the correct flag.'
+
+    SubRepo.pull()
+
+    submissions = my_team().submissions()
+    if chall in submissions.challs():
+        return False, 'Your team already solved %s.' % chall.id
 
     proof = proof_create(chall.id, chall_sk)
-    my_team().submissions().submit(proof)
+    submissions.submit(proof)
+    #SubRepo.sync(commit_message='Proof: found flag for %s' % chall.id)
 
-    SubRepo.sync(commit_message='Proof: found flag for %s' % chall.id)
-
-    return True
+    return True, 'Congratulations! You found the right flag for %s.' % chall.id
 
 
 LINE_WIDTH = 72
@@ -43,6 +49,8 @@ def pprint():
             chall['id'],
             chall['points'],
             ', '.join(chall['tags'])))
+        print('')
+        print(chall['title'])
         print('')
         print('\n'.join(textwrap.wrap(chall['description'],
                                       LINE_WIDTH)))

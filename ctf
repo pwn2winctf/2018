@@ -78,11 +78,8 @@ def cmd_init(args):
 
 def cmd_submit(args):
     print('Checking flag: %s' % args.flag)
-    ret = challenges.submit_flag(args.flag, args.chall)
-    if ret:
-        print('Congratulations! You found the right flag.')
-    else:
-        print('This is not the correct flag.')
+    ret, msg = challenges.submit_flag(args.flag, args.chall)
+    print(msg)
 
 def cmd_challenges(args):
     challenges.pprint()
