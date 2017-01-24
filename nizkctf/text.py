@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
 import unicodedata
-
-
-text_type = type('')
 
 
 def width(s):

@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
 import os
 import json
+from .six import viewitems
 
 
 class Settings(object):
@@ -15,7 +17,7 @@ def load():
     with open(os.path.join(thisdir, '..', 'settings.json')) as f:
         settings = json.load(f)
         assert isinstance(settings, dict)
-        for k, v in settings.items():
+        for k, v in viewitems(settings):
             setattr(Settings, k, v)
 
 load()

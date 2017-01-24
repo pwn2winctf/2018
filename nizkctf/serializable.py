@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
 import os
 import json
 from base64 import b64encode, b64decode
+from .six import viewitems
 
 
 class Serializable(object):
@@ -37,13 +39,13 @@ class SerializableDict(Serializable, dict):
         return False
 
     def _unserialize_inplace(self):
-        for k, v in self.items():
+        for k, v in viewitems(self):
             if self._binary_field(k):
                 self[k] = b64decode(v)
 
     def _serialize(self):
         return {k: b64encode(v).decode('utf-8') if self._binary_field(k) else v
-                for k, v in self.items()}
+                for k, v in viewitems(self)}
 
 
 class SerializableList(Serializable, list):

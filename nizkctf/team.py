@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
 import os
 import hashlib
-from .text import text_type
+from .six import text_type
 from .subrepo import SubRepo
 from .serializable import SerializableDict, SerializableList
 

@@ -1,10 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
 import os
 import pysodium
 from base64 import b64encode, b64decode
-from .text import text_type
+from .six import text_type
 from .challenge import Challenge
 from .team import Team
 from .cli.teamsecrets import TeamSecrets

@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
 import sys
 import json
 import operator
@@ -8,6 +9,7 @@ import tempfile
 import subprocess
 import codecs
 from ..text import width
+from ..six import viewitems
 
 
 def rank(f):
@@ -35,7 +37,7 @@ def rank(f):
         scores[team] = scores.get(team, 0) + subm['points']
         submissions.setdefault(team, []).append(subm)
 
-    return (sorted(scores.items(), key=operator.itemgetter(1),
+    return (sorted(viewitems(scores), key=operator.itemgetter(1),
             reverse=True), submissions)
 
 
