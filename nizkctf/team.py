@@ -26,9 +26,6 @@ class Team(SerializableDict):
     def dir(self):
         return SubRepo.get_path(self.id)
 
-    def exists(self):
-        return os.path.exists(self.dir())
-
     def path(self):
         return os.path.join(self.dir(), TEAM_FILE)
 

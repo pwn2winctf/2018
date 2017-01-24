@@ -75,9 +75,8 @@ def cmd_init(args):
     print('We are all set!')
 
 def cmd_submit(args):
-    print('Checking flag: %s'%(args.flag))
-    thisdir = os.path.dirname(os.path.realpath(__file__))
-    ret = challenges.check_flag(args.id, args.flag)
+    print('Checking flag: %s' % args.flag)
+    ret = challenges.submit_flag(args.flag, args.chall)
     if ret:
         print('Congratulations! You found the right flag.')
     else:
@@ -123,8 +122,9 @@ def main():
 
     parser_submit = subparsers.add_parser('submit', help='submit a flag')
     parser_submit.set_defaults(command='submit')
-    parser_submit.add_argument('id', metavar='CHALL_ID', help='challenge id')
     parser_submit.add_argument('flag', metavar='FLAG', help='flag')
+    parser_submit.add_argument('--chall', type=str, default=None,
+                               metavar='CHALL_ID', help='challenge id')
 
     parser_challenges = subparsers.add_parser('challs', help='list challenges')
     parser_challenges.set_defaults(command='challs')

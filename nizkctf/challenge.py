@@ -64,12 +64,14 @@ def derive_keypair(salt, flag):
 def lookup_flag(flag, chall_id=None):
     if chall_id:
         # challenge provided, only try it
-        try_challenges = [chall_id]
+        try_challenges = [Challenge(chall_id)]
+        if not try_challenges[0].exists():
+            raise ValueError("A challenge named '%s' does not exist." %
+                             chall_id)
     else:
         # try every challenge
-        try_challenges = Challenge.index()
+        try_challenges = map(Challenge, Challenge.index())
 
-    try_challenges = map(Challenge, try_challenges)
     try_salts = set(chall['salt'] for chall in try_challenges)
     pk_chall = {chall['pk']: chall for chall in try_challenges}
 

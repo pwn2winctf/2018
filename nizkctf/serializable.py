@@ -22,6 +22,9 @@ class Serializable(object):
         with open(self.path(), 'w') as f:
             json.dump(self._serialize(), f)
 
+    def exists(self):
+        return os.path.exists(self.path())
+
     def _unserialize_inplace(self):
         pass
 

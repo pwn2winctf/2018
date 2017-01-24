@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import os
 from . import log
 from ..serializable import SerializableDict
+from ..team import Team
 
 
 TEAMSECRETS_FILE = 'team-secrets.json'
@@ -20,6 +21,10 @@ class DefaultTeamSecrets(SerializableDict):
 
 
 TeamSecrets = DefaultTeamSecrets()
+
+
+def my_team():
+    return Team(id=TeamSecrets['id'])
 
 
 def write_team_secrets(team_id, crypt_sk, sign_sk):
