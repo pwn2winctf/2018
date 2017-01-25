@@ -1,0 +1,4 @@
+image: pwn2win/ptesubmissions
+
+before_script:
+    - python -v
