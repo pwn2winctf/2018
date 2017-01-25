@@ -129,10 +129,14 @@ class TeamSubmissions(object):
             f.write(proof + b'\n')
 
     def challs(self):
+        r = []
         if os.path.exists(self.path):
             with open(self.path) as f:
                 for proof in f:
-                    yield proof_open(self.team, proof.strip())
+                    r.append(proof_open(self.team, proof.strip()))
+        if len(set(r)) != len(r):
+            raise ValueError('Team submissions contain repeated challenges')
+        return r
 
 
 def my_team():
