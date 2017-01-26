@@ -8,10 +8,12 @@ import sys
 import codecs
 import argparse
 import getpass
+import base64
 
 from nizkctf.cli import scoreboard, challenges, team
 from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
+from nizkctf.challenge import Challenge, derive_keypair, random_salt
 
 
 def read_opt(msg, opts):
@@ -97,6 +99,27 @@ def cmd_submit(args):
 def cmd_challenges(args):
     challenges.pprint()
 
+def cmd_add_challenge(args):
+    id = raw_input('Challenge id (digits, letters, underscore): ').strip()
+    title = raw_input('Title: ').strip()
+    description = raw_input('Description: ').strip()
+    points = int(raw_input('Points: ').strip())
+    tags = raw_input('Tags (separate tags with space): ').strip().split()
+    salt = raw_input('Salt (empty string for random salt): ').strip()
+    if salt == '':
+        salt = random_salt()
+    flag = raw_input('Flag: ').strip()
+
+    pk, sk = derive_keypair(salt, flag)
+    chall = Challenge(id=id)
+    chall['id'] = id
+    chall['title'] = title
+    chall['description'] = description
+    chall['points'] = points
+    chall['tags'] = tags
+    chall['salt'] = base64.b64encode(salt)
+    chall['pk'] = base64.b64encode(pk)
+    chall.save()
 
 def main():
     commands = {
@@ -106,6 +129,7 @@ def main():
         'register': cmd_register,
         'submit': cmd_submit,
         'challs': cmd_challenges,
+        'add': cmd_add_challenge,
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
@@ -151,9 +175,11 @@ def main():
     parser_challenges = subparsers.add_parser('challs', help='list challenges')
     parser_challenges.set_defaults(command='challs')
 
+    parser_add_challenge = subparsers.add_parser('add', help='add challenge')
+    parser_add_challenge.set_defaults(command='add')
+
     args = parser.parse_args()
     commands[args.command](args)
-
 
 if __name__ == '__main__':
     main()
