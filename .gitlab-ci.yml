@@ -1,8 +1,0 @@
-image: registry.gitlab.com/pwn2win/ptesubmissions
-
-before_script:
-    - python -v
-
-test:
-    script:
-        - echo "lala"
