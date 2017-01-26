@@ -65,6 +65,30 @@ class GitLab(BaseRepoHost):
         self._raise_for_status(r)
         return r.json()
 
+    def mr_comment(self, proj, mr_id, contents):
+        r = self.s.post(Settings.gitlab_api_endpoint +
+                        'projects/' + quote_plus(proj) +
+                        '/merge_requests/%d' % mr_id + '/notes',
+                        json={'body': contents})
+        self._raise_for_status(r)
+        return r.json()
+
+    def mr_close(self, proj, mr_id):
+        r = self.s.put(Settings.gitlab_api_endpoint +
+                       'projects/' + quote_plus(proj) +
+                       '/merge_requests/%d' % mr_id,
+                       json={'state': 'closed'})
+        self._raise_for_status(r)
+        return r.json()
+
+    def mr_accept(self, proj, mr_id, sha):
+        r = self.s.put(Settings.gitlab_api_endpoint +
+                       'projects/' + quote_plus(proj) +
+                       '/merge_requests/%d' % mr_id + '/merge',
+                       json={'sha': sha})
+        self._raise_for_status(r)
+        return r.json()
+
     def _get_user_namespace(self):
         return (n['path'] for n in self._get_namespaces()
                 if n['kind'] == 'user').next()

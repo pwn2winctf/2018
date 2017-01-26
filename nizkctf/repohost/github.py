@@ -55,6 +55,27 @@ class GitHub(BaseRepoHost):
         self._raise_for_status(r)
         return r.json()
 
+    def mr_comment(self, proj, mr_id, contents):
+        r = self.s.post(Settings.github_api_endpoint +
+                        'repos/' + proj + '/issues/%d' % mr_id + '/comments',
+                        json={'body': contents})
+        self._raise_for_status(r)
+        return r.json()
+
+    def mr_close(self, proj, mr_id):
+        r = self.s.patch(Settings.github_api_endpoint +
+                         'repos/' + proj + '/pulls/%d' % mr_id,
+                         json={'state': 'closed'})
+        self._raise_for_status(r)
+        return r.json()
+
+    def mr_accept(self, proj, mr_id, sha):
+        r = self.s.put(Settings.github_api_endpoint +
+                       'repos/' + proj + '/pulls/%d' % mr_id + '/merge',
+                       json={'sha': sha})
+        self._raise_for_status(r)
+        return r.json()
+
     def _init_session(self):
         self.s.headers.update({'Authorization': 'token ' + self.token})
 
