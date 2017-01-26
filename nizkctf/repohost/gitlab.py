@@ -77,7 +77,7 @@ class GitLab(BaseRepoHost):
         r = self.s.put(Settings.gitlab_api_endpoint +
                        'projects/' + quote_plus(proj) +
                        '/merge_requests/%d' % mr_id,
-                       json={'state': 'closed'})
+                       json={'state_event': 'close'})
         self._raise_for_status(r)
         return r.json()
 
