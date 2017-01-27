@@ -3,21 +3,55 @@
 from __future__ import unicode_literals, division, print_function,\
      absolute_import
 from nizkctf.repohost import RepoHost
+from nizkctf.subrepo import SubRepo
+from nizkctf.proposal import consider_proposal
 from nizkctf.six import to_bytes
 import os
 import json
 import base64
 import tempfile
+import traceback
+
+
+def run(merge_info):
+    # Prepare git and ssh for usage inside the container
+    setup_environment()
+
+    # Clone official submissions repository
+    SubRepo.clone()
+
+    # Merge proposal if changes are valid
+    consider_proposal(merge_info)
 
 
 def handle_payload(payload, context):
-    print('Payload recognized correctly:\n')
-    print(repr(payload))
-    print('\nAfter adapted:\n')
-    print(repr(RepoHost.webhook.adapt_payload(payload)))
-    print()
+    merge_info = RepoHost.webhook.adapt_payload(payload)
 
-    setup_environment()
+    if not merge_info:
+        # Message not of our interest (e.g. merge request closed)
+        return
+
+    try:
+        run(merge_info)
+    except:
+        # Stderr is sent by AWS to CloudWatch
+        traceback.print_exc()
+        # Send tracking number to the user
+        send_cloudwatch_info(merge_info, context)
+
+
+def send_cloudwatch_info(merge_info, context):
+    proj = Settings.submissions_project
+    mr_id = merge_info['mr_id']
+
+    comment = "Sorry. A failure has occurred when processing your proposal. " \
+              "Please contact support and present the following info:\n\n" \
+              "**Stream name**: %s\n" \
+              "**Request ID**: %s\n" % \
+              (context.log_stream_name, context.aws_request_id)
+
+    RepoHost.mr_comment(proj, mr_id, comment)
+    RepoHost.mr_close(proj, mr_id)
 
 
 def handle_apigw(event, context):
@@ -27,6 +61,7 @@ def handle_apigw(event, context):
     # autenticate the message
     secret = to_bytes(os.getenv('WEBHOOK_SECRET_TOKEN'))
     RepoHost.webhook.auth(secret, headers, raw_payload)
+    del os.environ['WEBHOOK_SECRET_TOKEN']
 
     payload = json.loads(raw_payload)
     return handle_payload(payload, context)
