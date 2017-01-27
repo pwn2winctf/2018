@@ -20,7 +20,9 @@ class BaseRepoHost(object):
 
     @classmethod
     def instance(cls):
-        return cls(LocalSettings.token)
+        token = os.getenv('REPOHOST_TOKEN') or \
+            LocalSettings.token
+        return cls(token)
 
     def __init__(self, token):
         self.token = token

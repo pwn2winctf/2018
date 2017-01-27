@@ -10,7 +10,6 @@ import os
 import json
 import base64
 import tempfile
-import traceback
 
 
 def run(merge_info):
@@ -18,7 +17,7 @@ def run(merge_info):
     setup_environment()
 
     # Clone official submissions repository
-    SubRepo.clone()
+    SubRepo.clone(fork=False)
 
     # Merge proposal if changes are valid
     consider_proposal(merge_info)
@@ -34,10 +33,10 @@ def handle_payload(payload, context):
     try:
         run(merge_info)
     except:
-        # Stderr is sent by AWS to CloudWatch
-        traceback.print_exc()
         # Send tracking number to the user
         send_cloudwatch_info(merge_info, context)
+        # Re-raise exception
+        raise
 
 
 def send_cloudwatch_info(merge_info, context):
