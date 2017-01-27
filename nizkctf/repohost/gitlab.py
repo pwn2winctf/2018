@@ -6,6 +6,7 @@ import requests
 import hmac
 import re
 from ..settings import Settings
+from ..six import to_bytes
 from .common import BaseRepoHost, APIError, WebhookAuthError, quote_plus
 
 
