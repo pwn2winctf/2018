@@ -6,6 +6,8 @@ from nizkctf.repohost import RepoHost
 from nizkctf.six import to_bytes
 import os
 import json
+import base64
+import tempfile
 
 
 def handle_payload(payload, context):
@@ -14,6 +16,8 @@ def handle_payload(payload, context):
     print('\nAfter adapted:\n')
     print(repr(RepoHost.webhook.adapt_payload(payload)))
     print()
+
+    setup_environment()
 
 
 def handle_apigw(event, context):
@@ -44,9 +48,25 @@ def setup_environment():
     os.environ['PATH'] += ':' + bin_dir
     os.environ['GIT_EXEC_PATH'] = bin_dir
 
+    ssh_dir = tempfile.mkdtemp()
+
+    ssh_identity = os.path.join(ssh_dir, 'identity')
+    with os.fdopen(os.open(ssh_identity, os.O_WRONLY | os.O_CREAT, 0o600),
+                   'w') as f:
+        f.write(base64.b64decode(os.getenv('SSH_IDENTITY')))
+    del os.environ['SSH_IDENTITY']
+
+    ssh_config = os.path.join(ssh_dir, 'config')
+    with open(ssh_config, 'w') as f:
+        f.write('StrictHostKeyChecking yes\n'
+                'IdentityFile %s\n'
+                'UserKnownHostsFile %s\n' %
+                (ssh_identity, os.path.join(root, 'known_hosts')))
+
+    os.environ['GIT_SSH_COMMAND'] = 'ssh -F %s' % ssh_config
+
 
 def lambda_handler(event, context):
-    setup_environment()
     if 'Records' in event:
         return handle_sns(event, context)
     elif 'body' in event:
