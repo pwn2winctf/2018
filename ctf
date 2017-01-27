@@ -99,6 +99,7 @@ def cmd_submit(args):
 def cmd_challenges(args):
     challenges.pprint()
 
+
 def cmd_add_challenge(args):
     id = raw_input('Challenge id (digits, letters, underscore): ').strip()
     title = raw_input('Title: ').strip()
@@ -120,6 +121,7 @@ def cmd_add_challenge(args):
     chall['salt'] = base64.b64encode(salt)
     chall['pk'] = base64.b64encode(pk)
     chall.save()
+
 
 def main():
     commands = {

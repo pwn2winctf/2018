@@ -65,9 +65,11 @@ def derive_keypair(salt, flag):
 
     return pysodium.crypto_sign_seed_keypair(chall_seed)
 
+
 def random_salt():
     return pysodium.randombytes(
-            pysodium.crypto_pwhash_scryptsalsa208sha256_SALTBYTES)
+        pysodium.crypto_pwhash_scryptsalsa208sha256_SALTBYTES)
+
 
 def lookup_flag(flag, chall_id=None):
     if chall_id:
