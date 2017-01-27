@@ -38,7 +38,15 @@ def handle_sns(event, context):
     return handle_payload(payload, context)
 
 
+def setup_environment():
+    root = os.getenv('LAMBDA_TASK_ROOT')
+    bin_dir = os.path.join(root, 'bin')
+    os.environ['PATH'] += ':' + bin_dir
+    os.environ['GIT_EXEC_PATH'] = bin_dir
+
+
 def lambda_handler(event, context):
+    setup_environment()
     if 'Records' in event:
         return handle_sns(event, context)
     elif 'body' in event:
