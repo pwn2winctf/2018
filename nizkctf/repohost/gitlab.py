@@ -18,6 +18,27 @@ class GitLabWebhook(object):
         if not hmac.compare_digest(secret, received_token):
             raise WebhookAuthError()
 
+    @staticmethod
+    def adapt_payload(payload):
+        # filtering
+        if payload['object_kind'] != 'merge_request':
+            return None
+        if payload['object_attributes']['action'] != 'open':
+            return None
+        if payload['object_attributes']['target']['path_with_namespace'] != \
+           Settings.submissions_project:
+            return None
+        if payload['object_attributes']['target_branch'] != 'master':
+            return None
+        # mappings
+        return {"mr_id": payload['object_attributes']['id'],
+                "source_ssh_url": payload['object_attributes']['source']
+                                         ['git_ssh_url'],
+                "source_commit": payload['object_attributes']['last_commit']
+                                        ['id'],
+                "user_id": payload['object_attributes']['author_id'],
+                "username": payload['user']['username']}
+
 
 class GitLab(BaseRepoHost):
     webhook = GitLabWebhook

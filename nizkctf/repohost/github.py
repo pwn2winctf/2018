@@ -24,6 +24,26 @@ class GitHubWebhook(object):
         if not hmac.compare_digest(received_sig, correct_sig):
             raise WebhookAuthError()
 
+    @staticmethod
+    def adapt_payload(payload):
+        # filtering
+        if 'pull_request' not in payload:
+            return None
+        if payload['action'] != 'opened':
+            return None
+        if payload['pull_request']['base']['repo']['full_name'] != \
+           Settings.submissions_project:
+            return None
+        if payload['pull_request']['base']['ref'] != 'master':
+            return None
+        # mappings
+        return {"mr_id": payload['pull_request']['number'],
+                "source_ssh_url": payload['pull_request']['head']['repo']
+                                         ['ssh_url'],
+                "source_commit": payload['pull_request']['head']['sha'],
+                "user_id": payload['pull_request']['user']['id'],
+                "username": payload['pull_request']['user']['login']}
+
 
 class GitHub(BaseRepoHost):
     webhook = GitHubWebhook

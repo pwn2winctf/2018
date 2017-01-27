@@ -11,7 +11,9 @@ import json
 def handle_payload(payload, context):
     print('Payload recognized correctly:\n')
     print(repr(payload))
-    print('')
+    print('\nAfter adapted:\n')
+    print(repr(RepoHost.webhook.adapt_payload(payload)))
+    print()
 
 
 def handle_apigw(event, context):
@@ -23,7 +25,7 @@ def handle_apigw(event, context):
     RepoHost.webhook.auth(secret, headers, raw_payload)
 
     payload = json.loads(raw_payload)
-    handle_payload(payload, context)
+    return handle_payload(payload, context)
 
 
 def handle_sns(event, context):
@@ -33,13 +35,13 @@ def handle_sns(event, context):
     # no way to authenticate, but also no need to
     # (publishing to the SNS topic should already be authenticated)
 
-    handle_payload(payload, context)
+    return handle_payload(payload, context)
 
 
 def lambda_handler(event, context):
     if 'Records' in event:
-        handle_sns(event, context)
+        return handle_sns(event, context)
     elif 'body' in event:
-        handle_apigw(event, context)
+        return handle_apigw(event, context)
     raise ValueError("Did not recognize a valid event originated by SNS nor "
                      "by API Gateway. Did you configure it correctly?")
