@@ -9,7 +9,9 @@ import json
 
 
 def handle_payload(payload, context):
+    print('Payload recognized correctly:\n')
     print(repr(payload))
+    print('')
 
 
 def handle_apigw(event, context):
@@ -37,7 +39,7 @@ def handle_sns(event, context):
 def lambda_handler(event, context):
     if 'Records' in event:
         handle_sns(event, context)
-    elif 'body-json' in event:
+    elif 'body' in event:
         handle_apigw(event, context)
     raise ValueError("Did not recognize a valid event originated by SNS nor "
                      "by API Gateway. Did you configure it correctly?")
