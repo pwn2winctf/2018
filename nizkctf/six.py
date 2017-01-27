@@ -16,3 +16,10 @@ if PY2:
     viewitems = operator.methodcaller("viewitems")
 else:
     viewitems = operator.methodcaller("items")
+
+
+def to_bytes(s):
+    if isinstance(s, text_type):
+        return s.encode('utf-8')
+    assert isinstance(s, bytes)
+    return s

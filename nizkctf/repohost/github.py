@@ -3,11 +3,31 @@
 from __future__ import unicode_literals, division, print_function,\
                        absolute_import
 import requests
+import hashlib
+import hmac
 from ..settings import Settings
-from .common import BaseRepoHost, APIError
+from ..six import to_bytes
+from .common import BaseRepoHost, APIError, WebhookAuthError
+
+
+class GitHubWebhook(object):
+    @staticmethod
+    def auth(secret, headers, raw_payload):
+        assert isinstance(raw_payload, bytes)
+        assert isinstance(secret, bytes)
+
+        received_sig = to_bytes(headers['X-Hub-Signature'])
+
+        h = hmac.new(secret, raw_payload, hashlib.sha1).hexdigest()
+        correct_sig = b'sha1=' + to_bytes(h)
+
+        if not hmac.compare_digest(received_sig, correct_sig):
+            raise WebhookAuthError()
 
 
 class GitHub(BaseRepoHost):
+    webhook = GitHubWebhook
+
     @classmethod
     def get_token(cls, username, password):
         authorization = {'scopes': 'public_repo',

@@ -3,12 +3,24 @@
 from __future__ import unicode_literals, division, print_function,\
                        absolute_import
 import requests
+import hmac
 import re
 from ..settings import Settings
-from .common import BaseRepoHost, APIError, quote_plus
+from .common import BaseRepoHost, APIError, WebhookAuthError, quote_plus
+
+
+class GitLabWebhook(object):
+    @staticmethod
+    def auth(secret, headers, raw_payload):
+        assert isinstance(secret, bytes)
+        received_token = to_bytes(headers['X-Gitlab-Token'])
+        if not hmac.compare_digest(secret, received_token):
+            raise WebhookAuthError()
 
 
 class GitLab(BaseRepoHost):
+    webhook = GitLabWebhook
+
     @classmethod
     def get_token(cls, username, password):
         auth = {'login': username,

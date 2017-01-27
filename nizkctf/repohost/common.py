@@ -46,5 +46,9 @@ class APIError(Exception):
     pass
 
 
+class WebhookAuthError(Exception):
+    pass
+
+
 quote_plus = urllib.quote_plus if hasattr(urllib, 'quote_plus') else \
     urllib.parse.quote_plus
