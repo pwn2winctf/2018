@@ -51,3 +51,12 @@ To submit a flag:
 ```
 
 You may omit `--chall chall-id` from the command, however it will be slower to run this way. In this case, we will look for the flag in every challenge released until now.
+
+## Scoreboard
+
+Currently, the scoreboard is only available through the command line interface:
+```bash
+./ctf score --names --pull
+```
+
+However we plan to make it available through the web interface in a future release.
