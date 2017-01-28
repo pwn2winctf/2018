@@ -8,7 +8,6 @@ import subprocess
 from .settings import Settings
 from .repohost import RepoHost
 from .subrepo import SubRepo
-from .acceptedsubmissions import AcceptedSubmissions
 from .team import Team, TEAM_FILE, SUBMISSIONS_FILE
 
 
@@ -87,6 +86,8 @@ def flag_submission(merge_info, modified_file):
     # Back to branch, do local modifications
     checkout('master')
     add_member(team, merge_info)
+
+    from .acceptedsubmissions import AcceptedSubmissions
     AcceptedSubmissions.add(chall.id, chall['points'], team.id)
 
     accept_proposal(merge_info)

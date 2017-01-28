@@ -1,7 +1,7 @@
 {
 	"ctf_name": "Pwn2Win Platform Test Edition",
-	"repository_host": "GitLab",
-	"submissions_project": "pwn2win/PTEsubmissions",
+	"repository_host": "GitHub",
+	"submissions_project": "pwn2winctf/PTEsubmissions",
 
 	"scrypt_ops_limit": 33554432,
 	"scrypt_mem_limit": 1073741824,
