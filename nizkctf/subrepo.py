@@ -13,12 +13,12 @@ from .repohost import RepoHost
 
 SUBREPO_NAME = 'submissions'
 
-thisdir = os.path.dirname(os.path.realpath(__file__))
-
 
 class SubRepo(object):
-    clone_into = os.path.realpath(os.path.join(thisdir, '..'))
-    path = os.path.join(clone_into, SUBREPO_NAME)
+    @classmethod
+    def set_clone_into(cls, clone_into):
+        cls.clone_into = clone_into
+        cls.path = os.path.join(clone_into, SUBREPO_NAME)
 
     @classmethod
     def get_path(cls, subpath=''):
@@ -96,3 +96,7 @@ class GitError(Exception):
     def __init__(self, returncode, *args):
         self.returncode = returncode
         super(GitError, self).__init__(*args)
+
+
+thisdir = os.path.dirname(os.path.realpath(__file__))
+SubRepo.set_clone_into(os.path.realpath(os.path.join(thisdir, '..')))

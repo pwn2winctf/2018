@@ -2,6 +2,8 @@
 
 from __future__ import unicode_literals, division, print_function,\
      absolute_import
+from nizkctf.settings import Settings
+from nizkctf.subrepo import SubRepo
 from nizkctf.repohost import RepoHost
 from nizkctf.proposal import consider_proposal
 from nizkctf.six import to_bytes
@@ -12,6 +14,8 @@ import tempfile
 
 
 def run(merge_info):
+    SubRepo.set_clone_into(tempfile.mkdtemp())
+
     # Prepare git and ssh for usage inside the container
     setup_environment()
 
