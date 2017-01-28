@@ -2,11 +2,29 @@
     _.nizkctf = {};
 
     var challengesDiv = $('#challenges');
+    var modalsDiv = $('#modals');
 
-    var challengeTpl = function(challenge) {
-        var tags = challenge.tags.map(function(tag){
-            return '<span class="new badge" data-badge-caption="">' + tag + '</span>'
-        });
+    var challTagsTpl = function(tags) {
+        return tags.map(function(tag){
+            return '<span class="new badge" data-badge-caption="">' + tag + '</span>';
+        }).join('');
+    };
+
+    var challModalTpl = function(challenge) {
+        return  '<div id="' + challenge.id + '" class="modal">'
+            +       '<div class="modal-content">'
+            +           '<h4>' + challenge.title + '</h4>'
+            +           '<p>' + challenge.description + '</p>'
+            +           '<p><b>Points</b>: ' + challenge.points + '</></p>'
+            +           '<p><b>Tags</b>: ' + challenge.tags.join(', ') + '</></p>'
+            +       '</div>'
+            +       '<div class="modal-footer">'
+            +           '<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>'
+            +       '</div>'
+            +   '</div>';
+    }
+
+    var challCardTpl = function(challenge) {
 
         return  '<div class="col s12 m4">'
             +       '<div class="card blue-grey darken-1">'
@@ -16,10 +34,10 @@
             +                   '<span class="new badge red" data-badge-caption="points">' + challenge.points + '</span>'
             +               '</span>'
             +               '<p>' + challenge.description.substr(0,100) + '...' + '</p>'
-            +               '<p>' + tags.join('') + '</p>'
+            +               '<p>' + challTagsTpl(challenge.tags) + '</p>'
             +           '</div>'
             +           '<div class="card-action">'
-            +               '<a href="#">More</a>'
+            +               '<a class="waves-effect waves-light btn" href="#' + challenge.id + '">More</a>'
             +           '</div>'
             +       '</div>'
             +   '</div>';
@@ -27,7 +45,8 @@
 
     var getChallenges = function() {
         var mountChallTpl = function(challenge) {
-            var tpl = challengesDiv.append(challengeTpl(challenge));
+            challengesDiv.append(challCardTpl(challenge));
+            modalsDiv.append(challModalTpl(challenge));
         };
 
         var mountChallPromise = function(challUrl) {
@@ -43,10 +62,12 @@
             .then(challPromiseMap);
     };
 
-
     var renderChallenges = function() {
         challengesDiv.html('');
-        getChallenges();
+        getChallenges()
+            .then(function() {
+                $('.modal').modal();
+            });
     }
 
     _.nizkctf.init = function() {
