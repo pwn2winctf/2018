@@ -62,6 +62,15 @@
             .then(challPromiseMap);
     };
 
+    var getSettings = function() {
+        var handleSettings = function(settings) {
+            $('#logo-container').text(settings.ctf_name);
+        };
+
+        $.getJSON('../settings.json')
+            .then(handleSettings);
+    };
+
     var renderChallenges = function() {
         challengesDiv.html('');
         getChallenges()
@@ -72,6 +81,7 @@
 
     _.nizkctf.init = function() {
         renderChallenges();
+        getSettings();
     }
 
     _.nizkctf.init();
