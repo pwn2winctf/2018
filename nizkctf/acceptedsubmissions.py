@@ -21,6 +21,9 @@ class AcceptedSubmissions(SerializableList):
         return SubRepo.get_path(ACCEPTED_SUBMISSIONS_FILE)
 
     def add(self, chall_id, points, team_id):
+        if (chall_id, team_id) in ((s['chall'], s['team']) for s in self):
+            # Challenge already submitted by team
+            return
         self.append({"chall": chall_id,
                      "points": points,
                      "team": team_id,
