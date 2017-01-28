@@ -23,3 +23,12 @@ def to_bytes(s):
         return s.encode('utf-8')
     assert isinstance(s, bytes)
     return s
+
+
+def to_unicode(s):
+    if isinstance(s, text_type):
+        return s
+    encoding = sys.getfilesystemencoding()
+    s = s.decode(encoding)
+    assert isinstance(s, text_type)
+    return s
