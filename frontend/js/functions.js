@@ -4,11 +4,19 @@
     var challengesDiv = $('#challenges');
 
     var challengeTpl = function(challenge) {
+        var tags = challenge.tags.map(function(tag){
+            return '<span class="new badge" data-badge-caption="">' + tag + '</span>'
+        });
+
         return  '<div class="col s12 m4">'
             +       '<div class="card blue-grey darken-1">'
             +           '<div class="card-content white-text">'
-            +               '<span class="card-title">' + challenge.title + '</span>'
+            +               '<span class="card-title">'
+            +                   challenge.title
+            +                   '<span class="new badge red" data-badge-caption="points">' + challenge.points + '</span>'
+            +               '</span>'
             +               '<p>' + challenge.description.substr(0,100) + '...' + '</p>'
+            +               '<p>' + tags.join('') + '</p>'
             +           '</div>'
             +           '<div class="card-action">'
             +               '<a href="#">More</a>'
