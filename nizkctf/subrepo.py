@@ -56,8 +56,11 @@ class SubRepo(object):
             branch = cls.random_branch()
             cls.git(['checkout', '-b', branch, 'master'])
 
-        cls.git(['add', '-A'])
-        cls.git(['commit', '-m', commit_message])
+        try:
+            cls.git(['add', '-A'])
+            cls.git(['commit', '-m', commit_message])
+        except:
+            pass  # No changes
         cls.git(['push', '-u', 'origin', branch])
 
         if merge_request:
@@ -77,9 +80,13 @@ class SubRepo(object):
         if 'cwd' not in kwargs:
             kwargs['cwd'] = cls.get_path()
         p = subprocess.Popen(['git'] + args, **kwargs)
+        r = None
+        if 'stdout' in kwargs:
+            r = p.stdout.read()
         returncode = p.wait()
         if returncode != 0:
             raise GitError(returncode)
+        return r
 
 
 class GitError(Exception):
