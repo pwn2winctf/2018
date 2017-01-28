@@ -94,9 +94,6 @@ def plot(ranking, submissions, top=3):
         submissions (dict): Dict [team] -> submission list.
         top (int): Number of teams to appear in chart.
     '''
-
-
-
     # generate temporary files with data points
     fnames = []
     for team, _ in ranking[0:top]:
