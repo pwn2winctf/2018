@@ -56,6 +56,9 @@ def team_registration(merge_info, added_file):
 
     team = filename_owner(added_file)
     team.validate()
+
+    # Back to branch, do local modifications
+    checkout('master')
     add_member(team, merge_info)
 
     accept_proposal(merge_info)
@@ -65,7 +68,6 @@ def team_registration(merge_info, added_file):
 
 def flag_submission(merge_info, modified_file):
     team = filename_owner(modified_file)
-
     challs_before = set(team.submissions().challs())
 
     # Checkout to get the newly submitted challenge
@@ -78,6 +80,8 @@ def flag_submission(merge_info, modified_file):
     assert len(new_challs) == 1
     new_chall, = new_challs
 
+    # Back to branch, do local modifications
+    checkout('master')
     add_member(team, merge_info)
 
     # TODO: add to accepted-submissions.json
@@ -88,6 +92,8 @@ def flag_submission(merge_info, modified_file):
 
 
 def add_member(team, merge_info):
+    if not team.exists():
+        os.makedirs(team.dir())
     team.members().add(id=merge_info['user_id'],
                        username=merge_info['username'])
 
@@ -95,7 +101,8 @@ def add_member(team, merge_info):
 def accept_proposal(merge_info):
     proj = Settings.submissions_project
     mr_id = merge_info['mr_id']
-    RepoHost.mr_accept(proj, mr_id)
+    commit = merge_info['source_commit']
+    RepoHost.mr_accept(proj, mr_id, commit)
 
 
 def retry_push(commit_message, retries=PUSH_RETRIES):
