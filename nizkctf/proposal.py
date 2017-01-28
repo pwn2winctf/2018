@@ -20,6 +20,9 @@ def consider_proposal(merge_info):
     # Clone official repository
     SubRepo.clone(fork=False)
 
+    # Set CI user name / email
+    setup_user_name_and_email()
+
     # Fetch proposal
     add_proposal_remote(merge_info)
 
@@ -140,6 +143,15 @@ def add_proposal_remote(merge_info):
     url = merge_info['source_ssh_url']
     SubRepo.git(['remote', 'add', 'proposal', url])
     SubRepo.git(['fetch', 'proposal'])
+
+
+def setup_user_name_and_email():
+    ci_user_name = os.getenv('CI_USER_NAME')
+    ci_user_email = os.getenv('CI_USER_EMAIL')
+    if ci_user_name:
+        SubRepo.git(['config', 'user.name', ci_user_name])
+    if ci_user_email:
+        SubRepo.git(['config', 'user.email', ci_user_email])
 
 
 def checkout(commit):
