@@ -64,16 +64,16 @@ def team_registration(merge_info, added_file):
     team = filename_owner(added_file)
     team.validate()
 
-    def local_modifications():
+    def local_changes():
         # Back to branch, do local modifications
         checkout('master')
         add_member(team, merge_info)
 
-    local_modifications()  # Validate local modifications before accepting MR
+    local_changes()  # Validate local modifications before accepting MR
     accept_proposal(merge_info)
 
     for _ in retry_push('Add member who registered team'):
-        local_modifications()
+        local_changes()
 
 
 def flag_submission(merge_info, modified_file):
@@ -90,17 +90,17 @@ def flag_submission(merge_info, modified_file):
     assert len(new_challs) == 1
     chall, = new_challs
 
-    def local_modifications():
+    def local_changes():
         # Back to branch, do local modifications
         checkout('master')
         add_member(team, merge_info)
         AcceptedSubmissions().add(chall.id, chall['points'], team.id)
 
-    local_modifications()  # Validate local modifications before accepting MR
+    local_changes()  # Validate local modifications before accepting MR
     accept_proposal(merge_info)
 
     for _ in retry_push('Accept challenge solution'):
-        local_modifications()
+        local_changes()
 
 
 def add_member(team, merge_info):
