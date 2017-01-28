@@ -124,7 +124,8 @@ def accept_proposal(merge_info):
 def retry_push(commit_message, retries=PUSH_RETRIES):
     for retry in range(retries):
         try:
-            SubRepo.git(['reset', '--hard', 'origin/master'])
+            checkout('master')
+            SubRepo.git(['reset', '--hard', 'upstream/master'])
             SubRepo.pull()
             yield retry  # do local modifications
             SubRepo.push(commit_message, merge_request=False)
@@ -142,7 +143,7 @@ def filename_owner(filename):
 def add_proposal_remote(merge_info):
     url = merge_info['source_ssh_url']
     SubRepo.git(['remote', 'add', 'proposal', url])
-    SubRepo.git(['fetch', 'proposal'])
+    SubRepo.git(['fetch', '--all'])
 
 
 def setup_user_name_and_email():
@@ -226,6 +227,6 @@ def check_diff_size(src, dest):
 
 
 def get_merge_base(commit):
-    merge_base = SubRepo.git(['merge-base', 'origin/master', commit],
+    merge_base = SubRepo.git(['merge-base', 'upstream/master', commit],
                              stdout=subprocess.PIPE).strip()
     return merge_base
