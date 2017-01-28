@@ -24,16 +24,21 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
    **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`. If you are using Debian, you need to get the package from [sid](https://packages.debian.org/sid/libsodium18).
   
 3. If dependencies are installed correctly, you should now see the help menu when calling:
-  ```bash
-  ./ctf -h
-  ```
+   ```bash
+   ./ctf -h
+   ```
 
-4. The leader of the team must execute the following command and follow the instructions to register the team:
-  ```bash
-  ./ctf init
-  ```
-
-5. After that, the leader shares `team-secrets.json` with the members of the team and they are ready to go :)
+4. The **leader of the team** must execute the following command and follow the instructions to register the team:
+   ```bash
+   ./ctf init
+   ```
+  
+5. The **other members of the team** must login to GitHub without registering a new team, by running:
+   ```bash
+   ./ctf login
+   ```
+   
+6. After that, **the leader** must share the `team-secrets.json` with the members of the team. The **other members of the team** must place the `team-secrets.json` file shared by the leader in their `PTE` directory.
 
 ## Challenges
 
