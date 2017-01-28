@@ -8,6 +8,7 @@ import operator
 import tempfile
 import subprocess
 import codecs
+from ..team import Team
 from ..text import width
 from ..six import viewitems
 from ..acceptedsubmissions import AcceptedSubmissions, TIME_FORMAT
@@ -40,7 +41,7 @@ def rank():
             reverse=True), submissions)
 
 
-def pprint(ranking, top=0):
+def pprint(ranking, top=0, show_names=False):
     '''
     Pretty print scoreboard in terminal.
 
@@ -53,7 +54,12 @@ def pprint(ranking, top=0):
     if top == 0:
         top = len(ranking)
 
-    team_len = max(width(team) for team, score in ranking[:top])
+    ranking = ranking[:top]
+
+    if show_names:
+        ranking = [(Team(id=team)['name'], score) for team, score in ranking]
+
+    team_len = max(width(team) for team, score in ranking)
     team_len = max(team_len, 10)
 
     pos_len = score_len = 6
@@ -76,7 +82,7 @@ def pprint(ranking, top=0):
     print(fmt('Pos', 'Team', 'Score'))
     print(sep)
 
-    for idx, (team, score) in enumerate(ranking[0:top]):
+    for idx, (team, score) in enumerate(ranking):
         pos = '%d' % (idx + 1)
         print(fmt(pos, team, '%d' % score))
 

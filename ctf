@@ -41,7 +41,7 @@ def read_auth(opt):
 
 def cmd_scoreboard(args):
     ranking, submissions = scoreboard.rank()
-    scoreboard.pprint(ranking, top=args.top)
+    scoreboard.pprint(ranking, top=args.top, show_names=args.names)
 
     if args.chart:
         scoreboard.plot(ranking, submissions)
@@ -161,9 +161,10 @@ def main():
     parser_score.add_argument('--top', type=int,
                               default=0, metavar='N',
                               help='size of ranking to display')
-    parser_score.add_argument('--chart', type=bool,
-                              default=False, metavar='T/F',
-                              help='display chart (true or false).')
+    parser_score.add_argument('--names', action='store_true',
+                              help='display team names')
+    parser_score.add_argument('--chart', action='store_true',
+                              help='display chart')
 
     parser_register = subparsers.add_parser('register',
                                             help='register a new team')
