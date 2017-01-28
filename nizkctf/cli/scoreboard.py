@@ -8,7 +8,7 @@ import operator
 import tempfile
 import subprocess
 import codecs
-from ..acceptedsubmissions import AcceptedSubmissions
+from ..acceptedsubmissions import AcceptedSubmissions, TIME_FORMAT
 from ..text import width
 from ..six import viewitems
 
@@ -115,7 +115,7 @@ def plot(ranking, submissions, top=3):
     w.write('set terminal dumb 120 30\n')
     w.write('set xdata time\n')
     w.write('set datafile sep \',\'\n')
-    w.write('set timefmt "%Y-%m-%dT%H:%M:%S"\n')
+    w.write('set timefmt "%s"\n' % TIME_FORMAT)
     w.write('set style data steps\n')
     w.write('plot ')
     fmt = '\'%s\' using 1:2 title \'%s\''
