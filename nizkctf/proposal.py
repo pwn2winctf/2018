@@ -8,6 +8,7 @@ import subprocess
 from .settings import Settings
 from .repohost import RepoHost
 from .subrepo import SubRepo
+from .acceptedsubmissions import AcceptedSubmissions
 from .team import Team, TEAM_FILE, SUBMISSIONS_FILE
 
 
@@ -78,13 +79,12 @@ def flag_submission(merge_info, modified_file):
 
     new_challs = challs_after - challs_before
     assert len(new_challs) == 1
-    new_chall, = new_challs
+    chall, = new_challs
 
     # Back to branch, do local modifications
     checkout('master')
     add_member(team, merge_info)
-
-    # TODO: add to accepted-submissions.json
+    AcceptedSubmissions.add(chall.id, chall['points'], team.id)
 
     accept_proposal(merge_info)
 
@@ -124,8 +124,6 @@ def filename_owner(filename):
 
 def add_proposal_remote(merge_info):
     url = merge_info['source_ssh_url']
-    try: SubRepo.git(['remote', 'remove', 'proposal']) #REMOVE
-    except: pass #REMOVE
     SubRepo.git(['remote', 'add', 'proposal', url])
     SubRepo.git(['fetch', 'proposal'])
 
