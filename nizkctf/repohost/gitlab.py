@@ -13,7 +13,6 @@ from .common import BaseRepoHost, APIError, WebhookAuthError, quote_plus
 class GitLabWebhook(object):
     @staticmethod
     def auth(secret, headers, raw_payload):
-        assert isinstance(secret, bytes)
         received_token = to_bytes(headers['X-Gitlab-Token'])
         if not hmac.compare_digest(secret, received_token):
             raise WebhookAuthError()
@@ -23,7 +22,7 @@ class GitLabWebhook(object):
         # filtering
         if payload['object_kind'] != 'merge_request':
             return None
-        if payload['object_attributes']['action'] != 'open':
+        if payload['object_attributes']['action'] not in {'open', 'reopen'}:
             return None
         if payload['object_attributes']['target']['path_with_namespace'] != \
            Settings.submissions_project:

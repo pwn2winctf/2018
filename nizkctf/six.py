@@ -20,7 +20,7 @@ else:
 
 def to_bytes(s):
     if isinstance(s, text_type):
-        return s.encode('utf-8')
+        return bytes(s.encode('utf-8'))
     return s
 
 

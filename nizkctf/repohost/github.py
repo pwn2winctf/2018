@@ -13,9 +13,6 @@ from .common import BaseRepoHost, APIError, WebhookAuthError
 class GitHubWebhook(object):
     @staticmethod
     def auth(secret, headers, raw_payload):
-        assert isinstance(raw_payload, bytes)
-        assert isinstance(secret, bytes)
-
         received_sig = to_bytes(headers['X-Hub-Signature'])
 
         h = hmac.new(secret, raw_payload, hashlib.sha1).hexdigest()
