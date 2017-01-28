@@ -8,7 +8,6 @@ import operator
 import tempfile
 import subprocess
 import codecs
-from ..acceptedsubmissions import AcceptedSubmissions, TIME_FORMAT
 from ..text import width
 from ..six import viewitems
 
@@ -28,6 +27,8 @@ def rank():
 
         And a map containing submissions sorted by team.
     '''
+
+    from ..acceptedsubmissions import AcceptedSubmissions
 
     submissions = {}
     scores = {}
@@ -94,6 +95,8 @@ def plot(ranking, submissions, top=3):
         submissions (dict): Dict [team] -> submission list.
         top (int): Number of teams to appear in chart.
     '''
+
+    from ..acceptedsubmissions import TIME_FORMAT
 
     # generate temporary files with data points
     fnames = []
