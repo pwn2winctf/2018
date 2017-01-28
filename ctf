@@ -40,6 +40,9 @@ def read_auth(opt):
 
 
 def cmd_scoreboard(args):
+    if args.pull:
+        SubRepo.pull()
+
     ranking, submissions = scoreboard.rank()
     scoreboard.pprint(ranking, top=args.top, show_names=args.names)
 
@@ -161,6 +164,8 @@ def main():
     parser_score.add_argument('--top', type=int,
                               default=0, metavar='N',
                               help='size of ranking to display')
+    parser_score.add_argument('--pull', action='store_true',
+                              help='pull submissions before displaying scores')
     parser_score.add_argument('--names', action='store_true',
                               help='display team names')
     parser_score.add_argument('--chart', action='store_true',
