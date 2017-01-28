@@ -1,2 +1,2 @@
-requests[security]
-pysodium
+requests[security] >= 2.13.0
+pysodium >= 0.6.9.1
