@@ -1,2 +1,2 @@
 all:
-	elm-make frontend/Main.elm
+	python -m SimpleHTTPServer 8080
