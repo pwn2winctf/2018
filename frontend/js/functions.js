@@ -50,7 +50,7 @@
         };
 
         var mountChallPromise = function(challUrl) {
-            return $.getJSON('../challenges/' + challUrl + '.json')
+            return $.getJSON('challenges/' + challUrl + '.json')
                 .then(mountChallTpl);
         };
 
@@ -58,7 +58,7 @@
             return $.when.apply($, challList.map(mountChallPromise));
         };
 
-        return $.getJSON('../challenges/index.json')
+        return $.getJSON('challenges/index.json')
             .then(challPromiseMap);
     };
 
