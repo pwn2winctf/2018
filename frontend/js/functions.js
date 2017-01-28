@@ -67,7 +67,7 @@
             $('#logo-container').text(settings.ctf_name);
         };
 
-        $.getJSON('../settings.json')
+        $.getJSON('settings.json')
             .then(handleSettings);
     };
 
