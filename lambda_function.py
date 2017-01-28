@@ -45,8 +45,9 @@ def send_cloudwatch_info(merge_info, context):
               "**Request ID**: %s\n" % \
               (context.log_stream_name, context.aws_request_id)
 
-    RepoHost.mr_comment(proj, mr_id, comment)
-    RepoHost.mr_close(proj, mr_id)
+    repohost = RepoHost.instance()
+    repohost.mr_comment(proj, mr_id, comment)
+    repohost.mr_close(proj, mr_id)
 
 
 def handle_apigw(event, context):

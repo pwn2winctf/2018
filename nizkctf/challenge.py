@@ -27,6 +27,9 @@ class Challenge(SerializableDict):
     def __eq__(self, other):
         return self.id == other.id
 
+    def __hash__(self):
+        return hash(self.id)
+
     def path(self):
         return os.path.join(chall_dir, self.id + '.json')
 

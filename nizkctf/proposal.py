@@ -47,8 +47,8 @@ def consider_proposal(merge_info):
 
     if added_file and changed_basename == TEAM_FILE:
         team_registration(merge_info, added_file)
-    elif modified_file and changed_basename == SUBMISSIONS_FILE:
-        flag_submission(merge_info, modified_file)
+    elif changed_file and changed_basename == SUBMISSIONS_FILE:
+        flag_submission(merge_info, changed_file)
     else:
         raise ValueError("unrecognized operation")
 
@@ -92,12 +92,12 @@ def flag_submission(merge_info, modified_file):
 
     accept_proposal(merge_info)
 
-    retry_push('Accept challenge solution')
-
 
 def add_member(team, merge_info):
-    if not team.exists():
-        os.makedirs(team.dir())
+    team_dir = team.dir()
+    if not os.path.exists(team_dir):
+        os.makedirs(team_dir)
+
     team.members().add(id=merge_info['user_id'],
                        username=merge_info['username'])
 
@@ -106,7 +106,9 @@ def accept_proposal(merge_info):
     proj = Settings.submissions_project
     mr_id = merge_info['mr_id']
     commit = merge_info['source_commit']
-    RepoHost.mr_accept(proj, mr_id, commit)
+
+    repohost = RepoHost.instance()
+    repohost.mr_accept(proj, mr_id, commit)
 
 
 def retry_push(commit_message, retries=PUSH_RETRIES):
@@ -121,8 +123,7 @@ def retry_push(commit_message, retries=PUSH_RETRIES):
 
 
 def filename_owner(filename):
-    split_name = os.path.split(filename)
-    team_id = os.path.join(split_name[:-1])
+    team_id, basename = os.path.split(filename)
     return Team(id=team_id)
 
 
@@ -137,27 +138,19 @@ def checkout(commit):
 
 
 def get_added_file(src, dest):
-    stats = diff_stats(src, dest, ['--diff-filter=A'])
-    if len(stats) == 0:
-        return None
-    if len(stats) != 1:
-        raise ValueError("We only allow a single file to be added "
-                         "per commit")
-
-    stat, = stats
-    lines_added, lines_removed, filename = stat
-    assert lines_removed == 0
-
-    check_whitelist(filename, {TEAM_FILE})
-    return filename
+    return get_file(src, dest, 'A', {TEAM_FILE, SUBMISSIONS_FILE})
 
 
 def get_modified_file(src, dest):
-    stats = diff_stats(src, dest, ['--diff-filter=M'])
+    return get_file(src, dest, 'M', {SUBMISSIONS_FILE})
+
+
+def get_file(src, dest, filt, whitelist):
+    stats = diff_stats(src, dest, ['--diff-filter=' + filt])
     if len(stats) == 0:
         return None
     if len(stats) != 1:
-        raise ValueError("We only allow a single file to be modified "
+        raise ValueError("We only allow a single file to be added or modified "
                          "per commit")
 
     stat, = stats
@@ -167,7 +160,7 @@ def get_modified_file(src, dest):
     if lines_added != 1:
         raise ValueError("Changes can only add a single line to a file")
 
-    check_whitelist(filename, {SUBMISSIONS_FILE})
+    check_whitelist(filename, whitelist)
     return filename
 
 
@@ -212,6 +205,6 @@ def check_diff_size(src, dest):
 
 
 def get_merge_base(commit):
-    merge_base = SubRepo.git(['merge-base', 'upstream/master', commit],
+    merge_base = SubRepo.git(['merge-base', 'origin/master', commit],
                              stdout=subprocess.PIPE).strip()
     return merge_base
