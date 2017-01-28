@@ -13,9 +13,9 @@ ACCEPTED_SUBMISSIONS_FILE = 'accepted-submissions.json'
 TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
 
-class DefaultAcceptedSubmissions(SerializableList):
+class AcceptedSubmissions(SerializableList):
     def __init__(self):
-        super(DefaultAcceptedSubmissions, self).__init__()
+        super(AcceptedSubmissions, self).__init__()
 
     def path(self):
         return SubRepo.get_path(ACCEPTED_SUBMISSIONS_FILE)
@@ -30,6 +30,3 @@ class DefaultAcceptedSubmissions(SerializableList):
 
 def current_time():
     return time.strftime(TIME_FORMAT)
-
-
-AcceptedSubmissions = DefaultAcceptedSubmissions()

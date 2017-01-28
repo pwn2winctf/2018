@@ -10,6 +10,7 @@ import subprocess
 import codecs
 from ..text import width
 from ..six import viewitems
+from ..acceptedsubmissions import AcceptedSubmissions, TIME_FORMAT
 
 
 def rank():
@@ -28,11 +29,9 @@ def rank():
         And a map containing submissions sorted by team.
     '''
 
-    from ..acceptedsubmissions import AcceptedSubmissions
-
     submissions = {}
     scores = {}
-    for subm in AcceptedSubmissions:
+    for subm in AcceptedSubmissions():
         team = subm['team']
         scores[team] = scores.get(team, 0) + subm['points']
         submissions.setdefault(team, []).append(subm)
@@ -96,7 +95,7 @@ def plot(ranking, submissions, top=3):
         top (int): Number of teams to appear in chart.
     '''
 
-    from ..acceptedsubmissions import TIME_FORMAT
+
 
     # generate temporary files with data points
     fnames = []

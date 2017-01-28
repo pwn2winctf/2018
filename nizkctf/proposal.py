@@ -9,6 +9,7 @@ from .settings import Settings
 from .repohost import RepoHost
 from .subrepo import SubRepo
 from .team import Team, TEAM_FILE, SUBMISSIONS_FILE
+from .acceptedsubmissions import AcceptedSubmissions
 
 
 DIFF_MAX_SIZE = 5000
@@ -87,8 +88,7 @@ def flag_submission(merge_info, modified_file):
     checkout('master')
     add_member(team, merge_info)
 
-    from .acceptedsubmissions import AcceptedSubmissions
-    AcceptedSubmissions.add(chall.id, chall['points'], team.id)
+    AcceptedSubmissions().add(chall.id, chall['points'], team.id)
 
     accept_proposal(merge_info)
 
