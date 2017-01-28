@@ -11,6 +11,7 @@ import os
 import json
 import base64
 import tempfile
+import traceback
 
 
 def run(merge_info):
@@ -33,10 +34,10 @@ def handle_payload(payload, context):
     try:
         run(merge_info)
     except:
+        # Do not re-raise, we do not want automatic retries
+        traceback.print_exc()
         # Send tracking number to the user
         send_cloudwatch_info(merge_info, context)
-        # Re-raise exception
-        raise
 
 
 def send_cloudwatch_info(merge_info, context):
