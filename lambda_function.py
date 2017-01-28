@@ -62,7 +62,6 @@ def handle_apigw(event, context):
     # autenticate the message
     secret = to_bytes(os.getenv('WEBHOOK_SECRET_TOKEN'))
     RepoHost.webhook.auth(secret, headers, to_bytes(raw_payload))
-    del os.environ['WEBHOOK_SECRET_TOKEN']
 
     payload = json.loads(raw_payload)
     return handle_payload(payload, context)
@@ -90,7 +89,6 @@ def setup_environment():
     with os.fdopen(os.open(ssh_identity, os.O_WRONLY | os.O_CREAT, 0o600),
                    'w') as f:
         f.write(base64.b64decode(os.getenv('SSH_IDENTITY')))
-    del os.environ['SSH_IDENTITY']
 
     ssh_config = os.path.join(ssh_dir, 'config')
     with open(ssh_config, 'w') as f:
