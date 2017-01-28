@@ -29,7 +29,7 @@ class GitHubWebhook(object):
         # filtering
         if 'pull_request' not in payload:
             return None
-        if payload['action'] != 'opened':
+        if payload['action'] not in {'opened', 'reopened'}:
             return None
         if payload['pull_request']['base']['repo']['full_name'] != \
            Settings.submissions_project:
