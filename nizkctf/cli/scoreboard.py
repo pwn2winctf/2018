@@ -59,6 +59,10 @@ def pprint(ranking, top=0, show_names=False):
     if top == 0:
         top = len(ranking)
 
+    if len(ranking) == 0:
+        print('Nobody scored yet.')
+        return
+
     ranking = ranking[:top]
 
     if show_names:
