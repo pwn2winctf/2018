@@ -178,7 +178,8 @@ def diff_stats(src, dest, args=[]):
     stats = SubRepo.git(['diff', '--numstat'] + args + [src, dest],
                         stdout=subprocess.PIPE)
     lines = [re.split(r'\s+', line.strip(), 2) for line in
-             stats.strip().split('\n')]
+             stats.split('\n')]
+    lines = [line for line in lines if line != ['']]
     return [(int(lines_added), int(lines_removed), filename)
             for lines_added, lines_removed, filename
             in lines]
