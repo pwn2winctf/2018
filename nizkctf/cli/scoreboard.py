@@ -8,11 +8,12 @@ import operator
 import tempfile
 import subprocess
 import codecs
+from ..acceptedsubmissions import AcceptedSubmissions
 from ..text import width
 from ..six import viewitems
 
 
-def rank(f):
+def rank():
     '''
     Compute ranking given a submissions file.
 
@@ -28,11 +29,9 @@ def rank(f):
         And a map containing submissions sorted by team.
     '''
 
-    data = json.load(f)
-
     submissions = {}
     scores = {}
-    for subm in data:
+    for subm in AcceptedSubmissions:
         team = subm['team']
         scores[team] = scores.get(team, 0) + subm['points']
         submissions.setdefault(team, []).append(subm)

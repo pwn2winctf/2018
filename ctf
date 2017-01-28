@@ -39,8 +39,7 @@ def read_auth(opt):
 
 
 def cmd_scoreboard(args):
-    with SubRepo.get_path('accepted-submissions.json') as f:
-        ranking, submissions = scoreboard.rank(f)
+    ranking, submissions = scoreboard.rank()
     scoreboard.pprint(ranking, top=args.top)
 
     if args.chart:
