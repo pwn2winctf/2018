@@ -21,12 +21,12 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
    sudo apt-get install libsodium18
    sudo -H pip install -r pip-requirements.txt
    ```
-
-3. Test if you can see the help menu:
+   **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`. If you are using Debian, you need to get the package from [sid](https://packages.debian.org/sid/libsodium18).
+  
+3. If dependencies are installed correctly, you should now see the help menu when calling:
   ```bash
   ./ctf -h
   ```
-  **Note**: If you have installed `libsodium13`, you may have problems with pysodium. In this case, you should install `libsodium18` (e.g. https://packages.debian.org/sid/libsodium18)
 
 4. The leader of the team must execute the following command and follow the instructions to register the team:
   ```bash
