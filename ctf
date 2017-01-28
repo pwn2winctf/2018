@@ -14,7 +14,7 @@ from nizkctf.cli import scoreboard, challenges, team
 from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
 from nizkctf.challenge import Challenge, derive_keypair, random_salt
-from nizkctf.six import to_unicode
+from nizkctf.six import to_unicode, PY2
 
 
 def read_opt(msg, opts):
@@ -127,7 +127,8 @@ def cmd_add_challenge(args):
 
 
 def main():
-    sys.argv = map(to_unicode, sys.argv)
+    if PY2:
+        sys.argv = map(to_unicode, sys.argv)
 
     commands = {
         'init': cmd_init,
