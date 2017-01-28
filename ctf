@@ -121,8 +121,8 @@ def cmd_add_challenge(args):
     chall['description'] = description
     chall['points'] = points
     chall['tags'] = tags
-    chall['salt'] = base64.b64encode(salt)
-    chall['pk'] = base64.b64encode(pk)
+    chall['salt'] = salt
+    chall['pk'] = pk
     chall.save()
 
 
