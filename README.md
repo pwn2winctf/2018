@@ -18,6 +18,7 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
    ```bash
    git clone git@github.com:pwn2winctf/PTE.git
    cd PTE
+   sudo apt-get install libsodium18
    sudo -H pip install -r pip-requirements.txt
    ```
 
@@ -25,7 +26,7 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
   ```bash
   ./ctf -h
   ```
-  **Note**: If you have problems with pysodium, you should install libsodium18 (e.g, https://packages.debian.org/sid/libsodium18)
+  **Note**: If you have installed `libsodium13`, you may have problems with pysodium. In this case, you should install `libsodium18` (e.g. https://packages.debian.org/sid/libsodium18)
 
 4. The leader of the team must execute the following command and follow the instructions to register the team:
   ```bash
