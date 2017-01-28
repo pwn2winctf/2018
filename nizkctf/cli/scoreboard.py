@@ -32,13 +32,18 @@ def rank():
 
     submissions = {}
     scores = {}
-    for subm in AcceptedSubmissions():
+    last_submission = {}
+    for subm_num, subm in enumerate(AcceptedSubmissions()):
         team = subm['team']
-        scores[team] = scores.get(team, 0) + subm['points']
+        score, _ = scores.get(team, (0, None))
+        scores[team] = (score + subm['points'], -subm_num)
         submissions.setdefault(team, []).append(subm)
 
-    return (sorted(viewitems(scores), key=operator.itemgetter(1),
-            reverse=True), submissions)
+    scores = sorted(viewitems(scores), key=operator.itemgetter(1),
+                    reverse=True)
+    scores = [(team, score) for team, (score, _) in scores]
+
+    return (scores, submissions)
 
 
 def pprint(ranking, top=0, show_names=False):
