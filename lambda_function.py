@@ -3,7 +3,6 @@
 from __future__ import unicode_literals, division, print_function,\
      absolute_import
 from nizkctf.repohost import RepoHost
-from nizkctf.subrepo import SubRepo
 from nizkctf.proposal import consider_proposal
 from nizkctf.six import to_bytes
 import os
@@ -15,9 +14,6 @@ import tempfile
 def run(merge_info):
     # Prepare git and ssh for usage inside the container
     setup_environment()
-
-    # Clone official submissions repository
-    SubRepo.clone(fork=False)
 
     # Merge proposal if changes are valid
     consider_proposal(merge_info)

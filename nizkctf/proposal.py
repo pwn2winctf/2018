@@ -17,6 +17,9 @@ PUSH_RETRIES = 3
 
 
 def consider_proposal(merge_info):
+    # Clone official repository
+    SubRepo.clone(fork=False)
+
     # Fetch proposal
     add_proposal_remote(merge_info)
 
