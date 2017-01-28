@@ -15,6 +15,7 @@
             +       '<div class="modal-content">'
             +           '<h4>' + challenge.title + '</h4>'
             +           '<p>' + challenge.description + '</p>'
+            +           '<p><b>ID</b>: ' + challenge.id + '</></p>'
             +           '<p><b>Points</b>: ' + challenge.points + '</></p>'
             +           '<p><b>Tags</b>: ' + challenge.tags.join(', ') + '</></p>'
             +       '</div>'
@@ -65,6 +66,7 @@
     var getSettings = function() {
         var handleSettings = function(settings) {
             $('#logo-container').text(settings.ctf_name);
+            $('title').text(settings.ctf_name);
         };
 
         $.getJSON('settings.json')
