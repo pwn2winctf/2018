@@ -12,9 +12,12 @@ from . import log
 from .teamsecrets import write_team_secrets
 from ..team import Team
 from ..subrepo import SubRepo
+from ..six import to_unicode
 
 
 def register(team_name):
+    team_name = to_unicode(team_name)
+
     log.info('updating subrepo')
     SubRepo.pull()
 
