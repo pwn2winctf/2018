@@ -92,6 +92,8 @@ def flag_submission(merge_info, modified_file):
 
     accept_proposal(merge_info)
 
+    retry_push('Accept challenge solution')
+
 
 def add_member(team, merge_info):
     team_dir = team.dir()
