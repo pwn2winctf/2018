@@ -56,7 +56,7 @@ def handle_apigw(event, context):
 
     # autenticate the message
     secret = to_bytes(os.getenv('WEBHOOK_SECRET_TOKEN'))
-    RepoHost.webhook.auth(secret, headers, raw_payload)
+    RepoHost.webhook.auth(secret, headers, to_bytes(raw_payload))
     del os.environ['WEBHOOK_SECRET_TOKEN']
 
     payload = json.loads(raw_payload)
