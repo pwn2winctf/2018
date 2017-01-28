@@ -92,7 +92,8 @@ def setup_environment():
 
     ssh_config = os.path.join(ssh_dir, 'config')
     with open(ssh_config, 'w') as f:
-        f.write('StrictHostKeyChecking yes\n'
+        f.write('CheckHostIP no\n'
+                'StrictHostKeyChecking yes\n'
                 'IdentityFile %s\n'
                 'UserKnownHostsFile %s\n' %
                 (ssh_identity, os.path.join(root, 'known_hosts')))
