@@ -13,7 +13,7 @@ from .acceptedsubmissions import AcceptedSubmissions
 
 
 DIFF_MAX_SIZE = 5000
-PUSH_RETRIES = 3
+PUSH_RETRIES = 5
 
 
 def consider_proposal(merge_info):
@@ -61,13 +61,16 @@ def team_registration(merge_info, added_file):
     team = filename_owner(added_file)
     team.validate()
 
-    # Back to branch, do local modifications
-    checkout('master')
-    add_member(team, merge_info)
+    def local_modifications():
+        # Back to branch, do local modifications
+        checkout('master')
+        add_member(team, merge_info)
 
+    local_modifications()  # Validate local modifications before accepting MR
     accept_proposal(merge_info)
 
-    retry_push('Add member who registered team')
+    for _ in retry_push('Add member who registered team'):
+        local_modifications()
 
 
 def flag_submission(merge_info, modified_file):
@@ -84,15 +87,17 @@ def flag_submission(merge_info, modified_file):
     assert len(new_challs) == 1
     chall, = new_challs
 
-    # Back to branch, do local modifications
-    checkout('master')
-    add_member(team, merge_info)
+    def local_modifications():
+        # Back to branch, do local modifications
+        checkout('master')
+        add_member(team, merge_info)
+        AcceptedSubmissions().add(chall.id, chall['points'], team.id)
 
-    AcceptedSubmissions().add(chall.id, chall['points'], team.id)
-
+    local_modifications()  # Validate local modifications before accepting MR
     accept_proposal(merge_info)
 
-    retry_push('Accept challenge solution')
+    for _ in retry_push('Accept challenge solution'):
+        local_modifications()
 
 
 def add_member(team, merge_info):
@@ -116,7 +121,9 @@ def accept_proposal(merge_info):
 def retry_push(commit_message, retries=PUSH_RETRIES):
     for retry in range(retries):
         try:
+            SubRepo.git(['reset', '--hard', 'origin/master'])
             SubRepo.pull()
+            yield retry  # do local modifications
             SubRepo.push(commit_message, merge_request=False)
             break
         except:
