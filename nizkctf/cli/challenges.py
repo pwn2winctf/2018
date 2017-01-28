@@ -45,7 +45,7 @@ def pprint():
     print('')
     for chall_id in Challenge.index():
         chall = Challenge(chall_id)
-        print('%s        (%d points)        [%s]' % (
+        print('ID: %s        (%d points)        [%s]' % (
             chall['id'],
             chall['points'],
             ', '.join(chall['tags'])))
