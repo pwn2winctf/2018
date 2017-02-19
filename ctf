@@ -10,7 +10,7 @@ import argparse
 import getpass
 import base64
 
-from nizkctf.cli import scoreboard, challenges, team
+from nizkctf.cli import scoreboard, challenges, team, localserver
 from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
 from nizkctf.challenge import Challenge, derive_keypair, random_salt
@@ -103,6 +103,10 @@ def cmd_challenges(args):
     challenges.pprint()
 
 
+def cmd_serve(args):
+    localserver.main(port=args.port)
+
+
 def cmd_add_challenge(args):
     id = raw_input('Challenge id (digits, letters, underscore): ').strip()
     title = raw_input('Title: ').strip()
@@ -137,6 +141,8 @@ def main():
         'register': cmd_register,
         'submit': cmd_submit,
         'challs': cmd_challenges,
+        'serve': cmd_serve,
+
         'add': cmd_add_challenge,
     }
 
@@ -185,6 +191,11 @@ def main():
 
     parser_challenges = subparsers.add_parser('challs', help='list challenges')
     parser_challenges.set_defaults(command='challs')
+
+    parser_serve = subparsers.add_parser('serve', help='start a local server')
+    parser_serve.set_defaults(command='serve')
+    parser_serve.add_argument('--port', type=int, default=8000,
+                              metavar='PORT', help='port')
 
     parser_add_challenge = subparsers.add_parser('add', help='add challenge')
     parser_add_challenge.set_defaults(command='add')

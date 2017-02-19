@@ -1,5 +1,5 @@
 all:
-	python -m SimpleHTTPServer 8080
+	@echo nothing yet
 
 ../lambda.zip: FORCE
 	rm -f "$@"

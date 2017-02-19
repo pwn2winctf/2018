@@ -14,7 +14,7 @@ class Settings(object):
 def load():
     """ Load settings from json file """
     thisdir = os.path.dirname(os.path.realpath(__file__))
-    with open(os.path.join(thisdir, '..', 'settings.json')) as f:
+    with open(os.path.join(thisdir, os.pardir, 'settings.json')) as f:
         settings = json.load(f)
         assert isinstance(settings, dict)
         for k, v in viewitems(settings):

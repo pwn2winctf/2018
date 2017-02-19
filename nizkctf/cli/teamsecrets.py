@@ -15,7 +15,7 @@ TEAMSECRETS_FILE = 'team-secrets.json'
 class DefaultTeamSecrets(SerializableDict):
     def path(self):
         thisdir = os.path.dirname(os.path.realpath(__file__))
-        return os.path.join(thisdir, '..', '..', TEAMSECRETS_FILE)
+        return os.path.join(thisdir, os.pardir, os.pardir, TEAMSECRETS_FILE)
 
     @staticmethod
     def _binary_field(k):

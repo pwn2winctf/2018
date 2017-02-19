@@ -15,7 +15,7 @@ CHALLENGES_DIR = 'challenges'
 INDEX_FILE = 'index.json'
 
 thisdir = os.path.dirname(os.path.realpath(__file__))
-chall_dir = os.path.realpath(os.path.join(thisdir, '..', CHALLENGES_DIR))
+chall_dir = os.path.realpath(os.path.join(thisdir, os.pardir, CHALLENGES_DIR))
 
 
 class Challenge(SerializableDict):

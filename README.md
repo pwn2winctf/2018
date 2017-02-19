@@ -49,7 +49,7 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
 
 Challenges are available on https://pwn2winctf.github.io.
 
-If you prefer to browse them locally, you may also run a local webserver by typing `make`, or list challenges through the command line interface:
+If you prefer to browse them locally, you may also run a local webserver by typing `./ctf serve`, or list challenges through the command line interface:
 ```bash
 ./ctf challs
 ```

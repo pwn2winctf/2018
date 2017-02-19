@@ -99,4 +99,4 @@ class GitError(Exception):
 
 
 thisdir = os.path.dirname(os.path.realpath(__file__))
-SubRepo.set_clone_into(os.path.realpath(os.path.join(thisdir, '..')))
+SubRepo.set_clone_into(os.path.realpath(os.path.join(thisdir, os.pardir)))

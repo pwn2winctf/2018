@@ -8,7 +8,7 @@ import threading
 
 
 thisdir = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(thisdir, '..', 'local-settings.json')
+path = os.path.join(thisdir, os.pardir, 'local-settings.json')
 
 
 class DefaultLocalSettings(object):
