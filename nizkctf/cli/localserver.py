@@ -10,9 +10,13 @@ except ImportError:
     from http.server import SimpleHTTPRequestHandler, HTTPServer
 from ..settings import Settings
 from ..subrepo import SubRepo
+from .teamsecrets import TeamSecrets
+from ..localsettings import LocalSettings
 
 
-def handler(routes, root_redir=None):
+def handler(routes, root_redir=None, forbidden=set()):
+    forbidden = set(os.path.realpath(path) for path in forbidden)
+
     class RequestHandler(SimpleHTTPRequestHandler):
         protocol_version = 'HTTP/1.0'
 
@@ -34,12 +38,14 @@ def handler(routes, root_redir=None):
                     root = cur_root
                     path = path[len(url_prefix):]
                     break
+            if not root:
+                return ''
 
-            if root:
-                os.chdir(root)
-                return SimpleHTTPRequestHandler.translate_path(self, path)
-
-            return ''
+            os.chdir(root)
+            path = SimpleHTTPRequestHandler.translate_path(self, path)
+            if path in forbidden:
+                return ''
+            return path
 
     return RequestHandler
 
@@ -57,9 +63,14 @@ def main(port=8000):
         ('/%s' % submissions, subdir),
     ]
 
-    HandlerClass = handler(routes, '/%s' % ctf)
+    forbidden = {
+        LocalSettings.path(),
+        TeamSecrets.path(),
+    }
 
-    server_address = ('', port)
+    HandlerClass = handler(routes, '/%s' % ctf, forbidden)
+
+    server_address = ('localhost', port)
     httpd = HTTPServer(server_address, HandlerClass)
     sa = httpd.socket.getsockname()
     print("Serving HTTP on", sa[0], "port", sa[1], "...")

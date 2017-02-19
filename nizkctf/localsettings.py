@@ -7,22 +7,25 @@ import json
 import threading
 
 
-thisdir = os.path.dirname(os.path.realpath(__file__))
-path = os.path.join(thisdir, os.pardir, 'local-settings.json')
+LOCALSETTINGS_FILE = 'local-settings.json'
 
 
 class DefaultLocalSettings(object):
     __lock__ = threading.Lock()
 
+    def path(self):
+        thisdir = os.path.dirname(os.path.realpath(__file__))
+        return os.path.join(thisdir, os.pardir, LOCALSETTINGS_FILE)
+
     def __init__(self):
-        if os.path.exists(path):
-            with open(path) as f:
+        if os.path.exists(self.path()):
+            with open(self.path()) as f:
                 self.__dict__.update(json.load(f))
 
     def __setattr__(self, k, v):
         self.__dict__[k] = v
         with self.__lock__:
-            with open(path, 'w') as f:
+            with open(self.path(), 'w') as f:
                 json.dump(self.__dict__, f)
 
 
