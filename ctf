@@ -135,6 +135,9 @@ def cmd_news(args):
 
     news.pprint(news.News(), team_only=args.team)
 
+def cmd_add_news(args):
+    news.News().add(args.msg, args.to)
+
 def main():
     if PY2:
         sys.argv = map(to_unicode, sys.argv)
@@ -151,6 +154,7 @@ def main():
         'add': cmd_add_challenge,
 
         'news': cmd_news,
+        'add_news': cmd_add_news,
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
@@ -213,6 +217,12 @@ def main():
                               help='pull news before displaying news')
     parser_news.add_argument('--team', action='store_true',
                               help='show only team news')
+                              
+    parser_add_news = subparsers.add_parser('add_news', help='add news')
+    parser_add_news.set_defaults(command='add_news')
+    parser_add_news.add_argument('--msg', required=True, help='msg to be added')
+    parser_add_news.add_argument('--to', help='team name')
+
 
     args = parser.parse_args()
     commands[args.command](args)

@@ -31,10 +31,11 @@ def pprint(news, team_only):
     team = my_team()
 
     # FIXME improve filtering
+    team_news = [n for n in news if n.get('to') == team['name']]
     if team_only:
-        news = [n for n in news if n.get('to') == team['name']]
+        news = team_news
     else:
-        news = [n for n in news if 'to' not in n] + [n for n in news if n.get('to') == team['name']]
+        news = [n for n in news if 'to' not in n] + team_news
     
     def decrypt_msg(msg):
         team_pk, team_sk = team['crypt_pk'], TeamSecrets['crypt_sk']
@@ -49,6 +50,13 @@ def pprint(news, team_only):
         if 'to' in news:
             # Message was sent to a team, so we need to decrypt it
             news['msg'] = decrypt_msg(news['msg'])
+
+            try:
+                # TODO this fails in case the message was not encoded before
+                #      being encrypted. Change accordingly to the news add behaviour
+                news['msg'] = b64decode(news['msg'])
+            except:
+                pass
 
         news['msg'] = news['msg'].decode('utf-8')
         return news
