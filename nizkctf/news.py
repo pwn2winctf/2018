@@ -13,10 +13,6 @@ from .serializable import SerializableList
 
 
 NEWS_FILE = 'news.json'
-NEWS_DIR = '.'
-
-thisdir = os.path.dirname(os.path.realpath(__file__))
-news_dir = os.path.realpath(os.path.join(thisdir, os.pardir, NEWS_DIR))
 
 # TODO duplicated from scoreboard.py
 TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
@@ -26,29 +22,35 @@ class News(SerializableList):
         super(News, self).__init__()
 
     def path(self):
-        return os.path.join(news_dir, NEWS_FILE)
+        return SubRepo.get_path(NEWS_FILE)
 
-    def add(self, msg, to=None):
+    def add(self, msg_text, to=None):
         # TODO where should this function be inserted?
         # TODO how do we do commit/push?
+        
         if to is None:
             # TODO do we really encode public messages?
-            encoded_msg = b64encode(msg)
-            self.append({"msg": encoded_msg,
-                         "time": current_time()})
+            encoded_msg = b64encode(msg_text)
+            message = { "msg": encoded_msg,
+                        "time": current_time() }
         else:
             team = Team(name=to)
             team_pk = team['crypt_pk']
             # TODO check if msg really needs to be encoded before encrypted
             #       (and encoded after encrypted too)
-            msg = b64encode(msg)
+            msg_text = b64encode(msg_text)
             encrypted_msg = pysodium.crypto_box_seal(msg, team_pk)
             encoded_msg = b64encode(encrypted_msg)
 
-            self.append({"msg": encoded_msg,
-                         "to": team['name'],
-                         "time": current_time()})
+            message = { "msg": encoded_msg,
+                        "to": team['name'],
+                        "time": current_time() }
+        self.append(message)
+
         self.save()
+
+        dest = message["to"] if "to" in message else "all"
+        SubRepo.push(commit_message='Added news to %s' % dest)
     
 def current_time():
     # TODO duplicated from scoreboard.py
