@@ -30,39 +30,30 @@ def pprint(news, team_only):
 
     team = my_team()
 
-    # FIXME improve filtering
-    team_news = [n for n in news if n.get('to') == team['name']]
-    if team_only:
-        news = team_news
-    else:
-        news = [n for n in news if 'to' not in n] + team_news
+    def decrypt_news(news_item):
+        assert('to' in news_item)
+
+        # Message was sent to a team, so we need to decode and decrypt it
+        decoded_msg = b64decode(news_item['msg'].encode("utf-8"))
+        try:
+            team_pk, team_sk = team['crypt_pk'], TeamSecrets['crypt_sk']
+            decrypted_msg = pysodium.crypto_box_seal_open(decoded_msg, team_pk, team_sk)
+        except:
+            decrypted_msg = u'<Failed to decrypt>'
+
+        news_item['msg'] = decrypted_msg.decode("utf-8")
+        return news_item
     
-    def decrypt_msg(msg):
-        team_pk, team_sk = team['crypt_pk'], TeamSecrets['crypt_sk']
-        
-        # TODO Check if that's the better approach
-        # reference: https://download.libsodium.org/doc/public-key_cryptography/sealed_boxes.html
-        return pysodium.crypto_box_seal_open(msg, team_pk, team_sk)
+    def filter_news(news):
+        # Filter news items based on team_only flag, applying decryption if needed
+        to_filter = [team['name']] + ([] if team_only else [None])
+        for news_item in news:
+            to = news_item.get('to')
+            if to in to_filter:
+                yield decrypt_news(news_item) if to else news_item
 
-    def decode_news(news):
-        # News messages are always in base 64
-        news['msg'] = b64decode(news['msg'])
-        if 'to' in news:
-            # Message was sent to a team, so we need to decrypt it
-            news['msg'] = decrypt_msg(news['msg'])
-
-            try:
-                # TODO this fails in case the message was not encoded before
-                #      being encrypted. Change accordingly to the news add behaviour
-                news['msg'] = b64decode(news['msg'])
-            except:
-                pass
-
-        news['msg'] = news['msg'].decode('utf-8')
-        return news
+    news = filter_news(news)
     
-    news = [decode_news(n) for n in news]
-
     to_len = max(width(team['name']), 10)
 
     # FIXME test formatting
@@ -86,8 +77,8 @@ def pprint(news, team_only):
     print(fmt('Date', 'To', 'Message'))
     print(sep)
 
-    for n in news:
-        print(fmt(n['time'], n.get('to', u'all'), n['msg']))
+    for news_item in news:
+        print(fmt(news_item['time'], news_item.get('to', 'all'), news_item['msg']))
 
     print(sep)
     print('')
