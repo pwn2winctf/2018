@@ -4,7 +4,7 @@ from __future__ import unicode_literals, division, print_function,\
      absolute_import
 import os
 import time
-from .six import viewitems, text_type, to_bytes, to_unicode, PY2
+from .six import text_type
 from .subrepo import SubRepo
 from .serializable import SerializableDict
 
@@ -16,6 +16,8 @@ TIME_FORMAT = '%s'  # unix timestamp
 class AcceptedSubmissions(SerializableDict):
     def __init__(self):
         super(AcceptedSubmissions, self).__init__()
+        self.setdefault('tasks', [])
+        self.setdefault('standings', [])
 
     def path(self):
         return SubRepo.get_path(ACCEPTED_SUBMISSIONS_FILE)
@@ -47,25 +49,6 @@ class AcceptedSubmissions(SerializableDict):
         team['score'] += points
 
         self.save()
-
-    # TODO Unicode symbols in team names should be converted to unicode notation (\uXXXX).
-    #      reference: https://ctftime.org/json-scoreboard-feed
-    def _unserialize_inplace(self):
-        self.setdefault('tasks', [])
-        self.setdefault('standings', [])
-
-        for team in self['standings']:
-            #team['team'] = team['team'].encode('utf-8').decode('unicode_escape')
-            team['team'] = to_bytes(team['team']).decode('unicode_escape')
-
-    def _serialize(self):
-        from copy import deepcopy
-        serialized = deepcopy(self)
-
-        for team in serialized['standings']:
-            #team['team'] = team['team'].encode('unicode_escape').decode('utf-8')
-            team['team'] = to_unicode(team['team'].encode('unicode_escape'))
-        return serialized
 
 def current_time():
     return int(time.strftime(TIME_FORMAT))
