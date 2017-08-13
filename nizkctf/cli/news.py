@@ -45,7 +45,7 @@ def pprint(news, team_only):
                                                           team_pk,
                                                           team_sk)
         except:
-            decrypted_msg = u'<Failed to decrypt>'
+            decrypted_msg = b'<Failed to decrypt>'
 
         news_item['msg'] = decrypted_msg.decode("utf-8")
         return news_item
