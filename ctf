@@ -129,14 +129,17 @@ def cmd_add_challenge(args):
     chall['pk'] = pk
     chall.save()
 
+
 def cmd_news(args):
     if args.pull:
         SubRepo.pull()
 
     news.pprint(news.News(), team_only=args.team)
 
+
 def cmd_add_news(args):
     news.News().add(args.msg, args.to)
+
 
 def main():
     if PY2:
@@ -214,18 +217,19 @@ def main():
     parser_news = subparsers.add_parser('news', help='pull and show news')
     parser_news.set_defaults(command='news')
     parser_news.add_argument('--pull', action='store_true',
-                              help='pull news before displaying news')
+                             help='pull news before displaying news')
     parser_news.add_argument('--team', action='store_true',
-                              help='show only team news')
+                             help='show only team news')
 
     parser_add_news = subparsers.add_parser('add_news', help='add news')
     parser_add_news.set_defaults(command='add_news')
-    parser_add_news.add_argument('--msg', required=True, help='msg to be added')
+    parser_add_news.add_argument('--msg', required=True,
+                                 help='msg to be added')
     parser_add_news.add_argument('--to', help='team name')
-
 
     args = parser.parse_args()
     commands[args.command](args)
+
 
 if __name__ == '__main__':
     main()
