@@ -20,7 +20,7 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
    sudo apt-get install libsodium18
    sudo -H pip install -r pip-requirements.txt
    ```
-   **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`. If you are using Debian, you need to get the package from [sid](https://packages.debian.org/sid/libsodium18).
+   **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
   
 4. If dependencies are installed correctly, you should now see the help menu when calling:
    ```bash
