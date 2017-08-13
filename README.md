@@ -6,22 +6,23 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
 
    **Note**: If you prefer team members to stay anonymous, you can create a single GitHub account for the entire team and share its credentials.
-   
+
 2. All team members must have the git client [correctly set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). If you have never used git before, run:
    ```bash
    git config --global user.name "John Doe"
    git config --global user.email johndoe@example.com
    ```
-   
+
 3. All team members must clone the repository and install the dependencies:
    ```bash
    git clone git@github.com:pwn2winctf/PTE.git
    cd PTE
    sudo apt-get install libsodium18
-   sudo -H pip install -r pip-requirements.txt
+   curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
+   sudo -H python -m pip install -r pip-requirements.txt
    ```
    **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
-  
+
 4. If dependencies are installed correctly, you should now see the help menu when calling:
    ```bash
    ./ctf -h
@@ -31,12 +32,12 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
    ```bash
    ./ctf init
    ```
-  
+
 6. The **other members of the team** must login to GitHub without registering a new team, by running:
    ```bash
    ./ctf login
    ```
-   
+
 7. After that, **the leader** must share the `team-secrets.json` with the members of the team. The **other members of the team** must place the `team-secrets.json` file shared by the leader in their `PTE` directory.
 
 ## Challenges
