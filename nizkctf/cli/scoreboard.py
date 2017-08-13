@@ -11,7 +11,7 @@ import codecs
 from ..team import Team
 from ..text import width
 from ..six import viewitems
-from ..acceptedsubmissions import AcceptedSubmissions, TIME_FORMAT
+from ..acceptedsubmissions import AcceptedSubmissions
 
 
 def rank():
@@ -133,7 +133,7 @@ def plot(ranking, submissions, top=3):
     w.write('set terminal dumb 120 30\n')
     w.write('set xdata time\n')
     w.write('set datafile sep \',\'\n')
-    w.write('set timefmt "%s"\n' % TIME_FORMAT)
+    w.write('set timefmt "%s"\n')
     w.write('set style data steps\n')
     w.write('plot ')
     fmt = '\'%s\' using 1:2 title \'%s\''

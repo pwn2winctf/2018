@@ -10,7 +10,6 @@ from .serializable import SerializableDict
 
 
 ACCEPTED_SUBMISSIONS_FILE = 'accepted-submissions.json'
-TIME_FORMAT = '%s'  # unix timestamp
 
 
 class AcceptedSubmissions(SerializableDict):
@@ -42,13 +41,10 @@ class AcceptedSubmissions(SerializableDict):
             # Challenge already submitted by team
             return
 
-        accepted_time = current_time()
+        accepted_time = int(time.time())
         team['taskStats'][chall_id] = { 'points': points,
                                         'time':  accepted_time }
         team['lastAccept'] = accepted_time
         team['score'] += points
 
         self.save()
-
-def current_time():
-    return int(time.strftime(TIME_FORMAT))

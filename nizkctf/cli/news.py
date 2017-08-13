@@ -15,6 +15,10 @@ from ..text import width
 from .teamsecrets import TeamSecrets
 from ..team import Team
 
+
+TIME_DISPLAY_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+
 def pprint(news, team_only):
     '''
     Pretty print news in terminal.
@@ -43,7 +47,7 @@ def pprint(news, team_only):
 
         news_item['msg'] = decrypted_msg.decode("utf-8")
         return news_item
-    
+
     def filter_news(news):
         # Filter news items based on team_only flag, applying decryption if needed
         to_filter = [team['name']] + ([] if team_only else [None])
@@ -53,7 +57,7 @@ def pprint(news, team_only):
                 yield decrypt_news(news_item) if to else news_item
 
     news = filter_news(news)
-    
+
     to_len = max(width(team['name']), 10)
 
     # FIXME test formatting
@@ -72,13 +76,17 @@ def pprint(news, team_only):
                fmtcol(to, to_len) + '|' + \
                fmtcol(msg, msg_len)
 
+    def fmtime(timestamp):
+        return time.strftime(TIME_DISPLAY_FORMAT, time.localtime(timestamp))
+
     print('')
     print(sep)
     print(fmt('Date', 'To', 'Message'))
     print(sep)
 
     for news_item in news:
-        print(fmt(news_item['time'], news_item.get('to', 'all'), news_item['msg']))
+        print(fmt(fmtime(news_item['time']),
+                  news_item.get('to', 'all'), news_item['msg']))
 
     print(sep)
     print('')
