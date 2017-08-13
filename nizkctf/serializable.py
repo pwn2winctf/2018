@@ -9,6 +9,8 @@ from .six import viewitems, text_type
 
 
 class Serializable(object):
+    pretty_print = False
+
     def __init__(self):
         self.load()
 
@@ -21,7 +23,8 @@ class Serializable(object):
 
     def save(self):
         with open(self.path(), 'w') as f:
-            json.dump(self._serialize(), f)
+            kw = {'sort_keys': True, 'indent': 1} if self.pretty_print else {}
+            json.dump(self._serialize(), f, **kw)
 
     def exists(self):
         return os.path.exists(self.path())

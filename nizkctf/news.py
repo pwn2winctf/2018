@@ -16,6 +16,8 @@ NEWS_FILE = 'news.json'
 
 
 class News(SerializableList):
+    pretty_print = True
+
     def __init__(self):
         super(News, self).__init__()
 

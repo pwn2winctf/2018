@@ -13,6 +13,8 @@ ACCEPTED_SUBMISSIONS_FILE = 'accepted-submissions.json'
 
 
 class AcceptedSubmissions(SerializableDict):
+    pretty_print = True
+
     def __init__(self):
         super(AcceptedSubmissions, self).__init__()
         self.setdefault('tasks', [])
