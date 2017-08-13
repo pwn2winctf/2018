@@ -6,30 +6,49 @@ import os
 import time
 from .six import text_type
 from .subrepo import SubRepo
-from .serializable import SerializableList
+from .serializable import SerializableDict
 
 
 ACCEPTED_SUBMISSIONS_FILE = 'accepted-submissions.json'
-TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
+TIME_FORMAT = '%s'  # unix timestamp
 
 
-class AcceptedSubmissions(SerializableList):
+class AcceptedSubmissions(SerializableDict):
     def __init__(self):
         super(AcceptedSubmissions, self).__init__()
+        self.setdefault('tasks', [])
+        self.setdefault('standings', [])
 
     def path(self):
         return SubRepo.get_path(ACCEPTED_SUBMISSIONS_FILE)
 
     def add(self, chall_id, points, team_id):
-        if (chall_id, team_id) in ((s['chall'], s['team']) for s in self):
+        if chall_id not in self['tasks']:
+            self['tasks'].append(chall_id)
+
+        def get_team():
+            for team in self['standings']:
+                if team['team'] == team_id:
+                    return team
+
+            self['standings'].append({ 'team': team_id,
+                                       'taskStats': {},
+                                       'score': 0 })
+            return self['standings'][-1]
+
+        team = get_team()
+
+        if chall_id in team['taskStats']:
             # Challenge already submitted by team
             return
-        self.append({"chall": chall_id,
-                     "points": points,
-                     "team": team_id,
-                     "time": current_time()})
+
+        accepted_time = current_time()
+        team['taskStats'][chall_id] = { 'points': points,
+                                        'time':  accepted_time }
+        team['lastAccept'] = accepted_time
+        team['score'] += points
+
         self.save()
 
-
 def current_time():
-    return time.strftime(TIME_FORMAT)
+    return int(time.strftime(TIME_FORMAT))

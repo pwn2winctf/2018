@@ -32,12 +32,13 @@ def rank():
 
     submissions = {}
     scores = {}
-    last_submission = {}
-    for subm_num, subm in enumerate(AcceptedSubmissions()):
-        team = subm['team']
-        score, _ = scores.get(team, (0, None))
-        scores[team] = (score + subm['points'], -subm_num)
-        submissions.setdefault(team, []).append(subm)
+    for team in AcceptedSubmissions()['standings']:
+        team_id = Team(name=team['team']).id
+        submissions[team_id] = [sub for sub in team['taskStats'].values()]
+        submissions[team_id] = sorted(submissions[team_id],
+                                      key=operator.itemgetter('time'))
+
+        scores[team_id] = (team['score'], -team['lastAccept'])
 
     scores = sorted(viewitems(scores), key=operator.itemgetter(1),
                     reverse=True)
@@ -109,6 +110,9 @@ def plot(ranking, submissions, top=3):
         submissions (dict): Dict [team] -> submission list.
         top (int): Number of teams to appear in chart.
     '''
+    if len(ranking) == 0:
+        return
+
     # generate temporary files with data points
     fnames = []
     for team, _ in ranking[0:top]:
