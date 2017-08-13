@@ -21,30 +21,33 @@ class AcceptedSubmissions(SerializableDict):
     def path(self):
         return SubRepo.get_path(ACCEPTED_SUBMISSIONS_FILE)
 
-    def add(self, chall_id, points, team_id):
+    def add(self, chall, points, team):
+        chall_id = chall.id
+        team_name = team['name']
+
         if chall_id not in self['tasks']:
             self['tasks'].append(chall_id)
 
-        def get_team():
-            for team in self['standings']:
-                if team['team'] == team_id:
-                    return team
+        def get_team_standing():
+            for team_standing in self['standings']:
+                if team_standing['team'] == team_name:
+                    return team_standing
 
-            self['standings'].append({'team': team_id,
+            self['standings'].append({'team': team_name,
                                       'taskStats': {},
                                       'score': 0})
             return self['standings'][-1]
 
-        team = get_team()
+        team_standing = get_team_standing()
 
-        if chall_id in team['taskStats']:
+        if chall_id in team_standing['taskStats']:
             # Challenge already submitted by team
             return
 
         accepted_time = int(time.time())
-        team['taskStats'][chall_id] = {'points': points,
-                                       'time':  accepted_time}
-        team['lastAccept'] = accepted_time
-        team['score'] += points
+        team_standing['taskStats'][chall_id] = {'points': points,
+                                                'time': accepted_time}
+        team_standing['lastAccept'] = accepted_time
+        team_standing['score'] += points
 
         self.save()
