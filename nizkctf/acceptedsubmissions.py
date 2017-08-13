@@ -30,9 +30,9 @@ class AcceptedSubmissions(SerializableDict):
                 if team['team'] == team_id:
                     return team
 
-            self['standings'].append({ 'team': team_id,
-                                       'taskStats': {},
-                                       'score': 0 })
+            self['standings'].append({'team': team_id,
+                                      'taskStats': {},
+                                      'score': 0})
             return self['standings'][-1]
 
         team = get_team()
@@ -42,8 +42,8 @@ class AcceptedSubmissions(SerializableDict):
             return
 
         accepted_time = int(time.time())
-        team['taskStats'][chall_id] = { 'points': points,
-                                        'time':  accepted_time }
+        team['taskStats'][chall_id] = {'points': points,
+                                       'time':  accepted_time}
         team['lastAccept'] = accepted_time
         team['score'] += points
 

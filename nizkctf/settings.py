@@ -20,4 +20,5 @@ def load():
         for k, v in viewitems(settings):
             setattr(Settings, k, v)
 
+
 load()

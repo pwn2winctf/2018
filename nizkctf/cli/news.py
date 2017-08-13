@@ -41,7 +41,9 @@ def pprint(news, team_only):
         decoded_msg = b64decode(news_item['msg'].encode("utf-8"))
         try:
             team_pk, team_sk = team['crypt_pk'], TeamSecrets['crypt_sk']
-            decrypted_msg = pysodium.crypto_box_seal_open(decoded_msg, team_pk, team_sk)
+            decrypted_msg = pysodium.crypto_box_seal_open(decoded_msg,
+                                                          team_pk,
+                                                          team_sk)
         except:
             decrypted_msg = u'<Failed to decrypt>'
 
@@ -49,7 +51,7 @@ def pprint(news, team_only):
         return news_item
 
     def filter_news(news):
-        # Filter news items based on team_only flag, applying decryption if needed
+        # Filter items based on team_only flag, applying decryptionif needed
         to_filter = [team['name']] + ([] if team_only else [None])
         for news_item in news:
             to = news_item.get('to')

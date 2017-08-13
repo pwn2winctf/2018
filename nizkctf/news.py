@@ -25,18 +25,20 @@ class News(SerializableList):
     def add(self, msg_text, to=None):
         current_time = int(time.time())
         if to is None:
-            message = { "msg": msg_text, "time": current_time }
+            message = {"msg": msg_text, "time": current_time}
         else:
             team_pk = Team(name=to)['crypt_pk']
-            encrypted_msg = pysodium.crypto_box_seal(msg_text.encode("utf-8"), team_pk)
+            encrypted_msg = pysodium.crypto_box_seal(msg_text.encode("utf-8"),
+                                                     team_pk)
             encoded_msg = b64encode(encrypted_msg)
 
-            message = { "msg": encoded_msg.decode("utf-8"),
-                        "to": to,
-                        "time": current_time }
+            message = {"msg": encoded_msg.decode("utf-8"),
+                       "to": to,
+                       "time": current_time}
 
         self.append(message)
         self.save()
 
         dest = message["to"] if "to" in message else "all"
-        SubRepo.push(commit_message='Added news to %s' % dest, merge_request=False)
+        SubRepo.push(commit_message='Added news to %s' % dest,
+                     merge_request=False)
