@@ -21,6 +21,14 @@ class AcceptedSubmissions(SerializableDict):
     def path(self):
         return SubRepo.get_path(ACCEPTED_SUBMISSIONS_FILE)
 
+    def rank(self):
+        standings = self['standings']
+        standings.sort(key=lambda standing: (standing['score'],
+                                             -standing['lastAccept']),
+                       reverse=True)
+        for i, standing in enumerate(standings):
+            standing['pos'] = i + 1
+
     def add(self, chall, points, team):
         chall_id = chall.id
         team_name = team['name']
@@ -50,4 +58,5 @@ class AcceptedSubmissions(SerializableDict):
         team_standing['lastAccept'] = accepted_time
         team_standing['score'] += points
 
+        self.rank()
         self.save()

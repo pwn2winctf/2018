@@ -31,18 +31,13 @@ def rank():
     '''
 
     submissions = {}
-    scores = {}
+    scores = []
     for team in AcceptedSubmissions()['standings']:
         team_id = Team(name=team['team']).id
         submissions[team_id] = [sub for sub in team['taskStats'].values()]
         submissions[team_id] = sorted(submissions[team_id],
                                       key=operator.itemgetter('time'))
-
-        scores[team_id] = (team['score'], -team['lastAccept'])
-
-    scores = sorted(viewitems(scores), key=operator.itemgetter(1),
-                    reverse=True)
-    scores = [(team, score) for team, (score, _) in scores]
+        scores.append((team_id, team['score']))
 
     return (scores, submissions)
 
