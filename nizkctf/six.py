@@ -14,8 +14,10 @@ text_type = type('')
 
 if PY2:
     viewitems = operator.methodcaller("viewitems")
+    input = raw_input
 else:
     viewitems = operator.methodcaller("items")
+    input = input
 
 
 def to_bytes(s):

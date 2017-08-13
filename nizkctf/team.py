@@ -125,13 +125,14 @@ class TeamSubmissions(object):
         self.path = os.path.join(team.dir(), SUBMISSIONS_FILE)
 
     def submit(self, proof):
-        with open(self.path, 'a') as f:
+        assert isinstance(proof, bytes)
+        with open(self.path, 'ab') as f:
             f.write(proof + b'\n')
 
     def challs(self):
         r = []
         if os.path.exists(self.path):
-            with open(self.path) as f:
+            with open(self.path, 'rb') as f:
                 for proof in f:
                     r.append(proof_open(self.team, proof.strip()))
         if len(set(r)) != len(r):

@@ -11,11 +11,7 @@ from .cli.teamsecrets import TeamSecrets
 
 
 def proof_open(team, proof):
-    if isinstance(proof, text_type):
-        proof = proof.encode('utf-8')
-
     assert isinstance(proof, bytes)
-
     proof = b64decode(proof)
 
     claimed_chall_id = proof[2*64:].decode('utf-8')
@@ -45,4 +41,4 @@ def proof_create(chall_id, chall_sk):
     membership_proof = pysodium.crypto_sign(chall_id, team_sk)
     proof = pysodium.crypto_sign(membership_proof, chall_sk)
 
-    return b64encode(proof).decode('utf-8')
+    return b64encode(proof)

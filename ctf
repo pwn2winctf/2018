@@ -14,12 +14,12 @@ from nizkctf.cli import scoreboard, challenges, news, team, localserver
 from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
 from nizkctf.challenge import Challenge, derive_keypair, random_salt
-from nizkctf.six import to_unicode, PY2
+from nizkctf.six import input, to_unicode, PY2
 
 
 def read_opt(msg, opts):
     while True:
-        inp = raw_input(msg)
+        inp = input(msg)
         if inp.strip() in opts:
             return inp.strip()
 
@@ -28,13 +28,13 @@ def read_auth(opt):
     while True:
         if opt == '1':
             print('Enter your username and password:')
-            username = raw_input('Username: ')
+            username = input('Username: ')
             password = getpass.getpass('Password: ')
             RepoHost.login(username=username, password=password)
             return True
         elif opt == '2':
             print('Enter your auth token:')
-            token = raw_input('Token: ')
+            token = input('Token: ')
             RepoHost.login(token=token)
             return True
 
@@ -84,7 +84,7 @@ def cmd_init(args):
     opt = read_opt('>> ', {'y', 'n'})
     if opt == 'y':
         print('Enter your team name:')
-        team_name = raw_input('>> ')
+        team_name = input('>> ')
         team.register(team_name)
     print('')
 
@@ -108,15 +108,15 @@ def cmd_serve(args):
 
 
 def cmd_add_challenge(args):
-    id = raw_input('Challenge id (digits, letters, underscore): ').strip()
-    title = raw_input('Title: ').strip()
-    description = raw_input('Description: ').strip()
-    points = int(raw_input('Points: ').strip())
-    tags = raw_input('Tags (separate tags with space): ').strip().split()
-    salt = raw_input('Salt (empty string for random salt): ').strip()
+    id = input('Challenge id (digits, letters, underscore): ').strip()
+    title = input('Title: ').strip()
+    description = input('Description: ').strip()
+    points = int(input('Points: ').strip())
+    tags = input('Tags (separate tags with space): ').strip().split()
+    salt = input('Salt (empty string for random salt): ').strip()
     if salt == '':
         salt = random_salt()
-    flag = raw_input('Flag: ').strip()
+    flag = input('Flag: ').strip()
 
     pk, sk = derive_keypair(salt, flag)
     chall = Challenge(id=id)
@@ -217,7 +217,7 @@ def main():
                               help='pull news before displaying news')
     parser_news.add_argument('--team', action='store_true',
                               help='show only team news')
-                              
+
     parser_add_news = subparsers.add_parser('add_news', help='add news')
     parser_add_news.set_defaults(command='add_news')
     parser_add_news.add_argument('--msg', required=True, help='msg to be added')
