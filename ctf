@@ -17,6 +17,17 @@ from nizkctf.challenge import Challenge, derive_keypair, random_salt
 from nizkctf.six import input, to_unicode, PY2
 
 
+def ensure_unicode_locale():
+    if sys.stdout.encoding != 'UTF-8':
+        sys.stderr.write('\033[1mWARNING\033[00m: This CTF accepts '
+                         'international characters in team names and\nproblem '
+                         'descriptions. You are currently not using a Unicode '
+                         'locale,\ntherefore you may experience random '
+                         'UnicodeEncodeError exceptions.\n\nPlease fix by '
+                         'changing to a Unicode locale, e.g.\n\n'
+                         '  export LC_ALL=en_US.UTF-8\n\n\n')
+
+
 def read_opt(msg, opts):
     while True:
         inp = input(msg)
@@ -142,6 +153,7 @@ def cmd_add_news(args):
 
 
 def main():
+    ensure_unicode_locale()
     if PY2:
         sys.argv = map(to_unicode, sys.argv)
 
