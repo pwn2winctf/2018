@@ -83,7 +83,7 @@ def lookup_flag(flag, chall_id=None):
                              chall_id)
     else:
         # try every challenge
-        try_challenges = map(Challenge, Challenge.index())
+        try_challenges = [Challenge(id) for id in Challenge.index()]
 
     try_salts = set(chall['salt'] for chall in try_challenges)
     pk_chall = {chall['pk']: chall for chall in try_challenges}
