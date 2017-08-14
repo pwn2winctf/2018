@@ -66,3 +66,7 @@ Currently, the scoreboard is only available through the command line interface:
 ```
 
 However we plan to make it available through the web interface in a future release.
+
+## Support
+
+You may reach us through #tecland at irc.freenode.net.
