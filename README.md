@@ -1,6 +1,6 @@
-# Platform Test Edition
+# Pwn2Win
 
-Welcome to the Pwn2Win CTF **Platform Test Edition**.
+Welcome to Pwn2Win CTF 2017.
 
 ## Registration
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
@@ -15,8 +15,8 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
 
 3. All team members must clone the repository and install the dependencies:
    ```bash
-   git clone git@github.com:pwn2winctf/PTE.git
-   cd PTE
+   git clone git@github.com:pwn2winctf/2017.git
+   cd 2017
    sudo apt-get install libsodium18
    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
@@ -38,11 +38,11 @@ Welcome to the Pwn2Win CTF **Platform Test Edition**.
    ./ctf login
    ```
 
-7. After that, **the leader** must share the `team-secrets.json` with the members of the team. The **other members of the team** must place the `team-secrets.json` file shared by the leader in their `PTE` directory.
+7. After that, **the leader** must share the `team-secrets.json` with the members of the team. The **other members of the team** must place the `team-secrets.json` file shared by the leader in their `2017` directory.
 
 ## Challenges
 
-Challenges are available on https://pwn2winctf.github.io.
+Challenges will be available at https://pwn2winctf.github.io.
 
 If you prefer to browse them locally, you may also run a local webserver by typing `./ctf serve`, or list challenges through the command line interface:
 ```bash
