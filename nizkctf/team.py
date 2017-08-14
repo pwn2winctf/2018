@@ -91,6 +91,8 @@ class Team(SerializableDict):
 
 
 class TeamMembers(SerializableList):
+    pretty_print = True
+
     def __init__(self, team):
         self.team = team
         self.team_dir = team.dir()
