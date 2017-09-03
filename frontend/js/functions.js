@@ -1,91 +1,31 @@
-(function(_) {
-    _.nizkctf = {};
+const createPooling = (promise, cb, intervalTime) => {
+    let interval;
+    return {
+        isStarted: false,
+        async start() {
+            if (this.isStarted) {
+                return;
+            }
 
-    var challengesDiv = $('#challenges');
-    var modalsDiv = $('#modals');
-
-    var challTagsTpl = function(tags) {
-        return tags.map(function(tag){
-            return '<span class="new badge" data-badge-caption="">' + tag + '</span>';
-        }).join('');
-    };
-
-    var challModalTpl = function(challenge) {
-        return  '<div id="' + challenge.id + '" class="modal">'
-            +       '<div class="modal-content">'
-            +           '<h4>' + challenge.title + '</h4>'
-            +           '<p>' + challenge.description + '</p>'
-            +           '<p><b>ID</b>: ' + challenge.id + '</></p>'
-            +           '<p><b>Points</b>: ' + challenge.points + '</></p>'
-            +           '<p><b>Tags</b>: ' + challenge.tags.join(', ') + '</></p>'
-            +       '</div>'
-            +       '<div class="modal-footer">'
-            +           '<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>'
-            +       '</div>'
-            +   '</div>';
+            this.isStarted = true;
+            cb(await promise());
+            interval = setInterval(async () => {
+                cb(await promise());
+            }, intervalTime || 10000);
+        },
+        stop () {
+            this.isStarted = false
+            clearInterval(interval);
+        }
     }
+};
 
-    var challCardTpl = function(challenge) {
+const getSubmisionsPath = () => settings.submissions_project.split('/')[1];
 
-        return  '<div class="col s12 m4">'
-            +       '<div class="card blue-grey darken-1">'
-            +           '<div class="card-content white-text">'
-            +               '<span class="card-title">'
-            +                   challenge.title
-            +                   '<span class="new badge red" data-badge-caption="points">' + challenge.points + '</span>'
-            +               '</span>'
-            +               '<p>' + challenge.description.substr(0,100) + '...' + '</p>'
-            +               '<p>' + challTagsTpl(challenge.tags) + '</p>'
-            +           '</div>'
-            +           '<div class="card-action">'
-            +               '<a class="waves-effect waves-light btn" href="#' + challenge.id + '">More</a>'
-            +           '</div>'
-            +       '</div>'
-            +   '</div>';
-    };
-
-    var getChallenges = function() {
-        var mountChallTpl = function(challenge) {
-            challengesDiv.append(challCardTpl(challenge));
-            modalsDiv.append(challModalTpl(challenge));
-        };
-
-        var mountChallPromise = function(challUrl) {
-            return $.getJSON('challenges/' + challUrl + '.json')
-                .then(mountChallTpl);
-        };
-
-        var challPromiseMap = function(challList) {
-            return $.when.apply($, challList.map(mountChallPromise));
-        };
-
-        return $.getJSON('challenges/index.json')
-            .then(challPromiseMap);
-    };
-
-    var getSettings = function() {
-        var handleSettings = function(settings) {
-            $('#logo-container').text(settings.ctf_name);
-            $('title').text(settings.ctf_name);
-        };
-
-        $.getJSON('settings.json')
-            .then(handleSettings);
-    };
-
-    var renderChallenges = function() {
-        challengesDiv.html('');
-        getChallenges()
-            .then(function() {
-                $('.modal').modal();
-            });
-    }
-
-    _.nizkctf.init = function() {
-        renderChallenges();
-        getSettings();
-    }
-
-    _.nizkctf.init();
-
-})(window);
+const getSettings = () => $.getJSON('settings.json');
+const getNews = () => $.getJSON('submissions/news.json');
+const getChallenges = () => $.getJSON('challenges/index.json');
+const getChallenge = (id) => $.getJSON(`challenges/${id}.json`);
+const getSolvedChallenges = () => $.getJSON(`/${getSubmisionsPath()}/accepted-submissions.json`);
+const getTeam = hash => $.getJSON(`/${getSubmisionsPath()}/${hash}/team.json`);
+const getTeamMembers = hash => $.getJSON(`/${getSubmisionsPath()}/${hash}/membersjson`);

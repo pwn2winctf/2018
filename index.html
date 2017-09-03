@@ -6,30 +6,37 @@
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <link rel="stylesheet" href="frontend/css/styles.css">
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"></a></div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <h1 class="header center orange-text">Challenges</h1>
-    </div>
-  </div>
-
-
-  <div class="container">
-    <div class="section">
-      <div class="row" id="challenges"></div>
-      <div class="row" id="modals"></div>
+  <div id="app">
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo"></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/challenges">Challenges</router-link></li>
+          <li><router-link to="/rank">Rank</router-link></li>
+          <li><router-link to="/foo">Rules</router-link></li>
+        </ul>
+      </div>
+    </nav>
+    <div v-if="loaded" class="container">
+      <div class="section">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="frontend/js/functions.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-
-
-
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="frontend/js/functions.js"></script>
+  <script src="frontend/js/challenges.js"></script>
+  <script src="frontend/js/rank.js"></script>
+  <script src="frontend/js/home.js"></script>
+  <script src="frontend/js/app.js"></script>
 </body></html>

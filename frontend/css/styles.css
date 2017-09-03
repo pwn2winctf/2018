@@ -1,0 +1,9 @@
+.news {
+    height: 216px;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
+.card-content {
+    height: 180px;
+}
