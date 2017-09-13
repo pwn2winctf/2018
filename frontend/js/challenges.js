@@ -54,8 +54,10 @@ const Challenges = Vue.component('challenges', {
             }
         },
         setChallengesSolves: function(acceptedSubmissions) {
-            solves = acceptedSubmissions.reduce((reducer, { chall }) => {
-                reducer[chall]++ || (reducer[chall] = 1)
+            solves = acceptedSubmissions.standings.reduce((reducer, { taskStats }) => {
+                Object.keys(taskStats).forEach(chall => {
+                    reducer[chall]++ || (reducer[chall] = 1)
+                });
                 return reducer;
             }, {});
 
