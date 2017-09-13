@@ -15,6 +15,7 @@ from ..team import my_team
 from ..proof import proof_create
 from ..challenge import Challenge, lookup_flag
 from ..subrepo import SubRepo
+from ..acceptedsubmissions import AcceptedSubmissions
 
 
 def submit_flag(flag, chall_id=None):
@@ -43,11 +44,12 @@ def pprint():
     print('')
     print('-'*LINE_WIDTH)
     print('')
+    submissions = AcceptedSubmissions()
     for chall_id in Challenge.index():
         chall = Challenge(chall_id)
         print('ID: %s        (%d points)        [%s]' % (
             chall.id,
-            chall['points'],
+            submissions.compute_points(chall, additional_solves=1),
             ', '.join(chall['tags'])))
         print('')
         print(chall['title'])

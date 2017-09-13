@@ -15,6 +15,7 @@ from nizkctf.repohost import RepoHost
 from nizkctf.subrepo import SubRepo
 from nizkctf.challenge import Challenge, derive_keypair, random_salt
 from nizkctf.six import input, to_unicode, PY2
+from nizkctf.settings import Settings
 
 
 def ensure_unicode_locale():
@@ -122,7 +123,8 @@ def cmd_add_challenge(args):
     id = input('Challenge id (digits, letters, underscore): ').strip()
     title = input('Title: ').strip()
     description = input('Description: ').strip()
-    points = int(input('Points: ').strip())
+    if not Settings.dynamic_scoring:
+        points = int(input('Points: ').strip())
     tags = input('Tags (separate tags with space): ').strip().split()
     salt = input('Salt (empty string for random salt): ').strip()
     if salt == '':
@@ -134,7 +136,8 @@ def cmd_add_challenge(args):
     chall['id'] = id
     chall['title'] = title
     chall['description'] = description
-    chall['points'] = points
+    if not Settings.dynamic_scoring:
+        chall['points'] = points
     chall['tags'] = tags
     chall['salt'] = salt
     chall['pk'] = pk

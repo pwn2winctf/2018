@@ -94,7 +94,7 @@ def flag_submission(merge_info, modified_file):
         # Back to branch, do local modifications
         checkout('master')
         add_member(team, merge_info)
-        AcceptedSubmissions().add(chall, chall['points'], team)
+        AcceptedSubmissions().add(chall, team)
 
     local_changes()  # Validate local modifications before accepting MR
     accept_proposal(merge_info)
