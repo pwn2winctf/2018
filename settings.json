@@ -3,7 +3,7 @@
 	"repository_host": "GitHub",
 	"submissions_project": "pwn2winctf/2017submissions",
 
-	"dynamic_scoring": true,
+	"dynamic_scoring": {"K": 80.0, "V": 3.0, "minpts": 50, "maxpts": 500},
 
 	"scrypt_ops_limit": 33554432,
 	"scrypt_mem_limit": 1073741824,
