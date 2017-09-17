@@ -1,24 +1,45 @@
+const ChallengeModal = Vue.component('challenge-modal', {
+    template: `
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>{{challenge.title}}</h4>
+                <p>{{challenge.description}}</p>
+                <p>Total solves: {{challenge.solves}}</p>
+                <p>Points: {{challenge.points}}</p>
+                <p>Categories: {{challenge.tags.join(', ')}}</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-action modal-close waves-effect waves-green btn-flat">Close</button>
+            </div>
+        </div>
+    `,
+    props: ['challenge'],
+    mounted: function() {
+        $('.modal').modal();
+    }
+})
+
 const ChallengeComponent = Vue.component('challenge-card', {
     template: `
-        <div class="col s12 m4">
-            <div class="card blue-grey darken-1">
+        <div v-on:click="selectChallenge" class="col s12 m4">
+            <div class="clickable card blue-grey darken-1">
                 <div class="card-content white-text">
-                    <span class="card-title">{{challenge.title}}
-                        <span class="new badge red" data-badge-caption="points">{{challenge.points}}</span>
-                    </span>
-                    <p>{{challenge.description.substr(0,100)}}...</p>
-                    <p>
-                        <span v-for="tag in challenge.tags" class="new badge" data-badge-caption="">{{tag}}</span>
-                    </p>
-                    <p>{{challenge.solves}}</p>
+                    <span class="card-title">{{challenge.title}}</span>
+                    <div class="row"><strong>Total solves:</strong> {{challenge.solves}}</div>
                 </div>
                 <div class="card-action">
-                    <a class="waves-effect waves-light btn" href="# + challenge.id + ">More</a>
+                    <div class="row"><span v-for="tag in challenge.tags" class="new badge" data-badge-caption="">{{tag}}</span></div>
+                    <div class="row"><span class="new badge red" data-badge-caption="points">{{challenge.points}}</span></div>
                 </div>
             </div>
         </div>
     `,
-    props: ['challenge']
+    props: ['challenge', 'selectChallengeFunction'],
+    methods: {
+        selectChallenge: function() {
+            this.selectChallengeFunction(this.challenge);
+        }
+    }
 });
 
 const Challenges = Vue.component('challenges', {
@@ -26,12 +47,16 @@ const Challenges = Vue.component('challenges', {
         <div class="row">
             <app-title v-if="!hideTitle" title="Challenges"></app-title>
             <div v-for="challenge in challenges">
-                <challenge-card :challenge="challenge" />
+                <challenge-card :selectChallengeFunction="openModal" :challenge="challenge" />
+            </div>
+            <div v-if="selectedChallenge">
+                <challenge-modal :challenge="selectedChallenge"/>
             </div>
         </div>
     `,
     data: () => ({
-        challenges: []
+        challenges: [],
+        selectedChallenge: null
     }),
     props: ['hideTitle', 'submissions'],
     watch: {
@@ -64,6 +89,12 @@ const Challenges = Vue.component('challenges', {
             this.challenges.forEach((challenge, index) => {
                 this.challenges.splice(index, 1, Object.assign({}, challenge, { solves: solves[challenge.id] || 0 }));
             });
+        },
+        openModal: function(challenge) {
+            this.selectedChallenge = challenge;
+            Vue.nextTick(() => {
+                $('.modal').modal('open');
+            })
         }
     },
     mounted: function() {

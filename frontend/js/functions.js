@@ -8,6 +8,7 @@ const createPooling = (promise, cb, intervalTime) => {
             }
 
             this.isStarted = true;
+
             cb(await promise());
             interval = setInterval(async () => {
                 cb(await promise());
@@ -28,4 +29,8 @@ const getChallenges = () => $.getJSON('challenges/index.json');
 const getChallenge = (id) => $.getJSON(`challenges/${id}.json`);
 const getSolvedChallenges = () => $.getJSON(`/${getSubmisionsPath()}/accepted-submissions.json`);
 const getTeam = hash => $.getJSON(`/${getSubmisionsPath()}/${hash}/team.json`);
-const getTeamMembers = hash => $.getJSON(`/${getSubmisionsPath()}/${hash}/membersjson`);
+const getTeamMembers = hash => $.getJSON(`/${getSubmisionsPath()}/${hash}/members.json`);
+
+String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+};

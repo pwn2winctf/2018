@@ -12,6 +12,10 @@ const routes = [
     {
         path: '/rank',
         component: Rank
+    },
+    {
+        path: '/team/:name',
+        component: Team
     }
 ];
 

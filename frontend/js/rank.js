@@ -3,7 +3,7 @@ const Rank = Vue.component('rank', {
         <div>
             <app-title v-if="!hideTitle" title="Rank"></app-title>
             <ul class="rank collection z-depth-1">
-                <li class="collection-item" v-for="team in rank">
+                <li v-on:click="teamClick(team.team)" class="clickable collection-item" v-for="team in rank">
                     <div>{{team.pos}}. {{team.team}}
                         <div class="secondary-content">{{team.score}}</div>
                     </div>
@@ -25,6 +25,9 @@ const Rank = Vue.component('rank', {
         },
         loadRank: function(acceptedSubmissions) {
             this.rank = acceptedSubmissions.standings;
+        },
+        teamClick: function(teamName) {
+            this.$router.push({ path: `/team/${teamName}` });
         }
     },
     props: ['limit', 'hideTitle'],

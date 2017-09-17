@@ -5,5 +5,21 @@
 }
 
 .card-content {
-    height: 180px;
+    height: 110px;
+}
+
+.card .card-content {
+    padding: 10px;
+}
+
+.card .card-action {
+    padding: 10px 10px 1px 10px;
+}
+
+.card .row {
+    margin: 0 0 10px 0;
+}
+
+.clickable {
+    cursor: pointer;
 }
