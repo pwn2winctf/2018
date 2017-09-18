@@ -14,6 +14,7 @@ from ..text import width
 
 from .teamsecrets import TeamSecrets
 from ..team import Team
+from ..six import to_unicode
 
 
 TIME_DISPLAY_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -79,7 +80,7 @@ def pprint(news, team_only):
                fmtcol(msg, msg_len)
 
     def fmtime(timestamp):
-        return time.strftime(TIME_DISPLAY_FORMAT, time.localtime(timestamp))
+        return to_unicode(time.strftime(TIME_DISPLAY_FORMAT, time.localtime(timestamp)))
 
     print('')
     print(sep)
@@ -88,7 +89,7 @@ def pprint(news, team_only):
 
     for news_item in news:
         print(fmt(fmtime(news_item['time']),
-                  news_item.get('to', 'all'), news_item['msg']))
+                  news_item.get('to', to_unicode('all')), news_item['msg']))
 
     print(sep)
     print('')
