@@ -245,6 +245,9 @@ def main():
                                  help='msg to be added')
     parser_add_news.add_argument('--to', help='team name')
 
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
     args = parser.parse_args()
     commands[args.command](args)
 
