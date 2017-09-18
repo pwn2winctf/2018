@@ -14,10 +14,16 @@ from ..text import width
 
 from .teamsecrets import TeamSecrets
 from ..team import Team
+from ..proposal import retry_push
 from ..six import to_unicode
 
 
 TIME_DISPLAY_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+
+def submit(msg_text, to=None):
+    for _ in retry_push('Added news to %s' % (to or 'all')):
+        News().add(msg_text, to)
 
 
 def pprint(news, team_only):
@@ -80,7 +86,8 @@ def pprint(news, team_only):
                fmtcol(msg, msg_len)
 
     def fmtime(timestamp):
-        return to_unicode(time.strftime(TIME_DISPLAY_FORMAT, time.localtime(timestamp)))
+        return to_unicode(time.strftime(TIME_DISPLAY_FORMAT,
+                                        time.localtime(timestamp)))
 
     print('')
     print(sep)

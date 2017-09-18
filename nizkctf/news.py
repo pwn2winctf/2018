@@ -40,7 +40,3 @@ class News(SerializableList):
 
         self.append(message)
         self.save()
-
-        dest = message["to"] if "to" in message else "all"
-        SubRepo.push(commit_message='Added news to %s' % dest,
-                     merge_request=False)

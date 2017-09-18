@@ -151,9 +151,7 @@ def cmd_news(args):
 
 
 def cmd_add_news(args):
-    if args.pull:
-        SubRepo.pull()
-    news.News().add(args.msg, args.to)
+    news.submit(args.msg, args.to)
 
 
 def main():
@@ -177,7 +175,9 @@ def main():
     }
 
     parser = argparse.ArgumentParser(description='nizk CTF cli')
-    subparsers = parser.add_subparsers(help='command help')
+    subparsers = parser.add_subparsers(help='command help',
+                                       metavar='{init,login,score,register,'
+                                               'submit,challs,serve,news}')
 
     parser_init = subparsers.add_parser('init', help='init ctf environment')
     parser_init.set_defaults(command='init')
@@ -227,7 +227,7 @@ def main():
     parser_serve.add_argument('--port', type=int, default=8000,
                               metavar='PORT', help='port')
 
-    parser_add_challenge = subparsers.add_parser('add', help='add challenge')
+    parser_add_challenge = subparsers.add_parser('add')
     parser_add_challenge.set_defaults(command='add')
 
     parser_news = subparsers.add_parser('news', help='pull and show news')
@@ -237,10 +237,8 @@ def main():
     parser_news.add_argument('--team', action='store_true',
                              help='show only team news')
 
-    parser_add_news = subparsers.add_parser('add_news', help='add news')
+    parser_add_news = subparsers.add_parser('add_news')
     parser_add_news.set_defaults(command='add_news')
-    parser_add_news.add_argument('--pull', action='store_true',
-                                 help='pull news before adding more news')
     parser_add_news.add_argument('--msg', required=True,
                                  help='msg to be added')
     parser_add_news.add_argument('--to', help='team name')
