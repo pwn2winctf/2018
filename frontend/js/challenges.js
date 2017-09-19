@@ -3,10 +3,10 @@ const ChallengeModal = Vue.component('challenge-modal', {
         <div id="modal1" class="modal">
             <div class="modal-content">
                 <h4>{{challenge.title}}</h4>
-                <p>{{challenge.description}}</p>
-                <p>Total solves: {{challenge.solves}}</p>
-                <p>Points: {{challenge.points}}</p>
-                <p>Categories: {{challenge.tags.join(', ')}}</p>
+                <p v-html="challenge.description"></p>
+                <p><strong>{{$t('total-solves')}}:</strong> {{challenge.solves}}</p>
+                <p><strong>{{$t('score')}}:</strong> {{challenge.points}}</p>
+                <p><strong>{{$t('categories')}}:</strong> {{challenge.tags.join(', ')}}</p>
             </div>
             <div class="modal-footer">
                 <button class="modal-action modal-close waves-effect waves-green btn-flat">Close</button>
@@ -14,22 +14,54 @@ const ChallengeModal = Vue.component('challenge-modal', {
         </div>
     `,
     props: ['challenge'],
-    mounted: function() {
+    data: () => ({
+        loaded: false,
+        descriptionMap: {}
+    }),
+    methods: {
+        loadDescription: async function(challenge) {
+            const lang = Cookies.get('lang').toLowerCase();
+
+            if (!this.descriptionMap[lang]) {
+                this.descriptionMap[lang] = {};
+            }
+
+            if (this.descriptionMap[lang][challenge.id]) {
+                this.challenge.description = this.descriptionMap[lang][challenge.id];
+                return;
+            }
+
+            const challengeMd = await getChallengeDescription(this.challenge.id, lang);
+            this.descriptionMap[lang][challenge.id] = converter.makeHtml(challengeMd);
+            this.challenge.description = this.descriptionMap[lang][challenge.id];
+        },
+    },
+    mounted: async function() {
         $('.modal').modal();
-    }
+        this.loadDescription(this.challenge);
+    },
+    watch: {
+        challenge: function(challenge) {
+            thisloaded = false
+            this.loadDescription(challenge);
+        }
+    },
 })
 
 const ChallengeComponent = Vue.component('challenge-card', {
     template: `
         <div v-on:click="selectChallenge" class="col s12 m4">
-            <div class="clickable card blue-grey darken-1">
+            <div v-bind:class="{ 'is-solved': challenge.solved }" class="clickable card blue-grey darken-1">
                 <div class="card-content white-text">
                     <span class="card-title">{{challenge.title}}</span>
-                    <div class="row"><strong>Total solves:</strong> {{challenge.solves}}</div>
+                    <div class="row"><strong>{{$t('total-solves')}}:</strong> {{challenge.solves}}</div>
+                    <div class="row"><strong>{{$t('score')}}:</strong> {{challenge.points}}</div>
                 </div>
                 <div class="card-action">
-                    <div class="row"><span v-for="tag in challenge.tags" class="new badge" data-badge-caption="">{{tag}}</span></div>
-                    <div class="row"><span class="new badge red" data-badge-caption="points">{{challenge.points}}</span></div>
+                    <div class="row">
+                        <span v-if="challenge.optional" class="new badge red" data-badge-caption="">{{$t(challenge.optional)}}</span>
+                        <span v-for="tag in challenge.tags" class="new badge" data-badge-caption="">{{tag}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +77,7 @@ const ChallengeComponent = Vue.component('challenge-card', {
 const Challenges = Vue.component('challenges', {
     template: `
         <div class="row">
-            <app-title v-if="!hideTitle" title="Challenges"></app-title>
+            <app-title v-if="!hideTitle" title="challenges"></app-title>
             <div v-for="challenge in challenges">
                 <challenge-card :selectChallengeFunction="openModal" :challenge="challenge" />
             </div>
@@ -61,7 +93,7 @@ const Challenges = Vue.component('challenges', {
     props: ['hideTitle', 'submissions'],
     watch: {
         submissions: function(submissions) {
-            this.setChallengesSolves(submissions);
+            this.loadSubmissions(submissions);
         }
     },
     methods: {
@@ -74,21 +106,36 @@ const Challenges = Vue.component('challenges', {
                 .map(mountChallPromise);
 
             await Promise.all(challPromiseMap(challengeList));
+            this.challenges = this.challenges.sort((challA, challB) => challA.title.localeCompare(challB.title))
             if (!this.submissions && !this.submissionsPolling.isStarted) {
                 this.submissionsPolling.start();
             }
         },
-        setChallengesSolves: function(acceptedSubmissions) {
-            solves = acceptedSubmissions.standings.reduce((reducer, { taskStats }) => {
+        loadSubmissions: function(acceptedSubmissions) {
+            const userTeam = Cookies.get('team');
+            let teamSolves = new Set([]);
+            solves = acceptedSubmissions.standings.reduce((reducer, { taskStats, team }) => {
                 Object.keys(taskStats).forEach(chall => {
                     reducer[chall]++ || (reducer[chall] = 1)
                 });
+
+                if (userTeam && userTeam === team) {
+                    teamSolves = new Set(Object.keys(taskStats));
+                }
                 return reducer;
             }, {});
 
             this.challenges.forEach((challenge, index) => {
-                this.challenges.splice(index, 1, Object.assign({}, challenge, { solves: solves[challenge.id] || 0 }));
+                this.challenges.splice(index, 1, Object.assign({}, challenge, {
+                    solves: solves[challenge.id] || 0,
+                    points: this.calculatePoints(solves[challenge.id]),
+                    solved: teamSolves.has(challenge.id)
+                }));
             });
+        },
+        calculatePoints: function(solves) {
+            const { K, V, minpts, maxpts } = settings['dynamic_scoring'];
+            return parseInt(Math.max(minpts, Math.floor(maxpts - K * Math.log2(((solves + 1 || 1) + V)/(1 + V)))))
         },
         openModal: function(challenge) {
             this.selectedChallenge = challenge;
@@ -106,7 +153,7 @@ const Challenges = Vue.component('challenges', {
 
         this.submissionsPolling = createPooling(
             getSolvedChallenges,
-            this.setChallengesSolves
+            this.loadSubmissions
         );
         title = 'Challenges';
     },

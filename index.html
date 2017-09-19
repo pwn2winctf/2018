@@ -4,21 +4,22 @@
   <title></title>
 
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+  <link href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link rel="stylesheet" href="frontend/css/styles.css">
 </head>
 <body>
   <div id="app">
     <nav class="light-blue lighten-1" role="navigation">
-      <div class="nav-wrapper container">
+      <div v-if="loaded" class="nav-wrapper container">
         <a id="logo-container" href="#" class="brand-logo"></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/challenges">Challenges</router-link></li>
-          <li><router-link to="/rank">Rank</router-link></li>
-          <li><router-link to="/foo">Rules</router-link></li>
+          <li><router-link to="/">{{$t("home")}}</router-link></li>
+          <li><router-link to="/challenges">{{$t("challenges")}}</router-link></li>
+          <li><router-link to="/rank">{{$t("rank")}}</router-link></li>
+          <li><router-link to="/settings">{{$t("settings")}}</router-link></li>
         </ul>
+
       </div>
     </nav>
     <div v-if="loaded" class="container">
@@ -29,16 +30,23 @@
   </div>
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.6.0/sha256.min.js"></script>
-  <script src="https://unpkg.com/vue"></script>
-  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.6/showdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.1/vue-router.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.3.2/vue-i18n.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
   <script src="frontend/js/functions.js"></script>
   <script src="frontend/js/challenges.js"></script>
   <script src="frontend/js/rank.js"></script>
   <script src="frontend/js/team.js"></script>
   <script src="frontend/js/home.js"></script>
+  <script src="frontend/js/settings.js"></script>
+  <script src="frontend/locales/en.js"></script>
+  <script src="frontend/locales/pt.js"></script>
   <script src="frontend/js/app.js"></script>
 </body></html>

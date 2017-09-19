@@ -1,0 +1,22 @@
+const ptLocale = {
+    'home': 'Home',
+    'challenges': 'Desafios',
+    'rank': 'Rank',
+    'rules': 'Regras',
+    'settings': 'Configurações',
+    'news': 'Notícias',
+    'messages': 'Mensagens',
+    'solves': 'Resolvidos',
+    'private-message': 'Seu time tem uma nova mensagem, use o console para lê-la.',
+    'solved': 'resolveu',
+    'total-solves': 'Total de soluções',
+    'score': 'Pontos',
+    'categories': 'Categorias',
+    'isolated': 'Isolado',
+    'platform': 'Plataforma',
+    'position': 'Posição',
+    'members': 'Membros',
+    'solved-challenges': 'Desafios Resolvidos',
+    'team': 'Time',
+    'language': 'Língua'
+}

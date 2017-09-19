@@ -23,3 +23,33 @@
 .clickable {
     cursor: pointer;
 }
+
+.btn-small {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-header {
+    font-size: 20px !important;
+    line-height: 30px !important;
+}
+
+.input-header input {
+    font-weight: bold;
+    font-size: 15px !important;
+    padding-left: 0px !important;
+    width: 150px;
+}
+
+.team-selected {
+    background-color: #ccc !important;
+}
+
+.blue-grey.darken-1.is-solved {
+    background-color: green !important;
+}
+
+.country-flag {
+    width: 25px;
+    padding: 2px;
+}

@@ -1,5 +1,7 @@
-$.ajaxSetup({ cache: false });
-
+Vue.use(VueI18n);
+if (!Cookies.get('lang')) {
+    Cookies.set('lang', 'En');
+}
 const routes = [
     {
         path: '/',
@@ -16,6 +18,10 @@ const routes = [
     {
         path: '/team/:name',
         component: Team
+    },
+    {
+        path: '/settings',
+        component: Settings
     }
 ];
 
@@ -27,7 +33,7 @@ const Title = Vue.component('app-title', {
     template: `
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
-        <h4 class="header center orange-text">{{title}}</h4>
+        <h4 class="header center orange-text">{{$t(title)}}</h4>
       </div>
     </div>
     `,
@@ -42,5 +48,13 @@ const app = new Vue({
     async mounted() {
         settings = await getSettings();
         this.loaded = true;
-    }
+    },
+    i18n: new VueI18n({
+        locale: Cookies.get('lang'),
+        fallbackLocale: 'En',
+        messages: {
+            En: enLocale,
+            Pt: ptLocale
+        } 
+    })
 }).$mount('#app');

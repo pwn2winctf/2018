@@ -1,0 +1,22 @@
+const enLocale = {
+    'home': 'Home',
+    'challenges': 'Challenges',
+    'rank': 'Rank',
+    'rules': 'Rules',
+    'settings': 'Settings',
+    'news': 'News',
+    'messages': 'Messages',
+    'solves': 'Solves',
+    'private-message': 'Your team have a new private msg, use console to read',
+    'solved': 'solved',
+    'total-solves': 'Total solves',
+    'score': 'Score',
+    'categories': 'Categories',
+    'isolated': 'Isolated',
+    'platform': 'Plataform',
+    'position': 'Position',
+    'members': 'Members',
+    'solved-challenges': 'Solved Challenges',
+    'team': 'Team',
+    'language': 'Language'
+}
