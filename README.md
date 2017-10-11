@@ -21,7 +21,11 @@ Welcome to Pwn2Win CTF 2017.
    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
    ```
-   **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
+   **Notes**: 
+   
+	If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
+
+	If you are using Mac OS, install libsodium with `brew install libsodium`.
 
 4. If dependencies are installed correctly, you should now see the help menu when calling:
    ```bash
@@ -42,7 +46,7 @@ Welcome to Pwn2Win CTF 2017.
 
 ## Challenges
 
-Challenges will be available at https://pwn2winctf.github.io.
+Challenges will be available at https://game.pwn2win.party.
 
 If you prefer to browse them locally, you may also run a local webserver by typing `./ctf serve`, or list challenges through the command line interface:
 ```bash
