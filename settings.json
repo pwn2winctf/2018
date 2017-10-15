@@ -9,7 +9,9 @@
 	"scrypt_mem_limit": 1073741824,
 
 	"max_size_team_name": 50,
+	"max_size_team_countries": 5,
 	"max_size_chall_id": 15,
+	"flag_icon_css_ver": "2.8.0",
 
 	"github_api_endpoint": "https://api.github.com/",
 	"github_ssh_url": "git@github.com:%s.git",

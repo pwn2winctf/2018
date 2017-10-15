@@ -62,8 +62,14 @@ def cmd_scoreboard(args):
         scoreboard.plot(ranking, submissions)
 
 
+def parse_countries(countries):
+    if countries == '':
+        return []
+    return [c.lower().strip() for c in countries.split(',')]
+
+
 def cmd_register(args):
-    team.register(args.name)
+    team.register(args.name, parse_countries(args.countries))
 
 
 def cmd_login(args):
@@ -97,7 +103,12 @@ def cmd_init(args):
     if opt == 'y':
         print('Enter your team name:')
         team_name = input('>> ')
-        team.register(team_name)
+        print("Enter a comma-separated list of your member's countries.")
+        print("Use 2-letter ISO country codes: http://flag-icon-css.lip.is")
+        print("Example: For a team composed by brazilians and russians: BR,RU")
+        print("(leave empty if you want to omit nationality)")
+        team_countries = parse_countries(input('>> '))
+        team.register(team_name, team_countries)
     print('')
 
     print('We are all set!')
@@ -212,6 +223,10 @@ def main():
                                             help='register a new team')
     parser_register.set_defaults(command='register')
     parser_register.add_argument('name', metavar='NAME', help='team name')
+    parser_register.add_argument('countries', metavar='COUNTRIES',
+                                 help='Comma-separated list of 2-letter ISO '
+                                      'country codes (pass an empty string to '
+                                      'omit nationality)')
 
     parser_submit = subparsers.add_parser('submit', help='submit a flag')
     parser_submit.set_defaults(command='submit')

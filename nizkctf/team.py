@@ -7,6 +7,7 @@ import re
 import hashlib
 import pysodium
 from .six import text_type
+from .iso3166 import valid_countries
 from .settings import Settings
 from .subrepo import SubRepo
 from .serializable import SerializableDict, SerializableList
@@ -69,7 +70,7 @@ class Team(SerializableDict):
         return k.endswith('_pk')
 
     def validate(self):
-        expected_keys = {'name', 'crypt_pk', 'sign_pk'}
+        expected_keys = {'name', 'countries', 'crypt_pk', 'sign_pk'}
         if set(self.keys()) != expected_keys:
             raise ValueError("Team should contain, and only contain: %s" %
                              ', '.join(expected_keys))
@@ -80,6 +81,14 @@ class Team(SerializableDict):
                              Settings.max_size_team_name)
         if self.name_to_id(self['name']) != self.id:
             raise ValueError("Team name does not match its ID")
+
+        assert isinstance(self['countries'], list)
+        if len(self['countries']) > Settings.max_size_team_countries:
+            raise ValueError("Team must have at most %d countries." %
+                             Settings.max_size_team_countries)
+        for country in self['countries']:
+            if country not in valid_countries:
+                raise ValueError("Must use 2-letter ISO country codes.")
 
         assert isinstance(self['crypt_pk'], bytes)
         if len(self['crypt_pk']) != pysodium.crypto_box_PUBLICKEYBYTES:

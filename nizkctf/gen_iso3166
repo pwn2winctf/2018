@@ -1,0 +1,49 @@
+#! /usr/bin/env python
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals, division, print_function,\
+                       absolute_import
+
+from nizkctf.settings import Settings
+import os
+import json
+import string
+import requests
+
+
+def iter_country_codes():
+    r = requests.get('https://api.github.com/repos/lipis/flag-icon-css'
+                     '/contents/flags/1x1?ref=%s' % Settings.flag_icon_css_ver)
+    r.raise_for_status()
+    for item in r.json():
+        if item['type'] == 'file':
+            basename, ext = os.path.splitext(item['name'])
+            if ext == '.svg':
+                yield basename
+
+
+def gen_code():
+    allowed_chars = set(string.ascii_lowercase).union(set('-'))
+
+    py = 'valid_countries = set(['
+    i = 0
+
+    for country_code in iter_country_codes():
+        if i % 8 == 0:
+            py += '\n   '
+
+        assert set(country_code).issubset(allowed_chars)
+        py += " '%s'," % country_code
+
+        i += 1
+
+    py += '\n])'
+    return py
+
+
+def main():
+    print(gen_code())
+
+
+if __name__ == '__main__':
+    main()
