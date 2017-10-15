@@ -64,12 +64,10 @@ You may omit `--chall chall-id` from the command, however it will be slower to r
 
 ## Scoreboard
 
-Currently, the scoreboard is only available through the command line interface:
+You can see the scoreboard in the game link (https://game.pwn2win.party), or through the command line interface:
 ```bash
 ./ctf score --names --pull
 ```
-
-However we plan to make it available through the web interface in a future release.
 
 ## Support
 
