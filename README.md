@@ -64,7 +64,7 @@ You may omit `--chall chall-id` from the command, however it will be slower to r
 
 ## Scoreboard
 
-You can see the scoreboard in the game link (https://game.pwn2win.party), or through the command line interface:
+You can see the scoreboard in the game link (https://game.pwn2win.party), locally (if you ran the local webserver) or through the command line interface:
 ```bash
 ./ctf score --names --pull
 ```
