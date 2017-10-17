@@ -37,12 +37,16 @@ Welcome to Pwn2Win CTF 2017.
    ./ctf init
    ```
 
-6. The **other members of the team** must login to GitHub without registering a new team, by running:
+6. After that, **the leader** must share the `team-secrets.json` with the members of the team. The **other members of the team** must place the `team-secrets.json` file shared by the leader in their `2017` directory.
+
+7. The **other members of the team** must login to GitHub without registering a new team, by running:
    ```bash
    ./ctf login
    ```
-
-7. After that, **the leader** must share the `team-secrets.json` with the members of the team. The **other members of the team** must place the `team-secrets.json` file shared by the leader in their `2017` directory.
+If you are using OTP, you will need to login using a [token](https://github.com/settings/tokens) running:
+   ```bash
+   ./ctf login --token [TOKEN]
+   ```
 
 ## Challenges
 
