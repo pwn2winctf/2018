@@ -43,7 +43,7 @@ Welcome to Pwn2Win CTF 2017.
    ```bash
    ./ctf login
    ```
-If you are using OTP, you will need to login using a [token](https://github.com/settings/tokens) running:
+   If you are using OTP, you will need to login using a [token](https://github.com/settings/tokens) running:
    ```bash
    ./ctf login --token [TOKEN]
    ```
