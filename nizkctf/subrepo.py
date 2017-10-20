@@ -44,6 +44,10 @@ class SubRepo(object):
         cls.git(['clone', origin_url, SUBREPO_NAME], cwd=cls.clone_into)
         cls.git(['remote', 'add', 'upstream', upstream_url])
 
+        if fork:
+            cls.git(['remote', 'set-url', 'origin',
+                     repohost.get_ssh_url(forked_project)])
+
     @classmethod
     def pull(cls):
         cls.git(['checkout', 'master'])
