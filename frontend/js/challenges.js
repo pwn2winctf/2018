@@ -78,7 +78,10 @@ const Challenges = Vue.component('challenges', {
     template: `
         <div class="row">
             <app-title v-if="!hideTitle" title="challenges"></app-title>
-            <div v-for="challenge in challenges">
+            <div v-if="loaded" class="row categories">
+                <span v-bind:class="{green: category === selectedCategory}" v-for="category in categories" class="new badge" data-badge-caption="" v-on:click="selectCategory(category)">{{category}}</span>
+            </div>
+            <div v-if="loaded" v-for="challenge in filteredChallenges">
                 <challenge-card :selectChallengeFunction="openModal" :challenge="challenge" />
             </div>
             <div v-if="selectedChallenge">
@@ -87,8 +90,12 @@ const Challenges = Vue.component('challenges', {
         </div>
     `,
     data: () => ({
+        loaded: false,
         challenges: [],
-        selectedChallenge: null
+        selectedChallenge: null,
+        categories: [],
+        filteredChallenges: [],
+        selectedCategory: null
     }),
     props: ['hideTitle', 'submissions'],
     watch: {
@@ -97,6 +104,16 @@ const Challenges = Vue.component('challenges', {
         }
     },
     methods: {
+        selectCategory: function(category) {
+            if (this.selectedCategory === category) {
+                this.selectedCategory = null;
+                this.filteredChallenges = this.challenges;
+                return;
+            }
+
+            this.selectedCategory = category;
+            this.filteredChallenges = this.challenges.filter(challenge => challenge.tags.indexOf(category) >= 0);
+        },
         loadChallenges: async function(challengeList) {
             const mountChallPromise = (challId, index) => getChallenge(challId)
                 .then(chall => this.challenges.splice(index, 0, chall));
@@ -104,16 +121,26 @@ const Challenges = Vue.component('challenges', {
             const challPromiseMap = challList => challList
                 .filter(chall => this.challenges.map(c => c.id).indexOf(chall) < 0)
                 .map(mountChallPromise);
-
+            
             await Promise.all(challPromiseMap(challengeList));
+            const categories = new Set();
+            this.challenges.forEach(challenge => {
+                challenge.tags.forEach(category => {
+                    categories.add(category);
+                });
+            })
+            this.categories = [...categories];
             this.challenges = this.challenges.sort((challA, challB) => challA.title.localeCompare(challB.title))
+            this.filteredChallenges = this.challenges;
+            
             if (!this.submissions && !this.submissionsPolling.isStarted) {
                 this.submissionsPolling.start();
             }
+            this.loaded = true
         },
         loadSubmissions: function(acceptedSubmissions) {
             const userTeam = Cookies.get('team');
-            let teamSolves = new Set([]);
+            let teamSolves = new Set();
             solves = acceptedSubmissions.standings.reduce((reducer, { taskStats, team }) => {
                 Object.keys(taskStats).forEach(chall => {
                     reducer[chall]++ || (reducer[chall] = 1)
@@ -144,13 +171,8 @@ const Challenges = Vue.component('challenges', {
             })
         }
     },
-    mounted: function() {
-        this.challengesPolling = createPooling(
-            getChallenges,
-            this.loadChallenges
-        );
-        this.challengesPolling.start();
-
+    mounted: async function() {
+        this.loadChallenges(await getChallenges());
         this.submissionsPolling = createPooling(
             getSolvedChallenges,
             this.loadSubmissions

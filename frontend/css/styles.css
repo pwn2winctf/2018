@@ -5,7 +5,7 @@
 }
 
 .card-content {
-    height: 110px;
+    height: 145px;
 }
 
 .card .card-content {
@@ -52,4 +52,14 @@
 .country-flag {
     width: 25px;
     padding: 2px;
+}
+
+.categories {
+    text-align: center;
+}
+
+.categories span.badge {
+    float: initial;
+    padding: 3px 6px;
+    cursor: pointer;
 }
