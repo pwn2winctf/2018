@@ -13,7 +13,7 @@ const enLocale = {
     'score': 'Score',
     'categories': 'Categories',
     'isolated': 'Isolated',
-    'platform': 'Plataform',
+    'platform': 'Platform',
     'position': 'Position',
     'members': 'Members',
     'solved-challenges': 'Solved Challenges',
