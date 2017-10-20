@@ -45,7 +45,7 @@ def read_auth(opt):
             RepoHost.login(username=username, password=password)
             return True
         elif opt == '2':
-            print('Enter your auth token:')
+            print('Enter your auth token (with public_repo scope):')
             token = input('Token: ')
             RepoHost.login(token=token)
             return True
@@ -88,7 +88,7 @@ def cmd_init(args):
     print('NIZKCTF initializing your environment.')
     print('First of all, we need your github/gitlab credentials:')
     print('[1] auth via username / password')
-    print('[2] auth with personal access token')
+    print('[2] auth with personal access token (with public_repo scope)')
     opt = read_opt('>> ', {'1', '2'})
     print('')
 
@@ -204,7 +204,7 @@ def main():
                               help='password for logging in')
     parser_login.add_argument('--token', type=str, default=None,
                               metavar='TOKEN',
-                              help='use personal access token instead of '
+                              help='use personal access token (with public_repo scope) instead of '
                                    'username/password')
 
     parser_score = subparsers.add_parser('score', help='scoreboard help')
