@@ -4,6 +4,7 @@ const ChallengeModal = Vue.component('challenge-modal', {
             <div class="modal-content">
                 <h4>{{challenge.title}}</h4>
                 <p v-html="challenge.description"></p>
+                <p><strong>Id:</strong> {{challenge.id}}</p>
                 <p><strong>{{$t('total-solves')}}:</strong> {{challenge.solves}}</p>
                 <p><strong>{{$t('score')}}:</strong> {{challenge.points}}</p>
                 <p><strong>{{$t('categories')}}:</strong> {{challenge.tags.join(', ')}}</p>

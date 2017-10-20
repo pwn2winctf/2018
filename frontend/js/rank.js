@@ -51,7 +51,7 @@ const Rank = Vue.component('rank', {
             return this.teams[teamName];
         },
         loadRank: function(acceptedSubmissions) {
-            this.rank = acceptedSubmissions.standings;
+            this.rank = acceptedSubmissions.standings.filter((team, i) => i < (this.limit || acceptedSubmissions.standings.length));
             this.rank.forEach(async (rank, index) => {
                 this.rank.splice(index, 1, Object.assign({}, rank, { 
                     countries: (await this.loadTeam(rank.team)).countries
