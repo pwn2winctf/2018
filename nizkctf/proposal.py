@@ -4,6 +4,8 @@ from __future__ import unicode_literals, division, print_function,\
      absolute_import
 import os
 import re
+import time
+import random
 import subprocess
 from .settings import Settings
 from .repohost import RepoHost
@@ -13,7 +15,8 @@ from .acceptedsubmissions import AcceptedSubmissions
 
 
 DIFF_MAX_SIZE = 5000
-PUSH_RETRIES = 5
+PUSH_RETRIES = 10
+SLEEP_FACTOR = 0.2
 
 
 def consider_proposal(merge_info):
@@ -112,17 +115,24 @@ def add_member(team, merge_info):
                        username=merge_info['username'])
 
 
-def accept_proposal(merge_info):
+def accept_proposal(merge_info, retries=PUSH_RETRIES):
     proj = Settings.submissions_project
     mr_id = merge_info['mr_id']
     commit = merge_info['source_commit']
 
     repohost = RepoHost.instance()
-    repohost.mr_accept(proj, mr_id, commit)
+    for retry in range(1, retries + 1):
+        try:
+            repohost.mr_accept(proj, mr_id, commit)
+            break
+        except:
+            time.sleep(SLEEP_FACTOR * retry * random.random())
+            if retry == retries:
+                raise
 
 
 def retry_push(commit_message, retries=PUSH_RETRIES):
-    for retry in range(retries):
+    for retry in range(1, retries + 1):
         try:
             checkout('master')
             SubRepo.git(['reset', '--hard', 'upstream/master'])
@@ -131,7 +141,8 @@ def retry_push(commit_message, retries=PUSH_RETRIES):
             SubRepo.push(commit_message, merge_request=False)
             break
         except:
-            if retry == retries - 1:
+            time.sleep(SLEEP_FACTOR * retry * random.random())
+            if retry == retries:
                 raise
 
 
