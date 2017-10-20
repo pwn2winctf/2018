@@ -6,6 +6,7 @@ from base64 import b64decode
 import os
 import re
 import json
+import codecs
 import pysodium
 from .serializable import SerializableDict, SerializableList
 from .settings import Settings
@@ -32,6 +33,15 @@ class Challenge(SerializableDict):
 
     def path(self):
         return os.path.join(chall_dir, self.id + '.json')
+
+    def description(self, lang='en'):
+        # Get from a localized markdown file
+        path = os.path.join(chall_dir, '{}.{}.md'.format(self.id, lang))
+        if os.path.exists(path):
+            with codecs.open(path, encoding='utf-8') as f:
+                return f.read()
+        # Get from the json
+        return self['description']
 
     @staticmethod
     def validate_id(id):

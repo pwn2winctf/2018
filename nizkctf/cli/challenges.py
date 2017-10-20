@@ -54,8 +54,11 @@ def pprint():
         print('')
         print(chall['title'])
         print('')
-        print('\n'.join(textwrap.wrap(chall['description'],
-                                      LINE_WIDTH)))
+        print('\n'.join(textwrap.wrap(chall.description(),
+                                      LINE_WIDTH,
+                                      replace_whitespace=False,
+                                      drop_whitespace=False,
+                                      break_on_hyphens=False)))
         print('')
         print('-'*LINE_WIDTH)
         print('')
