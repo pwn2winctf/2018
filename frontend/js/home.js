@@ -45,7 +45,8 @@ const News = Vue.component('news', {
             this.news = news.filter(msg => {
                 console.log(!msg.to || (msg.to && msg.to === Cookies.get('team')));
                 return !msg.to || (msg.to && msg.to === Cookies.get('team'))
-            });
+            })
+	    .sort((msgA, msgB) => msgB.time - msgA.time);
         },
         setChallengesSolves: function(acceptedSubmissions) {
             this.solves = acceptedSubmissions.standings.reduce((reducer, { taskStats, team }) => {
