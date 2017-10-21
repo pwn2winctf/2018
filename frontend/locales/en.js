@@ -7,7 +7,7 @@ const enLocale = {
     'news': 'News',
     'messages': 'Messages',
     'solves': 'Solves',
-    'private-message': 'Your team have a new private msg, use console to read',
+    'private-message': 'Your team has a new private msg, use console to read',
     'solved': 'solved',
     'total-solves': 'Total solves',
     'score': 'Score',
