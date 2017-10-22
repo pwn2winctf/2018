@@ -10,6 +10,8 @@ Case, bem esperto, além de conseguir sair do labirinto e escapar da tortura, ai
 
 A entrada é composta por várias linhas contendo duas strings e um número (A B R) descrevendo o mapa, indicando que a resistência elétrica entre A e B é R. Depois de informado o mapa, há linhas contendo apenas dois caracteres cada linha. Para cada uma delas você deve responder com uma linha indicando qual a menor resistência que Case terá, obrigatoriamente que enfrentar com uma casa decimal.
 
+**Nota: omita o último '\n' se você estiver tendo problemas ao enviar a resposta do segundo caso de teste. Faça, por exemplo: '\n'.join(answers)**
+
 Exemplo:
 
 input:
