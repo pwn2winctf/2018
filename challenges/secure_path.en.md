@@ -10,6 +10,8 @@ Case, very clever, in addition to being able to leave the labyrinth and escape t
 
 The input consists of several lines containing two strings and a number (A B R) describing the map, indicating that the electrical resistance between A and B is R. After the map is informed, there are lines containing only two characters each line. For each one of them you must respond with a line with the smallest resistance that Case will need to cross with one decimal place.
 
+**Note: omit the last '\n' if you have trouble sending the second testcase answers, do e.g. '\n'.join(answers)**
+
 Example:
 
 input:
