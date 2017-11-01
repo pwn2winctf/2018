@@ -5,8 +5,6 @@ Welcome to Pwn2Win CTF 2017.
 ## Registration
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
 
-   **Note**: If you prefer team members to stay anonymous, you can create a single GitHub account for the entire team and share its credentials.
-
 2. All team members must have the git client [correctly set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). If you have never used git before, run:
    ```bash
    git config --global user.name "John Doe"
