@@ -1,7 +1,7 @@
 {
-	"ctf_name": "NIZKCTF upstream",
+	"ctf_name": "Pwn2Win CTF 2018",
 	"repository_host": "GitHub",
-	"submissions_project": "pwn2winctf/test_submissions",
+	"submissions_project": "pwn2winctf/2018submissions",
 
 	"scrypt_ops_limit": 33554432,
 	"scrypt_mem_limit": 1073741824,
@@ -9,8 +9,9 @@
 	"dynamic_scoring": {"K": 80.0, "V": 3.0, "minpts": 50, "maxpts": 500},
 
 	"max_size_team_name": 50,
-	"max_size_chall_id": 25,
-	"max_size_team_countries": 10,
+	"max_size_chall_id": 30,
+	"max_size_team_countries": 5,
+    "flag_icon_css_ver": "2.8.0",
 
 	"github_api_endpoint": "https://api.github.com/",
 	"github_ssh_url": "git@github.com:%s.git",

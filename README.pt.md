@@ -1,6 +1,4 @@
-**TUDO ABAIXO DAQUI É UM EXEMPLO DE README COM INSTRUÇÕES PARA OS JOGADORES, EDITE PARA O SEU CTF**
-
-# NIZKCTF example CTF
+# Pwn2Win CTF 2018
 
 
 ## Registro
@@ -14,9 +12,9 @@
 
 3. Todos os membros do time devem clonar o repositório e instalar as dependências:
    ```bash
-   git clone git@github.com:pwn2winctf/NIKCTF.git
-   cd NIKCTF
-   sudo apt-get install libsodium18
+   git clone git@github.com:pwn2winctf/2018.git
+   cd 2018
+   sudo apt-get install libsodium18 # Ou qualquer versão >= libsodium18
    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
    ```
@@ -37,7 +35,7 @@
    ./ctf login
    ```
 
-7. Após isso, **o líder** deve compartilhar o arquivo `team-secrets.json` com os demais mebros. **Os demais mebros** devem colocar o arquivo `team-secrets.json` na pasta `NIZKCTF` clonada.
+7. Após isso, **o líder** deve compartilhar o arquivo `team-secrets.json` com os demais mebros. **Os demais mebros** devem colocar o arquivo `team-secrets.json` na pasta `2018` clonada.
 
 ## Challenges
 
