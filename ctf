@@ -17,6 +17,7 @@ from nizkctf.challenge import Challenge, derive_keypair, random_salt
 from nizkctf.six import input, to_unicode, PY2
 from nizkctf.settings import Settings
 
+sys.tracebacklimit = 0
 
 def ensure_unicode_locale():
     if sys.stdout.encoding != 'UTF-8':
