@@ -41,7 +41,7 @@
 
 ## Challenges
 
-Challenges are available on https://pwn2winctf.github.io.
+Challenges are available on https://game.pwn2win.party.
 
 If you prefer to browse them locally, you may also run a local webserver by typing `./ctf serve`, or list challenges through the command line interface:
 ```bash
