@@ -57,6 +57,13 @@ To submit a flag:
 
 You may omit `--chall chall-id` from the command, however it will be slower to run this way. In this case, we will look for the flag in every challenge released until now.
 
+## VPN
+
+To get the VPN information, when your team unlock it, after solve 5 challenges (see the 'rules' page for more informations):
+```bash
+./ctf news --pull
+```
+
 ## Scoreboard
 
 Currently, the scoreboard is only available through the command line interface:
