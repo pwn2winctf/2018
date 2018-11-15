@@ -55,6 +55,13 @@ Para submeter uma flag:
 
 Você pode omitir o `--chall chall-id` do comando, mas vai demorar mais para submeter. Nesse caso, será tentada a flag para cada um dos challenges liberados até então.
 
+## VPN
+
+Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver 5 challenges (veja a página de "regras" pra entender melhor):
+```bash
+./ctf news --pull
+```
+
 ## Placar
 
 Atualmente o placar está disponível apenas via linha de comando:
