@@ -66,9 +66,11 @@ To get the VPN credentials, when your team unlock it, after solve 5 challenges (
 
 ## Scoreboard
 
-Currently, the scoreboard is only available through the command line interface:
+You can see the scoreboard in the game link (https://pwn2.win), locally (if you ran the local webserver) or through the command line interface:
 ```bash
 ./ctf score --names --pull
 ```
 
-However we plan to make it available through the web interface in a future release.
+## Support
+
+You may reach us through #pwn2win at irc.freenode.net.
