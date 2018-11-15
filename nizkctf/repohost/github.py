@@ -46,14 +46,19 @@ class GitHub(BaseRepoHost):
     webhook = GitHubWebhook
 
     @classmethod
-    def get_token(cls, username, password):
+    def get_token(cls, username, password, OTP):
         authorization = {'scopes': 'public_repo',
                          'note': Settings.ctf_name}
+        if OTP is None:
+            headers = None
+        else:
+            headers = {'X-GitHub-OTP': OTP}
 
         r = requests.post(Settings.github_api_endpoint +
                           'authorizations',
                           json=authorization,
-                          auth=(username, password))
+                          auth=(username, password),
+                          headers=headers)
 
         data = r.json()
 

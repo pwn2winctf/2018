@@ -43,7 +43,11 @@ def read_auth(opt):
             print('Enter your username and password:')
             username = input('Username: ')
             password = getpass.getpass('Password: ')
-            RepoHost.login(username=username, password=password)
+            OTP = input('OTP (only if you use two-factor authentication): ')
+            if OTP != "":
+                RepoHost.login(username=username, password=password, OTP=OTP)
+            else:
+                RepoHost.login(username=username, password=password)
             return True
         elif opt == '2':
             print('Enter your auth token (with public_repo scope):')

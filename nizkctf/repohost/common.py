@@ -11,9 +11,9 @@ from ..localsettings import LocalSettings
 
 class BaseRepoHost(object):
     @classmethod
-    def login(cls, username=None, password=None, token=None):
+    def login(cls, username=None, password=None, token=None, OTP=None):
         if not token and (username and password):
-            token = cls.get_token(username, password)
+            token = cls.get_token(username, password, OTP)
         if not token:
             raise ValueError("Pass either a token or an username/password")
         LocalSettings.token = token
@@ -33,7 +33,7 @@ class BaseRepoHost(object):
         pass
 
     @classmethod
-    def get_token(cls, username, password):
+    def get_token(cls, username, password, OTP):
         pass
 
     @staticmethod
