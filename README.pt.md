@@ -64,9 +64,12 @@ Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver
 
 ## Placar
 
-Atualmente o placar está disponível apenas via linha de comando:
+Voc pode ver o scoreboard no link do game (https://pwn2.win), localmente (se voc rodar o webserver) ou através da CLI:
 ```bash
 ./ctf score --names --pull
 ```
 
-Porém planejamos disponibilizá-lo via web num release futuro.
+## Suporte
+
+Podemos tentar ajudá-lo via IRC: #pwn2win @ freenode.
+
