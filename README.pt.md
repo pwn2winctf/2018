@@ -64,7 +64,7 @@ Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver
 
 ## Placar
 
-Voc pode ver o scoreboard no link do game (https://pwn2.win), localmente (se voc rodar o webserver) ou através da CLI:
+Voc pode ver o scoreboard no link do game (https://pwn2.win), localmente (se você rodar o webserver) ou através da CLI:
 ```bash
 ./ctf score --names --pull
 ```
