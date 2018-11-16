@@ -4,7 +4,7 @@
 ## Registration
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
 
-   **Important Note**: If you are unable to follow these installation instructions ~~or is simply too lazy to do all this steps~~, we made an LXC container pre-loaded with this platform, instructions are [here](container-lxc.en.md). If you prefer Docker, we made a [Dockerfile](container-docker.en.md) too. If you want to install in your own machine (instead of Containers), just ignore this Note.
+   **Important Note**: If you are unable to follow these installation instructions ~~or is simply too lazy to do all this steps~~, we made a LXC container pre-loaded with this platform, instructions are [here](container-lxc.en.md). If you prefer Docker, we made a [Dockerfile](container-docker.en.md) too. If you want to install in your own machine (instead of Containers), just ignore this Note.
 
 2. All team members must have the git client [correctly set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). If you have never used git before, run:
    ```bash
@@ -17,7 +17,7 @@
    git clone git@github.com:pwn2winctf/2018.git
    cd 2018
    sudo apt-get install libsodium23 # Or any version >= libsodium18
-   curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
+   curl https://bo(2 and 3)otstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
    ```
    **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
