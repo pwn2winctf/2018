@@ -10,9 +10,9 @@ apt install lxd
 
  - 1.1. Now, you need to init:
  
- ```bash
- lxd init
- ```  
+    ```bash
+    lxd init
+    ```  
  
   - The only option that is not default in this step, is: 
  *Would you like LXD to be available over the network? (yes/no) [default=no]*: (Type **yes**)
