@@ -3,7 +3,7 @@
 1. Primeiro instale e configure o LXD:
 
 ```bash
-add-apt-repository ppa:ubuntu-lxc/lxd-stable
+add-apt-repository ppa:ubuntu-lxc/lxc-stable
 apt update
 apt install lxd
 lxd init
