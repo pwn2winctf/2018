@@ -17,7 +17,7 @@ apt install lxd
   - Note que a única opção que não é "default" aqui, é: 
  *Would you like LXD to be available over the network? (yes/no) [default=no]*: (Digite **yes**)
 
-**2**. Baixe a [imagem](https://cloud.ufscar.br:8080/v1/AUTH_c93b694078064b4f81afd2266a502511/static.pwn2win.party/pwn2win2018.tar.gz) do container LXC e importe no LXD:
+**2**. Baixe a [imagem](https://static.pwn2win.party/pwn2win2018.tar.gz) do container LXC e importe no LXD:
 
 ```bash
 $ lxc image import pwn2win2018.tar.gz --alias=pwn2win2018
