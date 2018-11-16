@@ -27,17 +27,17 @@
    ./ctf -h
    ```
 
-5. **O líder do time** deve executar o seguinte comando e seguir as instruções para registrar o time:
+5. **O líder do time** deve executar o seguinte comando e seguir as instruções para registrar a equipe:
    ```bash
    ./ctf init
    ```
 
-6. **Os demais membros** devem se logar com o github sem criar um novo time:
+6. **Os demais membros** devem se logar com o GitHub sem criar um novo time:
    ```bash
    ./ctf login
    ```
 
-7. Após isso, **o líder** deve compartilhar o arquivo `team-secrets.json` com os demais mebros. **Os demais mebros** devem colocar o arquivo `team-secrets.json` na pasta `2018` clonada.
+7. Após isso, **o líder** deve compartilhar o arquivo `team-secrets.json` com os demais mebros. **Os demais membros** devem colocar o arquivo `team-secrets.json` na pasta `2018` clonada.
 
 ## Challenges
 
