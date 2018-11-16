@@ -4,7 +4,7 @@
 ## Registration
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
 
-   **Note**: If you prefer team members to stay anonymous, you can create a single GitHub account for the entire team and share its credentials.
+   **Note**: If you are unable to follow this instructions or don't trust our code ~~or is simply too lazy too do all this steps~~, we made an LXC container pre-loaded with this platform, instructions are [here](container.en.md).
 
 2. All team members must have the git client [correctly set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). If you have never used git before, run:
    ```bash
@@ -41,7 +41,7 @@
 
 ## Challenges
 
-Challenges are available on https://pwn2.win.
+Challenges are available on https://pwn2.win/2018.
 
 If you prefer to browse them locally, you may also run a local webserver by typing `./ctf serve`, or list challenges through the command line interface:
 ```bash
@@ -66,7 +66,7 @@ To get the VPN credentials, when your team unlock it, after solve 5 challenges (
 
 ## Scoreboard
 
-You can see the scoreboard in the game link (https://pwn2.win), locally (if you ran the local webserver) or through the command line interface:
+You can see the scoreboard in the game link (https://pwn2.win/2018), locally (if you ran the local webserver) or through the command line interface:
 ```bash
 ./ctf score --names --pull
 ```

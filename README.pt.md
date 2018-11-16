@@ -4,6 +4,8 @@
 ## Registro
 1. Todos os membros do time devem ter uma conta no GitHub e [configurar uma chave SSH nas suas configurações de conta](https://github.com/settings/keys).
 
+   **Nota**: Se você não conseguir seguir as instruções ou não confiar o suficiente em nós para rodar na sua máquina ~~ou simplesmente é preguiçoso demais~~, fizemos um container LXC com a plataforma pré-instalada, instruções [aqui](container.pt.md).
+
 2. Todos os membros do time devem ter um cliente git [corretamente configurado](https://git-scm.com/book/pt-br/v2/Começando-Configuração-Inicial-do-Git). Se você nunca usou git antes, execute:
    ```bash
    git config --global user.name "Fulano de Tal"
@@ -39,7 +41,7 @@
 
 ## Challenges
 
-Os challenges estão disponíveis em https://pwn2.win.
+Os challenges estão disponíveis em https://pwn2.win/2018.
 
 Se você Se você preferir, pode consultar localmente subindo um servidor usando `./ctf serve`, ou listar os challenges na Interface de Linha de Comando:
 ```bash
@@ -64,7 +66,7 @@ Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver
 
 ## Placar
 
-Voc pode ver o scoreboard no link do game (https://pwn2.win), localmente (se você rodar o webserver) ou através da CLI:
+Voc pode ver o scoreboard no link do game (https://pwn2.win/2018), localmente (se você rodar o webserver) ou através da CLI:
 ```bash
 ./ctf score --names --pull
 ```
@@ -72,4 +74,3 @@ Voc pode ver o scoreboard no link do game (https://pwn2.win), localmente (se voc
 ## Suporte
 
 Podemos tentar ajudá-lo via IRC: #pwn2win @ freenode.
-
