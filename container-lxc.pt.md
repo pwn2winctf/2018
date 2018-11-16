@@ -27,8 +27,8 @@ $ lxc image import pwn2win2018.tar.gz --alias=pwn2win2018
 
 ```bash
 $ lxc init pwn2win2018 pwn2win
-$ lxc list
 $ lxc start pwn2win
+$ lxc list
 $ ssh player@[ip_do_container_pwn2win]
 ```
 
