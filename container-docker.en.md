@@ -30,6 +30,6 @@ $ docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2win
 	$ docker exec -it pwn2win /bin/bash
 	```
 
-**6** - Back to [README](https://github.com/pwn2winctf/2018) and follow from the fourth step onwards.
+**6** - Back to [README](README.en.md) and follow from the fourth step onwards.
  
  
