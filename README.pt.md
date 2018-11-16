@@ -22,7 +22,7 @@
    ```
    **Note**: Se você estiver usando Ubuntu 14.04, adicione [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) no seu sistema para poder instalar o `libsodium18`.
 
-4. Se as dependencias estiverem corretamente instaladas, você deve conseguir ver o menu de ajuda executando:
+4. Se as dependencias estiverem corretamente instaladas (ou se você usou uma das nossas imagens), você deve conseguir ver o menu de ajuda executando:
    ```bash
    ./ctf -h
    ```
