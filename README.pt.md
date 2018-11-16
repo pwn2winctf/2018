@@ -41,9 +41,9 @@
 
 ## Challenges
 
-Os challenges estão disponíveis em https://pwn2.win/2018.
+Os challenges ficarão disponíveis em https://pwn2.win/2018.
 
-Se você Se você preferir, pode consultar localmente subindo um servidor usando `./ctf serve`, ou listar os challenges na Interface de Linha de Comando:
+Se você preferir, pode consultar localmente subindo um servidor usando `./ctf serve`, ou listar os challenges na Interface de Linha de Comando:
 ```bash
 ./ctf challs
 ```
