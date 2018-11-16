@@ -4,7 +4,7 @@
 ## Registration
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
 
-   **Note**: If you are unable to follow this instructions or don't trust our code ~~or is simply too lazy too do all this steps~~, we made an LXC container pre-loaded with this platform, instructions are [here](container.en.md).
+   **Important Note**: If you are unable to follow these installation instructions ~~or is simply too lazy to do all this steps~~ (2 and 3), we made an LXC container pre-loaded with this platform, instructions are [here](container-lxc.en.md). If you prefer Docker, we made a [Dockerfile](container-docker.en.md) too. Choose an option, install it, and jump to Step 4. If you want to install in your own machine (instead of Containers), just ignore this Note.
 
 2. All team members must have the git client [correctly set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). If you have never used git before, run:
    ```bash
@@ -22,7 +22,7 @@
    ```
    **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
 
-4. If dependencies are installed correctly, you should now see the help menu when calling:
+4. If dependencies are installed correctly (or if used one of our Images), you should now see the help menu when calling:
    ```bash
    ./ctf -h
    ```
