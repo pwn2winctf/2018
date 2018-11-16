@@ -20,9 +20,10 @@ lxc image import pwn2win2018.tar.gz --alias=pwn2win2018
 ```bash
 lxc init pwn2win2018 pwn2win
 lxc list
+lxc start pwn2win
 ssh player@[ip_do_container_pwn2win]
 ```
 
   * A senha é `pwn2win2018`, nós recomendamos que ela seja trocada.
 
-4. Siga as instruções do **README** dentro do container para configurar o ambiente __git__.
+4. Siga as instruções do **README** dentro do container para configurar o ambiente _git_.
