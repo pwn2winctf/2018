@@ -3,15 +3,15 @@
 **1**. First install and configure LXD:
 
 ```bash
-$ add-apt-repository ppa:ubuntu-lxc/lxc-stable
-$ apt update
-$ apt install lxd
+$ sudo add-apt-repository ppa:ubuntu-lxc/lxc-stable
+$ sudo apt update
+$ sudo apt install lxd
 ```
 
  - **1.1**. Now, you need to init:
  
     ```bash
-    $ lxd init
+    $ sudo lxd init
     ```  
  
   - The only option that is not default in this step, is: 
