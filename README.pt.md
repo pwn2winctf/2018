@@ -41,7 +41,7 @@
 
 ## Challenges
 
-Os challenges ficarão disponíveis em https://pwn2.win/2018.
+Os challenges ficarão disponíveis em [https://pwn2.win/2018](https://pwn2.win/2018).
 
 Se você preferir, pode consultar localmente subindo um servidor usando `./ctf serve`, ou listar os challenges na Interface de Linha de Comando:
 ```bash
@@ -66,7 +66,7 @@ Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver
 
 ## Placar
 
-Voc pode ver o scoreboard no link do game (https://pwn2.win/2018), localmente (se você rodar o webserver) ou através da CLI:
+Voc pode ver o scoreboard no link do game ([https://pwn2.win/2018](https://pwn2.win/2018)), localmente (se você rodar o webserver) ou através da CLI:
 ```bash
 ./ctf score --names --pull
 ```
