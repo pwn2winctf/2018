@@ -6,7 +6,7 @@
 $ sudo add-apt-repository ppa:ubuntu-lxc/lxc-stable
 $ sudo apt update
 $ sudo apt install lxd
-$ lxd init
+$ lxd init   # Use as opções padrões
 ```  
 
 **2**. Baixe a [imagem](https://static.pwn2win.party/pwn2win2018.tar.gz) do container LXC e importe no LXD:
