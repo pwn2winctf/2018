@@ -14,7 +14,7 @@ $ sudo apt-get install docker.io
 $ docker build -t pwn2win .
 ```
 
-**5** - Create a container from image:
+**5** - Create a container from image (we are assuming here that your user's ssh key is the key that is in GitHub):
 ```bash
 $ docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2win
 ```
