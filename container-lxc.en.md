@@ -14,8 +14,7 @@ $ sudo apt install lxd
     $ sudo lxd init
     ```  
  
-  - The only option that is not default in this step, is: 
- *Would you like LXD to be available over the network? (yes/no) [default=no]*: (Type **yes**)
+  - All options are default.
  
 
 **2**. Download the LXC container [image](https://static.pwn2win.party/pwn2win2018.tar.gz) and import it to LXD:
