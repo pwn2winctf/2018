@@ -6,16 +6,8 @@
 $ sudo add-apt-repository ppa:ubuntu-lxc/lxc-stable
 $ sudo apt update
 $ sudo apt install lxd
-```
-
- - **1.1**. Now, you need to init:
- 
-    ```bash
-    $ sudo lxd init
-    ```  
- 
-  - All options are default.
- 
+$ sudo lxd init   # Use default options
+```  
 
 **2**. Download the LXC container [image](https://static.pwn2win.party/pwn2win2018.tar.gz) and import it to LXD:
 
