@@ -3,19 +3,11 @@
 **1**. Primeiro instale e configure o LXD:
 
 ```bash
-add-apt-repository ppa:ubuntu-lxc/lxc-stable
-apt update
-apt install lxd
-```
-
- - **1.1**. Agora, você precisa inicializá-lo:
- 
-    ```bash
-    $ lxd init
-    ```  
- 
-  - Note que a única opção que não é "default" aqui, é: 
- *Would you like LXD to be available over the network? (yes/no) [default=no]*: (Digite **yes**)
+$ sudo add-apt-repository ppa:ubuntu-lxc/lxc-stable
+$ sudo apt update
+$ sudo apt install lxd
+$ lxd init
+```  
 
 **2**. Baixe a [imagem](https://static.pwn2win.party/pwn2win2018.tar.gz) do container LXC e importe no LXD:
 
