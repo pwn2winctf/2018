@@ -30,6 +30,7 @@ $ sudo docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2
 	```bash
 	$ sudo docker exec -it pwn2win /bin/bash
 	```
+**Nota**: essa máquina é temporária, se você der um "exit" ou reiniciar o PC Host, terá que rodar o comando "docker run [...]" novamente. Dito isso, não esqueça de salvar o *team-secrets.json*!
 
 **6** - Volte para o [README](README.pt.md) e continue a partir do passo 4.
  
