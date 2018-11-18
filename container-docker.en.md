@@ -31,7 +31,7 @@ $ sudo docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2
 	$ sudo docker exec -it pwn2win /bin/bash
 	```
 
-**Note**: this box is ephemeral, if you type "exit" or reboot the Host PC, you will need to delete the current container ($ sudo docker rm pwn2win) and run command "docker run [...]" again, to be able to login (./ctf login) next time. So, don't forget, **save** *team-secrets.json*!
+**Note**: this box is ephemeral, if you type "exit" or reboot the Host PC, you will need to delete the current container ($ sudo docker rm pwn2win) and run command "docker run [...]" again, to be able to login next time only with *team-secrets.json* file. So, don't forget, **save** *team-secrets.json*!
 
 **6** - Back to [README](README.en.md) and follow from the fourth step onwards.
  
