@@ -1,6 +1,6 @@
 ## Instructions to install and use the Platform via Docker:
 
-**1** - Download the Dockerfile [here](https://static.pwn2win.party/Dockerfile).
+**1** - Download the Dockerfile [here](https://static.pwn2win.party/Dockerfile) and put it alone in a folder.
 
 **2** - Edit Dockerfile and put your GitHub infos in the variables.
 
