@@ -18,16 +18,24 @@ $ lxc image import pwn2win2018.tar.gz --alias=pwn2win2018
 **3**. Crie uma instância a partir da imagem:
 
 ```bash
-$ lxc init pwn2win2018 pwn2win
-$ lxc start pwn2win
+$ lxc launch pwn2win2018 pwn2win
 ```
 **4**. Certifique-se que está com a última versão do repositório:
 
 ```bash
-$ lxc exec pwn2win git pull
+$ lxc exec pwn2win -- git pull
 ```
 
-**5**. Siga as instruções do [README](https://github.com/pwn2winctf/2018/blob/master/README.pt.md) prefixando os comandos com *lxc exec pwn2win*. Por exemplo, para ver os *challenges*, digite:
+**5**. Agora, **OU** você pode gerar novas chaves e [adicioná-las](https://github.com/settings/keys) no GitHub:
 ```bash
-$ lxc exec pwn2win ./ctf challs
+$ lxc exec pwn2win -- ssh-keygen -t ed25519
+$ lxc exec pwn2win -- cat .ssh/id_ed25519.pub
+ ```
+
+OU ainda pode usar suas próprias chaves, da máquina host:
+```bash
+$ lxc file push ~/.ssh/id_* pwn2win/root/.ssh/
 ```
+
+
+**6**. Siga as instruções do [README](https://github.com/pwn2winctf/2018/blob/master/README.pt.md) prefixando os comandos com *lxc exec pwn2win --*. Por exemplo, se você for o capitão do time, registre a equipe digitando *lxc exec pwn2win -- ./ctf init*. Se quiser spawnar uma shell, use: *lxc exec pwn2win sh*.
