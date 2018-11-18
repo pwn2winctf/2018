@@ -11,12 +11,12 @@ $ sudo apt-get install docker.io
 
 **4** - Enter the Dockerfile directory, and build the image:
 ```bash
-$ docker build -t pwn2win .
+$ sudo docker build -t pwn2win .
 ```
 
 **5** - Create a container from image (we are assuming here that your user's ssh key is the key that is in GitHub):
 ```bash
-$ docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2win
+$ sudo docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2win
 ```
 
  - **5.1** - If you want to detach, type:
@@ -28,7 +28,7 @@ $ docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2win
  - **5.2** - To go back to the box, after detached, type:
 
 	```bash
-	$ docker exec -it pwn2win /bin/bash
+	$ sudo docker exec -it pwn2win /bin/bash
 	```
 
 **6** - Back to [README](README.en.md) and follow from the fourth step onwards.
