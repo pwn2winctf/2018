@@ -34,4 +34,4 @@ $ lxc exec pwn2win -- cat .ssh/id_ed25519
 $ lxc file push ~/.ssh/id_* pwn2win/root/.ssh/
 ```
 
-**5**. Just follow the instructions in the [README](README.md) prefixing every command with `lxc exec pwn2win --`. For example, to login as the leader of your team, type `lxc exec pwn2win -- ./ctf init`. You can always spawn a shell by typing `lxc exec pwn2win sh`.
+**5**. Just follow the instructions in the [README](README.en.md) prefixing every command with `lxc exec pwn2win --`. For example, to login as the leader of your team, type `lxc exec pwn2win -- ./ctf init`. You can always spawn a shell by typing `lxc exec pwn2win sh`.
