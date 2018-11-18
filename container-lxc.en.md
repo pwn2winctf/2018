@@ -12,14 +12,26 @@ $ sudo lxd init   # Accept the default options
 
 ```bash
 $ lxc image import pwn2win2018.tar.gz --alias=pwn2win2018
-$ lxc init pwn2win2018 pwn2win
-$ lxc start pwn2win
+$ lxc launch pwn2win2018 pwn2win
 ```
 
-**3**. Make sure your container has the latest copy of this repository:
+**3**. The container already has this repository cloned for you. Just make sure your copy is up to date:
 
 ```bash
-$ lxc exec pwn2win git pull
+$ lxc exec pwn2win -- git pull
 ```
 
-**4**. Just follow the instructions on the [README](README.md) prefixing every command with `lxc exec pwn2win`. For example, to list challenges, type `lxc exec pwn2win ./ctf challs`.
+**4**. Either generate a new SSH key pair inside the container and [add it](https://github.com/settings/ssh/new) to the GitHub account you will be using:
+
+```bash
+$ lxc exec pwn2win -- ssh-keygen -t ed25519
+$ lxc exec pwn2win -- cat .ssh/id_ed25519
+```
+
+**or** copy your existing key pair to the container:
+
+```bash
+$ lxc file push ~/.ssh/id_* pwn2win/root/.ssh/
+```
+
+**5**. Just follow the instructions in the [README](README.md) prefixing every command with `lxc exec pwn2win --`. For example, to login as the leader of your team, type `lxc exec pwn2win -- ./ctf init`. You can always spawn a shell by typing `lxc exec pwn2win sh`.
