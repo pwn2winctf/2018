@@ -17,7 +17,7 @@
    git clone git@github.com:pwn2winctf/2018.git
    cd 2018
    sudo apt-get install libsodium23 # Or any version >= libsodium18
-   curl https://bo(2 and 3)otstrap.pypa.io/get-pip.py | sudo -H python
+   curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
    ```
    **Note**: If you are using Ubuntu 14.04, add [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) to your system to be able to install `libsodium18`.
