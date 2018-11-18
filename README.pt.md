@@ -4,7 +4,7 @@
 ## Registro
 1. Todos os membros do time devem ter uma conta no GitHub e [configurar uma chave SSH nas suas configurações de conta](https://github.com/settings/keys).
 
-   **Nota**: Se você não conseguir seguir as instruções ~~ou simplesmente é preguiçoso demais~~, fizemos um container LXC com a plataforma pré-instalada, instruções [aqui](container-lxc.pt.md). Se você prefere Docker, criamos um [Dockerfile](container-docker.pt.md) também. Caso queira instalar na sua própria máquina, ignore essa Nota.
+   **Nota**: Se você não conseguir seguir as instruções abaixo, ~~ou simplesmente é preguiçoso demais~~, fizemos um container LXC com a plataforma pré-instalada, instruções [aqui](container-lxc.pt.md). Se você prefere Docker, criamos um [Dockerfile](container-docker.pt.md) também. Caso queira instalar na sua própria máquina, ignore essa Nota.
 
 2. Todos os membros do time devem ter um cliente git [corretamente configurado](https://git-scm.com/book/pt-br/v2/Começando-Configuração-Inicial-do-Git). Se você nunca usou git antes, execute:
    ```bash
