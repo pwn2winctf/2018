@@ -25,7 +25,7 @@ $ lxc exec pwn2win -- git pull
 
 ```bash
 $ lxc exec pwn2win -- ssh-keygen -t ed25519
-$ lxc exec pwn2win -- cat .ssh/id_ed25519
+$ lxc exec pwn2win -- cat .ssh/id_ed25519.pub
 ```
 
 **or** copy your existing key pair to the container:
