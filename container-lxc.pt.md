@@ -1,6 +1,6 @@
 ## Instruções para instalação e uso do container
 
-**1**. Primeiro, instale e configure o LXD. [Este documento](https://linuxcontainers.org/lxd/getting-started-cli/#getting-the-packages) contém informaçes para várias distros. Se você está usando ubuntu, siga os passos abaixo:
+**1**. Primeiro, instale e configure o LXD. [Este documento](https://linuxcontainers.org/lxd/getting-started-cli/#getting-the-packages) contém pacotes para várias distros. Se você está usando ubuntu, siga os passos abaixo:
 
 ```bash
 $ sudo add-apt-repository ppa:ubuntu-lxc/lxc-stable
