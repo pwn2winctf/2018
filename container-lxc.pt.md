@@ -29,5 +29,5 @@ $ lxc exec pwn2win git pull
 
 **5**. Siga as instruções do [README](https://github.com/pwn2winctf/2018/blob/master/README.pt.md) prefixando os comandos com *lxc exec pwn2win*. Por exemplo, para ver os *challenges*, digite:
 ```bash
-$ lxc exec pwn2win ./ctf challs.
+$ lxc exec pwn2win ./ctf challs
 ```
