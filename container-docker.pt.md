@@ -19,7 +19,7 @@ $ sudo docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2
 
 **5** - Substitua suas informações do GitHub nas variáveis, e instale as dependências da plataforma dentro do container:
 ```bash
-root@c62ed90932e6:/ctf/2018# git config --global user.name "YOUR_USER_HERE" && git config --global user.email "YOUR_EMAIL_HERE" && git clone git@github.com:pwn2winctf/2018.git && cd $HOME_DIR/2018 && curl https://bootstrap.pypa.io/get-pip.py | sudo -H python && sudo -H python -m pip install -r pip-requirements.txt
+root@c62ed90932e6:/ctf/2018# git config --global user.name "SEU_NOME_AQUI" && git config --global user.email "SEU_EMAIL_AQUI" && git clone git@github.com:pwn2winctf/2018.git && cd $HOME_DIR/2018 && curl https://bootstrap.pypa.io/get-pip.py | sudo -H python && sudo -H python -m pip install -r pip-requirements.txt
 ```
 
  - **5.1** - Agora, se você digitar "exit" ou reiniciar sua máquina física, terá que retornar para o container:
