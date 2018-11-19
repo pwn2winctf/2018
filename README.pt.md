@@ -4,15 +4,9 @@
 ## Registro
 1. Todos os membros do time devem ter uma conta no GitHub e [configurar uma chave SSH nas suas configurações de conta](https://github.com/settings/keys).
 
-   **Nota**: Se você não conseguir seguir as instruções de instalação abaixo, ~~ou simplesmente é preguiçoso demais para fazer os passos~~, fizemos um container LXC com a plataforma pré-instalada, instruções [aqui](container-lxc.pt.md). Se você prefere Docker, criamos um [Dockerfile](container-docker.pt.md) também. Caso queira instalar na sua própria máquina, ignore essa Nota.
+   **Nota**: Se você não conseguir seguir as instruções de instalação abaixo, ~~ou simplesmente é preguiçoso demais para fazer os passos~~, preparamos para você um [contêiner LXD com a plataforma pré-instalada](container-lxc.pt.md). Se você prefere Docker, disponibilizamos também um [Dockerfile](container-docker.pt.md). Caso queira instalar diretamente na sua máquina (sem contêineres), ignore esta nota.
 
-2. Todos os membros do time devem ter um cliente git [corretamente configurado](https://git-scm.com/book/pt-br/v2/Começando-Configuração-Inicial-do-Git). Se você nunca usou git antes, execute:
-   ```bash
-   git config --global user.name "Fulano de Tal"
-   git config --global user.email fulanodetal@exemplo.com.br
-   ```
-
-3. Todos os membros do time devem clonar o repositório e instalar as dependências:
+2. Todos os membros do time devem clonar o repositório e instalar as dependências:
    ```bash
    git clone git@github.com:pwn2winctf/2018.git
    cd 2018
@@ -20,7 +14,12 @@
    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
    ```
-   **Note**: Se você estiver usando Ubuntu 14.04, adicione [ppa:elt/libsodium](https://launchpad.net/~elt/+archive/ubuntu/libsodium) no seu sistema para poder instalar o `libsodium18`.
+   
+3. Todos os membros do time devem ter um cliente git [corretamente configurado](https://git-scm.com/book/pt-br/v2/Começando-Configuração-Inicial-do-Git). Se você nunca usou git antes, execute:
+   ```bash
+   git config --global user.name "Fulano de Tal"
+   git config --global user.email fulanodetal@exemplo.com.br
+   ```
 
 4. Se as dependências estiverem corretamente instaladas (ou se você usou uma das nossas imagens), você deve conseguir ver o menu de ajuda executando:
    ```bash
