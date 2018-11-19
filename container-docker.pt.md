@@ -2,35 +2,31 @@
 
 **1** - Baixe o Dockerfile [aqui](https://static.pwn2win.party/Dockerfile) e coloque em uma pasta onde fique apenas ele.
 
-**2** - Edite-o e coloque suas informações do GitHub nas variáveis.
-
-**3** - Instale o docker:
+**2** - Instale o docker:
 ```bash
 $ sudo apt-get install docker.io
 ```
 
-**4** - Entre no diretório onde está o Dockerfile, e crie a imagem:
+**3** - Entre no diretório onde está o Dockerfile, e crie a imagem base:
 ```bash
 $ sudo docker build -t pwn2win .
 ```
 
-**5** - Crie o container a partir da imagem (nós estamos assumindo aqui que a key do seu usuário é a que está adicionada no GitHub):
+**4** - Crie o container a partir da imagem (nós estamos assumindo aqui que a key do seu usuário é a que está adicionada no GitHub):
 ```bash
 $ sudo docker run --name pwn2win -it -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa pwn2win
 ```
 
- - **5.1** - Caso você queira detachar, use:
+**5** - Substitua suas informações do GitHub nas variáveis, e instale as dependências da plataforma dentro do container:
+```bash
+root@c62ed90932e6:/ctf/2018# git config --global user.name "YOUR_USER_HERE" && git config --global user.email "YOUR_EMAIL_HERE" && git clone git@github.com:pwn2winctf/2018.git && cd $HOME_DIR/2018 && curl https://bootstrap.pypa.io/get-pip.py | sudo -H python && sudo -H python -m pip install -r pip-requirements.txt
+```
 
-	```bash
-	CTRL + P + Q
-	```
-
- - **5.2** - Pra voltar para a box, após detachado:
-
-	```bash
-	$ sudo docker exec -it pwn2win /bin/bash
-	```
-**Nota Importante**: essa máquina é temporária, se você der um "exit" ou reiniciar o PC Host, terá que apagar o container atual ($ sudo docker rm pwn2win) e rodar o comando "docker run [...]" novamente, para logar na próxima vez usando apenas o *team-secrets.json*. Dito isso, **não esqueça** de salvar o *team-secrets.json*!
+ - **5.1** - Agora, se você digitar "exit" ou reiniciar sua máquina física, terá que retornar para o container:
+   ```bash
+   $ sudo docker restart pwn2win
+   $ sudo docker exec -it pwn2win /bin/bash
+   ```
 
 **6** - Volte para o [README](README.pt.md) e continue a partir do passo 4.
  
