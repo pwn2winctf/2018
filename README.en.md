@@ -58,7 +58,7 @@ You may omit `--chall chall-id` from the command, however it will be slower to r
 
 ## VPN
 
-To get the VPN credentials, when your team unlock it, after solve 5 challenges (see the [rules](https://pwn2win.party/rules) page for more infos):
+To get the VPN credentials after your team has unlocked it (by solving at least 5 challenges - see the [rules](https://pwn2win.party/rules) page for more details):
 ```bash
 ./ctf news --pull
 ```
