@@ -23,7 +23,7 @@ $ git config --global user.name "YOUR_USER_HERE" && git config --global user.ema
 ```
  - **5.1** - Now, if you type "exit" or reboot your Host PC, you need to go back to the container:
  ```bash
-    $ sudo docker reboot pwn2win
+    $ sudo docker restart pwn2win
     $ sudo docker exec -it pwn2win /bin/bash
  ```
 
