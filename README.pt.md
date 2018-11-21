@@ -58,7 +58,7 @@ Você pode omitir o `--chall chall-id` do comando, mas vai demorar mais para sub
 
 ## VPN
 
-Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver 5 challenges (veja a página de [regras](https://pwn2win.party/rules) pra entender melhor):
+Para pegar as credenciais da VPN, quando seu time desbloqueá-la, após resolver 6 challenges (veja a página de [regras](https://pwn2win.party/rules) pra entender melhor):
 ```bash
 ./ctf news --pull
 ```
