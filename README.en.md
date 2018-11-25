@@ -1,5 +1,6 @@
 # Pwn2Win CTF 2018
 
+About our NIZK (Non-Interactive Zero-Knowledge) Platform: [https://arxiv.org/pdf/1708.05844.pdf](https://arxiv.org/pdf/1708.05844.pdf)
 
 ## Registration
 1. All team members must have a GitHub account and [configure a SSH key in their account settings](https://github.com/settings/keys).
