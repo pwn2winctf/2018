@@ -11,11 +11,13 @@ About our NIZK (Non-Interactive Zero-Knowledge) Platform: [https://arxiv.org/pdf
    ```bash
    git clone git@github.com:pwn2winctf/2018.git
    cd 2018
-   sudo apt-get install libsodium23 # Or any version >= libsodium18
+   sudo apt-get install libsodium23
    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
    ```
-   
+
+   Note: Any libsodium version >= libsodium18 is supported. However, recent pysodium has a bug when used together with old libsodium. Therefore, if you use libsodium18, please change `pip-requirements.txt` second line to `pysodium == 0.6.9.1` in order to exactly the pysodium version which works correctly with libsodium18.
+
 3. All team members must have the git client [correctly set up](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). If you have never used git before, run:
    ```bash
    git config --global user.name "John Doe"
