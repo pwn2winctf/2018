@@ -61,7 +61,7 @@ class SubRepo(object):
             cls.git(['checkout', '-b', branch, 'master'])
 
         cls.git(['add', '-A'])
-        cls.git(['commit', '-m', commit_message],
+        cls.git(['commit', '--no-gpg-sign', '-m', commit_message],
                 returncodes={0, 1})  # do not fail on 'nothing to commit'
         cls.git(['push', '-u', 'origin', branch])
 
