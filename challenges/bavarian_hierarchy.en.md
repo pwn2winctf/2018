@@ -25,9 +25,9 @@ input:
 
 output:
 
-2
+1
 
-2
+1
 
 **Server:** openssl s_client -connect programming.pwn2.win:9003
 
