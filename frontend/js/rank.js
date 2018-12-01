@@ -1,6 +1,7 @@
 const Rank = Vue.component('rank', {
     template: `
         <div>
+            <img src="https://cloud.ufscar.br:8080/v1/AUTH_c93b694078064b4f81afd2266a502511/charts/top_5_score.svg" alt="Rank">
             <app-title v-if="!hideTitle" title="Rank"></app-title>
             <!--<div v-if="!hideTitle">
                 <canvas id="chart"></canvas>
