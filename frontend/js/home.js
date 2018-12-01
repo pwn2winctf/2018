@@ -18,7 +18,7 @@ const News = Vue.component('news', {
             <div id="test1" class="col s12">
                 <div v-for="singleNews in news">
                     <span v-if="!singleNews.to">[ {{formatDate(singleNews.time)}} ] admin: {{formatNews(singleNews)}}</span>
-                    <span  v-if="singleNews.to">[ {{formatDate(singleNews.time)}} ] admin: {{$t("private-message")}}</span>
+                    <span  v-if="singleNews.to">[ {{formatDate(singleNews.time)}} ] admin: <span class="news-priv">{{$t("private-message")}}</span></span>
                 </div>
             </div>
             <div id="test2" class="col s12">
@@ -35,7 +35,7 @@ const News = Vue.component('news', {
         formatDate: date => moment(date, "X").format('DD-MM-YYYY HH:mm:ss'),
         formatNews: function(msg) {
             if (msg.to) {
-                return 
+                return
             }
 
             return msg.msg

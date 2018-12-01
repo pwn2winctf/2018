@@ -4,6 +4,11 @@
     overflow: auto;
 }
 
+.news-priv {
+    color: red;
+    font-weight: bold;
+}
+
 .card-content {
     height: 145px;
 }
