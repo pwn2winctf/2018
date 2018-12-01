@@ -2,9 +2,9 @@ const Rank = Vue.component('rank', {
     template: `
         <div>
             <app-title v-if="!hideTitle" title="Rank"></app-title>
-            <!--<div v-if="!hideTitle">
-                <canvas id="chart"></canvas>
-            </div>-->
+            <div class="center" v-if="!hideTitle">
+                <img id="chart" alt="Chart" />
+            </div>
             <ul class="rank collection z-depth-1">
                 <li v-bind:class="{ 'team-selected': userTeam === team.team }" v-on:click="teamClick(team.team)" class="clickable collection-item" v-for="team in rank">
                     <div>{{team.pos}}. {{team.team}}
@@ -20,28 +20,12 @@ const Rank = Vue.component('rank', {
     data: () => ({
         rank: [],
         teams: {},
-        userTeam: Cookies.get('team'),
-        chart: null
+        userTeam: Cookies.get('team')
     }),
     methods: {
         getTeamFlagUrl: country => `https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/${settings.flag_icon_css_ver || '2.8.0'}/flags/4x3/${country}.svg`,
-        startChart: function(data) {
-            this.chart = new Chart($('#chart'), {
-                "type":"line",
-                "data": {
-                    "labels":["January","February","March","April","May","June","July"],
-                    "datasets":[
-                        {
-                            "label":"My First Dataset",
-                            "data":[65,59,80,81,56,55,40],
-                            "fill":false,
-                            "borderColor":"rgb(75, 192, 192)",
-                            "lineTension":0.1
-                        }
-                    ]
-                },
-                "options": {}
-            });
+        loadChart: function(data) {
+            $('#chart').attr('src', data);
         },
         loadTeam: async function(teamName) {
             if (!this.teams[teamName]) {
@@ -53,11 +37,10 @@ const Rank = Vue.component('rank', {
         loadRank: function(acceptedSubmissions) {
             this.rank = acceptedSubmissions.standings.filter((team, i) => i < (this.limit || acceptedSubmissions.standings.length));
             this.rank.forEach(async (rank, index) => {
-                this.rank.splice(index, 1, Object.assign({}, rank, { 
+                this.rank.splice(index, 1, Object.assign({}, rank, {
                     countries: (await this.loadTeam(rank.team)).countries
                 }));
             })
-            this.startChart();
         },
         teamClick: function(teamName) {
             this.$router.push({ path: `/team/${teamName}` });
@@ -70,8 +53,14 @@ const Rank = Vue.component('rank', {
             this.loadRank
         );
         this.rankPolling.start();
-    },     
+        this.chartPolling = createPooling(
+            getChart,
+            this.loadChart
+        );
+        this.chartPolling.start();
+    },
     beforeDestroy: function() {
         this.rankPolling.stop();
+        this.chartPolling.stop();
     }
 });
