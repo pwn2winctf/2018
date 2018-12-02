@@ -6,6 +6,6 @@ nizkctf/iso3166.py: nizkctf/gen_iso3166 settings.json
 
 ../lambda.zip: FORCE
 	rm -f "$@"
-	zip -ry "$@" * .git*
+	zip -ry "$@" * -x 'submissions/*'
 
 FORCE:
