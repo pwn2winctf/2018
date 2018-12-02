@@ -2,6 +2,16 @@
 Agora temos computadores quânticos. Uma colaboradora nossa construiu este circuito quântico para calcular a fatoração de uma chave RSA dos Bavs
 e anotou os resultados. Eles estão no servidor dela ([https://qc.pwn2.win](https://qc.pwn2.win)) no caminho `/a/N`, onde `a` é o gerador do grupo e `N` é o módulo. Infelizmente não conseguimos falar com ela nos últimos dias, então precisamos de sua ajuda para entender o que ela fez. Quando você descobrir como o circuito funciona e os valores de `a` e `N`, poderemos encontrar os seus resultados e usá-los para decifrar a mensagem.
 
+Escolha uma versão do desafio abaixo (aceitaremos qualquer uma delas).
+
+**versão de 640 bits**
+
+[Link](https://cloud.ufscar.br:8080/v1/AUTH_c93b694078064b4f81afd2266a502511/static.pwn2win.party/back-to-bletchley-park_e27c9e079019f76ac913fa01933fc65147e1c06adf49d70b8c3cc868593eadbb.tar.gz)
+
+[Mirror](https://static.pwn2win.party/back-to-bletchley-park_e27c9e079019f76ac913fa01933fc65147e1c06adf49d70b8c3cc868593eadbb.tar.gz)
+
+~~**versão de 1024 bits**~~ (por favor espere, estamos reenviando)
+
 [Link](https://cloud.ufscar.br:8080/v1/AUTH_c93b694078064b4f81afd2266a502511/static.pwn2win.party/back-to-bletchley-park_b349f5d19905bcdf8f4abd01f321f2e05adf0979dcf3b435465deaabbc913dec.tar.gz)
 
 [Mirror](https://static.pwn2win.party/back-to-bletchley-park_b349f5d19905bcdf8f4abd01f321f2e05adf0979dcf3b435465deaabbc913dec.tar.tgz)
