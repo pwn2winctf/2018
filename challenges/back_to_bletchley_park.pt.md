@@ -10,11 +10,11 @@ Escolha uma versão do desafio abaixo (aceitaremos qualquer uma delas).
 
 [Mirror](https://static.pwn2win.party/back-to-bletchley-park_e27c9e079019f76ac913fa01933fc65147e1c06adf49d70b8c3cc868593eadbb.tar.gz)
 
-~~**versão de 1024 bits**~~ (por favor espere, estamos reenviando)
+**versão de 1024 bits**
 
-[Link](https://cloud.ufscar.br:8080/v1/AUTH_c93b694078064b4f81afd2266a502511/static.pwn2win.party/back-to-bletchley-park_b349f5d19905bcdf8f4abd01f321f2e05adf0979dcf3b435465deaabbc913dec.tar.gz)
+[Link](https://cloud.ufscar.br:8080/v1/AUTH_c93b694078064b4f81afd2266a502511/static.pwn2win.party/back-to-bletchley-park_b349f5d19905bcdf8f4abd01f321f2e05adf0979dcf3b435465deaabbc913dec.tar.xz)
 
-[Mirror](https://static.pwn2win.party/back-to-bletchley-park_b349f5d19905bcdf8f4abd01f321f2e05adf0979dcf3b435465deaabbc913dec.tar.tgz)
+[Mirror](https://static.pwn2win.party/back-to-bletchley-park_b349f5d19905bcdf8f4abd01f321f2e05adf0979dcf3b435465deaabbc913dec.tar.xz)
 
 **Nota**: Nós sabemos que a mensagem foi originalmente cifrada com os seguintes comandos:
 
